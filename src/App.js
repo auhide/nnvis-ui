@@ -17,6 +17,11 @@ function App() {
   const [neuronsN, setNeuronsN] = useState(initialneuronsN);
   const [layersN, setLayersN] = useState(initialLayersN);
 
+  let resetLayers = () => {
+    nnData = {};
+    setLayersN(initialLayersN);
+  };
+  
   return (
     <div className="App">
       <h1>Neurons {neuronsN}</h1>
@@ -25,7 +30,7 @@ function App() {
 
       <h1>Layers {layersN}</h1>
       <button onClick={() => setLayersN(prevLayersN => ++prevLayersN)}>Increment</button>
-      <button onClick={() => setLayersN(initialLayersN)}>Reset</button>
+      <button onClick={resetLayers}>Reset</button>
       
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
@@ -36,6 +41,7 @@ function App() {
     </div>
   );
 }
+
 
 
 let nnData = {};
