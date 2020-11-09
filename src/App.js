@@ -1,41 +1,69 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-import {
-  Line,
-  SteppedLine,
-  PolyLine,
-  Circle,
-  Rectangle
-} from 'draw-shape-reactjs';
+import { 
+  Stage, 
+  Layer, 
+  Rect, 
+  Text, 
+  Circle, 
+  Line } from 'react-konva';
+
 
 
 function App() {
-  const initialCounter = 0;
-  const [counter, setCounter] = useState(initialCounter);
+  const initialneuronsN = 1;
+  const initialLayersN = 1;
+  const [neuronsN, setNeuronsN] = useState(initialneuronsN);
+  const [layersN, setLayersN] = useState(initialLayersN);
 
   return (
     <div className="App">
-      {drawNeurons(counter)}
-      <h1>{counter}</h1>
-      <button onClick={() => setCounter(prevCounter => ++prevCounter)}>Increment</button>
-      <button onClick={() => setCounter(0)}>Reset</button>
+      <h1>Neurons {neuronsN}</h1>
+      <button onClick={() => setNeuronsN(prevNeuronsN => ++prevNeuronsN)}>Increment</button>
+      <button onClick={() => setNeuronsN(initialneuronsN)}>Reset</button>
+
+      <h1>Layers {layersN}</h1>
+      <button onClick={() => setLayersN(prevLayersN => ++prevLayersN)}>Increment</button>
+      <button onClick={() => setLayersN(initialLayersN)}>Reset</button>
+      
+      <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Layer>
+          {drawLayers(layersN, neuronsN)}
+        </Layer>
+      </Stage>
     </div>
   );
 }
 
-let drawNeurons = (neurons_n) => {
+let drawLayers = (layersN, neuronsN) => {
+  let xPos = 100;
   let neurons = [];
-  let neuron_pos = 200;
-  
-  for (let i = 0; i < neurons_n; i++){
-    neurons.push(<Circle
-                  center={[100, neuron_pos]} radius={15} color='#00701a'
-                />);
-    neuron_pos += 50;
+
+  for (let i = 0; i < layersN; i++) {
+    neurons.push(...drawNeurons(neuronsN, xPos));
+    xPos += 200;
   }
 
   return neurons;
+}
+
+let drawNeurons = (neuronsN, xPos) => {
+  let neurons = [];
+  let yPos = window.innerHeight * 1/4;
+  
+  for (let i = 0; i < neuronsN; i++){
+    neurons.push(<Circle
+                  x={xPos} y={yPos} radius={15} fill="green"
+                />);
+    yPos += 100;
+  }
+
+  return neurons;
+}
+
+let drawSynapse = (x, y) => {
+
 }
 
 export default App;
