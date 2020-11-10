@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.buttonClass {
+  borderRadius: 90; 
+  fontSize: 30;
+  minWidth: '10px';
+  minHeight: '10px';
+  maxWidth: '30px';
+  maxHeight: '40px';
+}
