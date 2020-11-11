@@ -30,12 +30,12 @@ function App() {
         neuronsN, 
         setNeuronsN, 
         prevNeuronsN => ++prevNeuronsN
-      ))}
+      ), [150, 170])}
       {getIncrementalButton("-", () => setNeuronsCustom(
         neuronsN, 
         setNeuronsN, 
         prevNeuronsN => --prevNeuronsN
-      ))}
+      ), [100, 150])}
       <button onClick={() => setNeuronsN(prevNeuronsN => ++prevNeuronsN)}>+</button>
       <button onClick={() => setNeuronsN(prevNeuronsN => --prevNeuronsN)}>-</button>
 
