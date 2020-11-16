@@ -11,12 +11,18 @@ import {
   getIncrementalButton
 } from '../widgets/Buttons';
 
+import {
+  getNeuronStyle
+} from './stylistic';
 
-let yNeuronDifference = 100;
+
+// Buttons Margins
 let minusXSignMargin = 50;
 let yButtonMargin = 60;
 let xButtonMargin = 10;
 
+// Neural network margins
+let yNeuronDifference = 100;
 let xStartingPos = 300;
 let layersDistance = 100;
 let yTopNeuron = window.innerHeight * 1/4;
@@ -24,6 +30,7 @@ let maxNeurons = 8;
 let minNeurons = 2;
 
 export let nnData = {};
+
 
 export function drawLayers(architecture) {
   console.log(architecture)
@@ -40,6 +47,7 @@ export function drawLayers(architecture) {
   return neurons;
 }
 
+
 export function drawNeurons(layerIndex, neuronsN, xPos) {
   let neurons = [];
   let yPos = yTopNeuron;
@@ -47,9 +55,7 @@ export function drawNeurons(layerIndex, neuronsN, xPos) {
   
   for (let i = 0; i < neuronsN; i++){
     nnData[layerIndex][i] = [xPos, yPos];
-    neurons.push(<Circle
-                  x={xPos} y={yPos} radius={15} fill="black"
-                />);
+    neurons.push(getNeuronStyle(xPos, yPos));
     yPos += yNeuronDifference;
   }
 
@@ -80,6 +86,7 @@ export function drawButtons(architecture, setter) {
   return buttons;
 }
 
+
 function plusFunc(num) {
   if (num == maxNeurons) {
     return num;
@@ -107,7 +114,6 @@ function buttonCallback(architecture, setter, layer, func) {
 }
 
 
-
 export function drawSynapses() {
   let lines = [];
   let lastLayerId = Math.max(...Object.keys(nnData));
@@ -128,6 +134,7 @@ export function drawSynapses() {
 
   return lines;
 }
+
 
 export function singleNeuronSynapses(layer, neuron) {
   let synapses = [];
@@ -155,12 +162,18 @@ export function singleNeuronSynapses(layer, neuron) {
   return synapses;
 }
 
-export function stageFigures(figures) {
+
+export function Network(architecture, setter) {
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
-      <Layer>
-        {figures}
-      </Layer>
-    </Stage>
+    <div className="network">
+      <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Layer>
+          {drawLayers(architecture)}
+          {drawSynapses()}
+        </Layer>
+      </Stage>
+
+      {drawButtons(architecture, setter)}
+    </div>
   );
 }

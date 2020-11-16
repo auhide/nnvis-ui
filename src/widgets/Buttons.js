@@ -22,3 +22,4 @@ export function getIncrementalButton(symbol, callback,position){
         size="small" 
         color="primary">{symbol}</Button>
 }
+
