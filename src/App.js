@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { 
   Slider
@@ -34,33 +34,16 @@ function App() {
       <h1>{Object.keys(architecture)}</h1>
       <h1>{Object.values(architecture)}</h1>
 
-        {
-          stageFigures(
-            drawLayers(architecture)
+      {
+        stageFigures(
+          drawLayers(architecture)
           )
-        }
-        {drawButtons(architecture, setArchitecture)}
+      }
+      {drawButtons(architecture, setArchitecture)}
 
     </div>
   );
 }
 
-function initLayers(n, buttons, setter) {
-  let btnsToRender = [];
-
-  if (n > 4 || n < 2) {
-    return `${n} buttons can't be displayed!`;
-  }
-}
-
-function createButton(symbol) {
-
-  return (
-    <div>
-      {/* <h1>{state}</h1>
-      <button onClick={() => setState(prevState => ++prevState)}>{symbol}</button> */}
-    </div>
-  );
-}
 
 export default App;

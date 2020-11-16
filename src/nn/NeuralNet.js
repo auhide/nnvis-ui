@@ -16,6 +16,7 @@ let yNeuronDifference = 100;
 export let nnData = {};
 
 export function drawLayers(architecture) {
+  console.log(architecture)
   let xPos = 300;
   let neurons = [];
 
@@ -54,13 +55,13 @@ export function drawButtons(architecture, setter) {
     if (nnData[layerIndex][0]) {
       // Plus Button
       buttons.push(
-        getIncrementalButton("+", () => console.log("Something"), 
+        getIncrementalButton("+", () => buttonCallback(architecture, setter, layerIndex.toString(), plusFunc), 
         [nnData[layerIndex][0][0] + 10, nnData[layerIndex][0][1] + 60])
       );
 
       // Minus Button
       buttons.push(
-        getIncrementalButton("-", () => console.log("Something"), 
+        getIncrementalButton("-", () => buttonCallback(architecture, setter, layerIndex.toString(), minusFunc), 
         [nnData[layerIndex][0][0] - 50 + 10, nnData[layerIndex][0][1] + 60])
       );
     }
@@ -69,8 +70,30 @@ export function drawButtons(architecture, setter) {
   return buttons;
 }
 
-export function buttonCallback(architecture, layer, callback) {
-  
+function plusFunc(num) {
+  if (num == 8) {
+    return num;
+  }
+
+  return ++num;
+}
+
+function minusFunc(num) {
+  if (num == 2) {
+    return num;
+  }
+
+  return --num;
+}
+
+
+function buttonCallback(architecture, setter, layer, func) {
+  // Changing the number of neurons of a certain layer with `func`
+  let newArchitecture = architecture;
+  newArchitecture[layer] = func(architecture[layer]);
+  let mergedArchitecture = Object.assign(architecture, newArchitecture);
+
+  setter({...mergedArchitecture});
 }
 
 
