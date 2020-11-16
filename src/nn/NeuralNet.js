@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import { 
     Stage, 
     Layer, 
@@ -6,22 +7,29 @@ import {
     Circle, 
     Line } from 'react-konva';
 
+import {
+  getIncrementalButton
+} from '../widgets/Buttons';
 
+
+let yNeuronDifference = 100;
 export let nnData = {};
 
-export let drawLayers = (layersN, neuronsN) => {
-  let xPos = 100;
+export function drawLayers(architecture) {
+  let xPos = 300;
   let neurons = [];
 
-  for (let i = 0; i < layersN; i++) {
-    neurons.push(...drawNeurons(i, neuronsN, xPos));
-    xPos += 200;
+  for (let layerN in architecture) {
+    neurons.push(
+      ...drawNeurons(layerN, architecture[layerN], xPos)
+    );
+    xPos += 100;
   }
-  
+
   return neurons;
 }
 
-export let drawNeurons = (layerIndex, neuronsN, xPos) => {
+export function drawNeurons(layerIndex, neuronsN, xPos) {
   let neurons = [];
   let yPos = window.innerHeight * 1/4;
   nnData[layerIndex] = {};
@@ -31,23 +39,51 @@ export let drawNeurons = (layerIndex, neuronsN, xPos) => {
     neurons.push(<Circle
                   x={xPos} y={yPos} radius={15} fill="black"
                 />);
-    yPos += 100;
+    yPos += yNeuronDifference;
   }
 
   return neurons;
 }
 
-export let drawSynapses = () => {
+
+export function drawButtons(architecture, setter) {
+  let buttons = [];
+
+  for (let layerIndex in nnData) {
+
+    if (nnData[layerIndex][0]) {
+      // Plus Button
+      buttons.push(
+        getIncrementalButton("+", () => console.log("Something"), 
+        [nnData[layerIndex][0][0] + 10, nnData[layerIndex][0][1] + 60])
+      );
+
+      // Minus Button
+      buttons.push(
+        getIncrementalButton("-", () => console.log("Something"), 
+        [nnData[layerIndex][0][0] - 50 + 10, nnData[layerIndex][0][1] + 60])
+      );
+    }
+  }
+
+  return buttons;
+}
+
+export function buttonCallback(architecture, layer, callback) {
+  
+}
+
+
+
+export function drawSynapses() {
   let lines = [];
   let lastLayerId = Math.max(...Object.keys(nnData));
   
   for (let layer in nnData){
-    console.log(layer);
     
     if (layer != lastLayerId){
-      console.log(nnData[layer]);
+
       for (let neuron in nnData[layer]){
-        console.log(nnData[layer][neuron]);
         lines.push(
           ...singleNeuronSynapses(layer, neuron)
         );
@@ -60,7 +96,7 @@ export let drawSynapses = () => {
   return lines;
 }
 
-export let singleNeuronSynapses = (layer, neuron) => {
+export function singleNeuronSynapses(layer, neuron) {
   let synapses = [];
   let layerInt = parseInt(layer);
   let nextLayer = layerInt + 1;
@@ -86,35 +122,12 @@ export let singleNeuronSynapses = (layer, neuron) => {
   return synapses;
 }
 
-export let drawNeuralNet = (layersN, neuronsN) => {
+export function stageFigures(figures) {
   return (
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
-        {drawLayers(layersN, neuronsN)}
-        {drawSynapses()}
+        {figures}
       </Layer>
     </Stage>
-  )
+  );
 }
-
-export let setLayerCustom = (layersSetter, value) => {
-  nnData = {};
-  return layersSetter(value);
-};
-
-export let setNeuronsCustom = (neuronsN, neuronsSetter, change) => {
-  nnData = {};
-  let minNeurons = 2;
-  let maxNeurons = 6;
-  neuronsN = change(neuronsN);
-
-  if (neuronsN < minNeurons){
-    return neuronsSetter(minNeurons);
-  }
-
-  if (neuronsN > maxNeurons){
-    return neuronsSetter(maxNeurons);
-  }
-
-  return neuronsSetter(change);
-};

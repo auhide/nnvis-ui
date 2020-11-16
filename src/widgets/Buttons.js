@@ -3,7 +3,7 @@ import {
 } from '@material-ui/core';
 
 
-export function getIncrementalButton(symbol, callback, position){
+export function getIncrementalButton(symbol, callback,position){
     const [x, y] = position;
     
     return <Button 
