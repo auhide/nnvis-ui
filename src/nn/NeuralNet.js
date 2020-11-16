@@ -13,18 +13,28 @@ import {
 
 
 let yNeuronDifference = 100;
+let minusXSignMargin = 50;
+let yButtonMargin = 60;
+let xButtonMargin = 10;
+
+let xStartingPos = 300;
+let layersDistance = 100;
+let yTopNeuron = window.innerHeight * 1/4;
+let maxNeurons = 8;
+let minNeurons = 2;
+
 export let nnData = {};
 
 export function drawLayers(architecture) {
   console.log(architecture)
-  let xPos = 300;
+  let xPos = xStartingPos;
   let neurons = [];
 
   for (let layerN in architecture) {
     neurons.push(
       ...drawNeurons(layerN, architecture[layerN], xPos)
     );
-    xPos += 100;
+    xPos += layersDistance;
   }
 
   return neurons;
@@ -32,7 +42,7 @@ export function drawLayers(architecture) {
 
 export function drawNeurons(layerIndex, neuronsN, xPos) {
   let neurons = [];
-  let yPos = window.innerHeight * 1/4;
+  let yPos = yTopNeuron;
   nnData[layerIndex] = {};
   
   for (let i = 0; i < neuronsN; i++){
@@ -56,13 +66,13 @@ export function drawButtons(architecture, setter) {
       // Plus Button
       buttons.push(
         getIncrementalButton("+", () => buttonCallback(architecture, setter, layerIndex.toString(), plusFunc), 
-        [nnData[layerIndex][0][0] + 10, nnData[layerIndex][0][1] + 60])
+        [nnData[layerIndex][0][0] + xButtonMargin, nnData[layerIndex][0][1] + yButtonMargin])
       );
 
       // Minus Button
       buttons.push(
         getIncrementalButton("-", () => buttonCallback(architecture, setter, layerIndex.toString(), minusFunc), 
-        [nnData[layerIndex][0][0] - 50 + 10, nnData[layerIndex][0][1] + 60])
+        [nnData[layerIndex][0][0] + xButtonMargin - minusXSignMargin, nnData[layerIndex][0][1] + yButtonMargin])
       );
     }
   }
@@ -71,7 +81,7 @@ export function drawButtons(architecture, setter) {
 }
 
 function plusFunc(num) {
-  if (num == 8) {
+  if (num == maxNeurons) {
     return num;
   }
 
@@ -79,7 +89,7 @@ function plusFunc(num) {
 }
 
 function minusFunc(num) {
-  if (num == 2) {
+  if (num == minNeurons) {
     return num;
   }
 
