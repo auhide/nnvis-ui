@@ -17,7 +17,7 @@ export function getIncrementalButton(symbol, callback,position){
             position: 'absolute',   
             left:`${x}px`, 
             top:`${y}px`
-        }} 
+        }}
         onClick={callback}
         size="small" 
         color="primary">{symbol}</Button>

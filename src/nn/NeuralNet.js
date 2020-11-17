@@ -12,13 +12,18 @@ import {
 } from '../widgets/Buttons';
 
 import {
-  getNeuronStyle
+  getNeuronStyle,
+  getSynapseStyle
 } from './stylistic';
+
+import {
+  LayersSlider
+} from '../widgets/Sliders'
 
 
 // Buttons Margins
 let minusXSignMargin = 50;
-let yButtonMargin = 60;
+let yButtonMargin = 125;
 let xButtonMargin = 10;
 
 // Neural network margins
@@ -33,9 +38,11 @@ export let nnData = {};
 
 
 
-export function Network(architecture, setter) {
+export function Network(architecture, setter, initLayersN) {
   return (
     <div className="network">
+      {LayersSlider(architecture, setter, initLayersN)}
+
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
           {drawLayers(architecture)}
@@ -167,15 +174,10 @@ export function singleNeuronSynapses(layer, neuron) {
   for (let nextLayerNeuron in nnData[nextLayer]){
 
     synapses.push(
-      <Line
-        points={[nnData[layer][neuron][0], 
-                 nnData[layer][neuron][1],
-                 nnData[nextLayer][nextLayerNeuron][0],
-                 nnData[nextLayer][nextLayerNeuron][1]]}
-        tension={0.5}
-        closed
-        stroke="black"
-      />
+      getSynapseStyle(
+        nnData[layer][neuron][0], nnData[layer][neuron][1],
+        nnData[nextLayer][nextLayerNeuron][0], nnData[nextLayer][nextLayerNeuron][1]
+      )
     );
   }
 

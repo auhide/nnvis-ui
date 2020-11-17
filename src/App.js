@@ -6,10 +6,6 @@ import {
   Network
 } from './nn/NeuralNet';
 
-import {
-  LayersSlider
-} from './widgets/Sliders'
-
 
 function App() {
   const initLayersN = 2;
@@ -27,8 +23,6 @@ function App() {
       {/* <button onClick={() => addButton(setButtons)}>Add Button</button> */}
       <h1>{Object.keys(architecture)}</h1>
       <h1>{Object.values(architecture)}</h1>
-
-      {LayersSlider(architecture, setArchitecture, initLayersN)}
 
       {Network(architecture, setArchitecture)}
     </div>

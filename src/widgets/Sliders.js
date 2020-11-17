@@ -44,9 +44,9 @@ let updateLayers = (event, value, architecture, setter) => {
     for (let layersN in architecture) {
         
         if (layersN > value && architecture[layersN] != 0) {
-        newArchitecture[layersN] = 0;
+            newArchitecture[layersN] = 0;
         } else if (layersN <= value && architecture[layersN] == 0) {
-        newArchitecture[layersN] = 2;
+            newArchitecture[layersN] = 2;
         }
 
     }
