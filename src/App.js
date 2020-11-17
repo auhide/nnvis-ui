@@ -1,18 +1,18 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 
-import { 
-  Slider
-} from '@material-ui/core';
-
-
 // Local Imports
 import {
   Network
 } from './nn/NeuralNet';
 
+import {
+  LayersSlider
+} from './widgets/Sliders'
+
 
 function App() {
+  const initLayersN = 2;
   const [architecture, setArchitecture] = useState({
     1: 2,
     2: 3,
@@ -27,6 +27,8 @@ function App() {
       {/* <button onClick={() => addButton(setButtons)}>Add Button</button> */}
       <h1>{Object.keys(architecture)}</h1>
       <h1>{Object.values(architecture)}</h1>
+
+      {LayersSlider(architecture, setArchitecture, initLayersN)}
 
       {Network(architecture, setArchitecture)}
     </div>

@@ -32,6 +32,26 @@ let minNeurons = 2;
 export let nnData = {};
 
 
+
+export function Network(architecture, setter) {
+  return (
+    <div className="network">
+      <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Layer>
+          {drawLayers(architecture)}
+          {drawSynapses()}
+        </Layer>
+      </Stage>
+
+      {drawButtons(architecture, setter)}
+    </div>
+  );
+}
+
+
+// export function 
+
+
 export function drawLayers(architecture) {
   console.log(architecture)
   let xPos = xStartingPos;
@@ -142,8 +162,8 @@ export function singleNeuronSynapses(layer, neuron) {
   let nextLayer = layerInt + 1;
   nextLayer = nextLayer.toString();
 
-  console.log("Layer: " + layer);
-  console.log(nnData[layer][neuron][1]);
+  // console.log("Layer: " + layer);
+  // console.log(nnData[layer][neuron][1]);
   for (let nextLayerNeuron in nnData[nextLayer]){
 
     synapses.push(
@@ -160,20 +180,4 @@ export function singleNeuronSynapses(layer, neuron) {
   }
 
   return synapses;
-}
-
-
-export function Network(architecture, setter) {
-  return (
-    <div className="network">
-      <Stage width={window.innerWidth} height={window.innerHeight}>
-        <Layer>
-          {drawLayers(architecture)}
-          {drawSynapses()}
-        </Layer>
-      </Stage>
-
-      {drawButtons(architecture, setter)}
-    </div>
-  );
 }
