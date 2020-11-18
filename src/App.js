@@ -8,7 +8,6 @@ import {
 
 
 function App() {
-  const initLayersN = 2;
   const [architecture, setArchitecture] = useState({
     1: 2,
     2: 3,
@@ -24,7 +23,7 @@ function App() {
       <h1>{Object.keys(architecture)}</h1>
       <h1>{Object.values(architecture)}</h1>
 
-      {Network(architecture, setArchitecture)}
+      <Network architecture={architecture} setter={setArchitecture}/>
     </div>
   );
 }

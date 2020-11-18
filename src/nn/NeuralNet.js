@@ -35,22 +35,27 @@ let maxNeurons = 8;
 let minNeurons = 2;
 
 export let nnData = {};
+let initLayersN = 2;
 
 
 
-export function Network(architecture, setter, initLayersN) {
+export function Network(props) {
   return (
     <div className="network">
-      {LayersSlider(architecture, setter, initLayersN)}
+      <LayersSlider 
+        architecture={props.architecture} 
+        setter={props.setter} 
+        initLayersN={props.initLayersN}
+      />
 
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
-          {drawLayers(architecture)}
+          {drawLayers(props.architecture)}
           {drawSynapses()}
         </Layer>
       </Stage>
 
-      {drawButtons(architecture, setter)}
+      {drawButtons(props.architecture, props.setter)}
     </div>
   );
 }
@@ -60,7 +65,7 @@ export function Network(architecture, setter, initLayersN) {
 
 
 export function drawLayers(architecture) {
-  console.log(architecture)
+  // console.log(architecture)
   let xPos = xStartingPos;
   let neurons = [];
 

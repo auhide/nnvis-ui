@@ -6,7 +6,7 @@ import {
 
 // Constants - Neurons
 const defaultNeuronRadius = 15;
-const neuronRadiusScale = 5;
+const neuronRadiusScale = 2;
 const neuronsColor = "black"
 
 // Constants - Synapses
@@ -25,19 +25,15 @@ export function getNeuronStyle(xPos, yPos) {
 function onNeuronOver(e) {
     console.log(e)
     const stage = e.target.getStage();
-    const container = e.target.getStage().container();
     
     e.target.attrs.radius = defaultNeuronRadius + neuronRadiusScale;
-    container.style.cursor = "pointer";
     
     stage.draw();
 }
 
 function onNeuronOut(e) {
     const stage = e.target.getStage();
-    const container = e.target.getStage().container();
     
-    container.style.cursor = "default";
     e.target.attrs.radius = defaultNeuronRadius;
     
     stage.draw();
@@ -63,9 +59,7 @@ export function getSynapseStyle(fromX, fromY, toX, toY) {
         
 function onSynapseOver(e) {
     const stage = e.target.getStage();
-    const container = e.target.getStage().container();
     
-    // container.style.cursor = "default";
     e.target.attrs.strokeWidth = defaultSynapseWidth + synapseWidthScale;
 
     stage.draw();
@@ -73,9 +67,7 @@ function onSynapseOver(e) {
 
 function onSynapseOut(e) {
     const stage = e.target.getStage();
-    const container = e.target.getStage().container();
     
-    // container.style.cursor = "pointer";
     e.target.attrs.strokeWidth = defaultSynapseWidth;
 
     stage.draw();

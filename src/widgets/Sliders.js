@@ -39,7 +39,6 @@ const marks = [
 
 let updateLayers = (event, value, architecture, setter) => {
     let newArchitecture = architecture;
-    console.log(value);
 
     for (let layersN in architecture) {
         
@@ -55,14 +54,14 @@ let updateLayers = (event, value, architecture, setter) => {
 }
 
 
-export function LayersSlider(architecture, setter, initLayersN) {
+export function LayersSlider(props) {
     const styles=sliderStyles();
 
     return (
         <div className={styles.root}>
             <Slider
-                defaultValue={initLayersN}
-                onChange={(e, value) => updateLayers(e, value, architecture, setter)}
+                defaultValue={props.initLayersN}
+                onChange={(e, value) => updateLayers(e, value, props.architecture, props.setter)}
                 aria-labelledby="discrete-slider-small-steps"
                 step={1}
                 min={2}
