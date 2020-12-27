@@ -8,6 +8,8 @@ export const useStyles = makeStyles((theme) => ({
     paper: {
         height: window.innerWidth,
         width: "45%",
+        alignItems: "center",
+        justify: "center"
     },
     control: {
         padding: theme.spacing(2),

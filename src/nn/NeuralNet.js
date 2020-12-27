@@ -23,13 +23,17 @@ import {
 
 // Buttons Margins
 let minusXSignMargin = 50;
-let yButtonMargin = 125;
-let xButtonMargin = 10;
+let yButtonMargin = 40;
+let xButtonMargin = 380;
 
 // Neural network margins
-let yNeuronDifference = 100;
-let xStartingPos = window.innerWidth / 3;
+let yNeuronDifference = 80;
+let xStartingPos = 50;
 let layersDistance = 450;
+
+let yTopNeuron = window.innerHeight * 1/7;
+let maxNeurons = 6;
+let minNeurons = 2;
 
 let layersScales = {
   "2": 450,
@@ -39,11 +43,6 @@ let layersScales = {
   "6": 100
 };
 
-
-let yTopNeuron = window.innerHeight * 1/4;
-let maxNeurons = 6;
-let minNeurons = 2;
-
 export let nnData = {};
 let initLayersN = 2;
 
@@ -52,7 +51,7 @@ let initLayersN = 2;
 export function Network(props) {
   return (
     <div className="network">
-      <LayersSlider 
+      <LayersSlider justify="center"
         architecture={props.architecture} 
         setter={props.setter} 
         initLayersN={props.initLayersN}

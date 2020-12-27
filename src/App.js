@@ -20,10 +20,12 @@ export function DrawGrids(props) {
 
   return (
       <Grid container className={classes.root} spacing={2}>
-          <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Network architecture={props.architecture} setter={props.setter}/>
-              </Paper>
+          <Grid item xs={12} >
+            <Grid container justify="center">
+                <Paper className={classes.paper}>
+                  <Network architecture={props.architecture} setter={props.setter}/>
+                </Paper>
+            </Grid>
           </Grid>
       </Grid>
   );
@@ -41,8 +43,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{Object.keys(architecture)}</h1>
-      <h1>{Object.values(architecture)}</h1>
+      {/* <h1>{Object.keys(architecture)}</h1>
+      <h1>{Object.values(architecture)}</h1> */}
       <SendArchitectureButton architecture={architecture} text="Train Network" />
       <DrawGrids architecture={architecture} setter={setArchitecture} />
     </div>
