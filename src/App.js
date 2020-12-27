@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import {
   Network
 } from './nn/NeuralNet';
+import {
+  SendArchitectureButton
+} from './forms/architectureForm'
 
 
 function App() {
@@ -17,12 +20,29 @@ function App() {
     6: 0
   });
 
+  let test_request = {
+      "architecture": {
+          "1": 3,
+          "2": 3,
+          "3": 3
+      },
+      "optimization": "adam",
+      "hyperparameters": {
+          "learning_rate": 0.1,
+          "type_": "classification",
+          "epochs": 5,
+          "random": 0,
+          "activation": "sigm",
+          "momentum": 0.5,
+          "epsilon": 0.01
+      }
+  }
+
   return (
     <div className="App">
-      {/* <button onClick={() => addButton(setButtons)}>Add Button</button> */}
       <h1>{Object.keys(architecture)}</h1>
       <h1>{Object.values(architecture)}</h1>
-
+      <SendArchitectureButton request={test_request} text="Train Network" />
       <Network architecture={architecture} setter={setArchitecture}/>
     </div>
   );

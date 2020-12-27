@@ -44,7 +44,8 @@ function onNeuronOut(e) {
 export function getSynapseStyle(fromX, fromY, toX, toY) {
     return (
         <Line
-        points={[fromX, 
+        points={[
+            fromX, 
             fromY,
             toX,
             toY]}
