@@ -56,6 +56,7 @@ export function Network(props) {
       </Stage>
 
       {drawButtons(props.architecture, props.setter)}
+
     </div>
   );
 }

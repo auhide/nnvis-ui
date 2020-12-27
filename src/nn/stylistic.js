@@ -23,7 +23,6 @@ export function getNeuronStyle(xPos, yPos) {
 }
 
 function onNeuronOver(e) {
-    console.log(e)
     const stage = e.target.getStage();
     
     e.target.attrs.radius = defaultNeuronRadius + neuronRadiusScale;
