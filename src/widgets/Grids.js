@@ -6,12 +6,13 @@ export const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
-        height: window.innerWidth,
-        width: "45%",
+        height: 600,
+        width: 600,
         alignItems: "center",
-        justify: "center"
+        justify: "center",
+        position: "absolute"
     },
-    control: {
-        padding: theme.spacing(2),
-    },
+    // control: {
+    //     padding: theme.spacing(2),
+    // },
 }));

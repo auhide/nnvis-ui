@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { 
     Stage, 
     Layer, 
@@ -23,8 +23,8 @@ import {
 
 // Buttons Margins
 let minusXSignMargin = 50;
-let yButtonMargin = 40;
-let xButtonMargin = 380;
+let yButtonMargin = 0;
+let xButtonMargin = 10;
 
 // Neural network margins
 let yNeuronDifference = 80;
