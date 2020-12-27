@@ -28,10 +28,20 @@ let xButtonMargin = 10;
 
 // Neural network margins
 let yNeuronDifference = 100;
-let xStartingPos = 300;
-let layersDistance = 100;
+let xStartingPos = window.innerWidth / 3;
+let layersDistance = 450;
+
+let layersScales = {
+  "2": 450,
+  "3": 225,
+  "4": 150,
+  "5": 125,
+  "6": 100
+};
+
+
 let yTopNeuron = window.innerHeight * 1/4;
-let maxNeurons = 8;
+let maxNeurons = 6;
 let minNeurons = 2;
 
 export let nnData = {};
@@ -62,13 +72,30 @@ export function Network(props) {
 }
 
 
-// export function 
+function getArchitectureLayersNumber(architecture) {
+  let counter = 0;
 
+  for (const layer in architecture) {
+    if (architecture[layer] != 0) {
+        counter++;
+    }
+  }
+
+  return counter;
+}
+
+function scaleNN(newArchitecture) {
+  let nLayers = getArchitectureLayersNumber(newArchitecture);
+  
+  layersDistance = layersScales[nLayers];
+}
 
 export function drawLayers(architecture) {
   // console.log(architecture)
   let xPos = xStartingPos;
   let neurons = [];
+
+  scaleNN(architecture);
 
   for (let layerN in architecture) {
     neurons.push(
