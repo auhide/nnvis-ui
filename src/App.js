@@ -28,7 +28,9 @@ function App() {
     "hyperparameters": {
       "epochs": 5,
       "learning_rate": 0.1,
-      "activation": "sigm"
+      "activation": "sigm",
+      "batch": 5,
+      "random": 0,
     }
   })
 

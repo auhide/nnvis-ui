@@ -12,10 +12,10 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 // Optimizer - Done
 // Epochs - Done
 // Learning rate - Done
-// Activation - 
-// Random
-// Batch
-// Momentum
+// Activation - Done
+// Batch - Done
+// Random - Done
+// Momentum - 
 // Epsilon
 // Beta 1
 // Beta 2
@@ -32,6 +32,40 @@ const ParametersSlider = withStyles({
         color: '#3F4D59'
     }
 })(Slider);
+
+const batches = [
+    {
+        value: 1,
+        label: '1',
+    },
+    {
+        value: 5,
+        label: '5',
+    },
+    {
+        value: 10,
+        label: '10',
+    },
+    {
+        value: 50,
+        label: '50',
+    },
+    {
+        value: 100,
+        label: '100',
+    }
+];
+
+const randomStatesMarks = [
+    {
+        value: 0,
+        label: '0',
+    },
+    {
+        value: 10,
+        label: '10',
+    },
+];
 
 const activations = [
     {
@@ -141,7 +175,71 @@ export function Hyperparameters(props) {
             <LearningRate params={props.params} hsetter={props.hsetter} />
             <Activation params={props.params} hsetter={props.hsetter} />
 
+            <br />
+            {/* Third Row */}
+            <Batches params={props.params} hsetter={props.hsetter} />
+            <RandomState params={props.params} hsetter={props.hsetter} />
 
+
+        </Grid>
+    )
+}
+
+function Batches(props) {
+    const handleBatchsChange = (event) => {
+        let newHP = props.params;
+        newHP.hyperparameters.batch = event.target.value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br />
+                <TextField
+                    id="select-batches"
+                    select
+                    value={props.params.hyperparameters.batch}
+                    onChange={handleBatchsChange}
+                    helperText="Batch Size"
+                >
+                    {batches.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
+        </Grid>
+    )
+}
+
+function RandomState(props) {
+    const handleRandomStatesChange = (event, value) => {
+        let newHP = props.params;
+        newHP.hyperparameters.random = value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <Typography id="discrete-slider-small-steps" gutterBottom>
+                    Random State
+                </Typography>
+                <ParametersSlider
+                    defaultValue={0}
+                    onChange={handleRandomStatesChange}
+                    aria-labelledby="discrete-slider-small-steps"
+                    step={1}
+                    min={0}
+                    max={10}
+                    marks={randomStatesMarks}
+                    valueLabelDisplay="auto"
+                />
+            </Grid>
         </Grid>
     )
 }
