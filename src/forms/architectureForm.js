@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 
 
-function prepareArchitectureRequest(architecture) {
+function prepareArchitectureRequest(architecture, hyperparams) {
     let request = {};
     request.architecture = {};
 
@@ -16,16 +16,8 @@ function prepareArchitectureRequest(architecture) {
     }
 
     // Adding Hyperparameters
-    request.optimization = "adam";
-    request.hyperparameters = {
-        "learning_rate": 0.1,
-        "type_": "classification",
-        "epochs": 5,
-        "random": 0,
-        "activation": "sigm",
-        "momentum": 0.5,
-        "epsilon": 0.01
-    };
+    request.optimization = hyperparams.optimization;
+    request.hyperparameters = hyperparams.hyperparameters
 
     return request
 }
@@ -48,7 +40,7 @@ export function SendArchitectureButton(props) {
             <Button
                 variant="outlined"
                 size="small"
-                onClick={() => sendArchitecture(props.architecture, props.hyperparams)}>
+                onClick={() => sendArchitecture(props.architecture, props.params)}>
                 <p className="mainText">{props.text}</p>
             </Button>
             <br />

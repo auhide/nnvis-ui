@@ -36,7 +36,7 @@ function App() {
     <div className="App">
       <CustomNavbar />
       <br />
-      <SendArchitectureButton architecture={architecture} text="Train Network" />
+      <SendArchitectureButton architecture={architecture} params={params} text="Train Network" />
       <br />
       <h1>Current Optimizer: {params.optimization}</h1>
       <h1>Current Epochs: {params.hyperparameters.epochs}</h1>
