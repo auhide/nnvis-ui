@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     paperOptions: {
         height: 600,
-        width: 300,
+        width: 400,
         alignItems: "center",
         justify: "center",
         position: "absolute",
@@ -35,7 +35,7 @@ export function DrawGrids(props) {
     const classes = useStyles();
   
     return (
-        <Grid container className={classes.root} spacing={2}>
+        <Grid container className={classes.root} spacing={4}>
             <Grid item xs={3} >
               <Grid container justify="center">
                   <Paper className={classes.paperOptions}>
