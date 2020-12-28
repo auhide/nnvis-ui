@@ -38,7 +38,7 @@ export function DrawGrids(props) {
             <Grid item xs={3} >
               <Grid container justify="center">
                   <Paper className={classes.paperOptions}>
-                    <Hyperparameters hyperparameters={props.hyperparameters} hsetter={props.hsetter}/>
+                    <Hyperparameters params={props.params} hsetter={props.hsetter}/>
                   </Paper>
               </Grid>
             </Grid>

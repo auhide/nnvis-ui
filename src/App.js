@@ -23,10 +23,13 @@ function App() {
     6: 0
   });
 
-  const [hyperparameters, setHyperparameters] = useState({
+  const [params, setparams] = useState({
     "optimization": "sgd",
-    "epochs": 5,
-    "learning_rate": 0.1
+    "hyperparameters": {
+      "epochs": 5,
+      "learning_rate": 0.1,
+      "activation": "sigm"
+    }
   })
 
   return (
@@ -35,11 +38,12 @@ function App() {
       <br />
       <SendArchitectureButton architecture={architecture} text="Train Network" />
       <br />
-      <h1>Current Optimizer: {hyperparameters.optimization}</h1>
-      <h1>Current Epochs: {hyperparameters.epochs}</h1>
-      <h1>Current LRate: {hyperparameters.learning_rate}</h1>
+      <h1>Current Optimizer: {params.optimization}</h1>
+      <h1>Current Epochs: {params.hyperparameters.epochs}</h1>
+      <h1>Current LRate: {params.hyperparameters.learning_rate}</h1>
+      <h1>Current Activation: {params.hyperparameters.activation}</h1>
       <DrawGrids architecture={architecture} setter={setArchitecture} 
-                 hyperparameters={hyperparameters} hsetter={setHyperparameters}/>
+                 params={params} hsetter={setparams}/>
     </div>
   );
 }

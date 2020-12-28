@@ -33,6 +33,21 @@ const ParametersSlider = withStyles({
     }
 })(Slider);
 
+const activations = [
+    {
+        value: 'sigm',
+        label: 'Sigmoid',
+    },
+    {
+        value: 'relu',
+        label: 'ReLU',
+    },
+    {
+        value: 'tanh',
+        label: 'Tanh',
+    }
+];
+
 const learningRates = [
     {
         value: 0.0001,
@@ -118,22 +133,53 @@ export function Hyperparameters(props) {
             </Grid>
 
             {/* First Row */}
-            <Optimizer hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
-            <Epochs hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
+            <Optimizer params={props.params} hsetter={props.hsetter} />
+            <Epochs params={props.params} hsetter={props.hsetter} />
 
             <br />
             {/* Second Row */}
-            <LearningRate hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
+            <LearningRate params={props.params} hsetter={props.hsetter} />
+            <Activation params={props.params} hsetter={props.hsetter} />
 
 
         </Grid>
     )
 }
 
+function Activation(props) {
+    const handleActivationsChange = (event) => {
+        let newHP = props.params;
+        newHP.hyperparameters.activation = event.target.value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br/>
+                <TextField
+                    id="select-activation"
+                    select
+                    value={props.params.hyperparameters.activation}
+                    onChange={handleActivationsChange}
+                    helperText="Activation"
+                >
+                    {activations.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
+        </Grid>
+    )
+}
+
 function LearningRate(props) {
     const handleLearningRateChange = (event) => {
-        let newHP = props.hyperparameters;
-        newHP.learning_rate = event.target.value;
+        let newHP = props.params;
+        newHP.hyperparameters.learning_rate = event.target.value;
         props.hsetter({...newHP});
     };
 
@@ -145,7 +191,7 @@ function LearningRate(props) {
                 <TextField
                     id="select-learningrate"
                     select
-                    value={props.hyperparameters.learning_rate}
+                    value={props.params.hyperparameters.learning_rate}
                     onChange={handleLearningRateChange}
                     helperText="Learning Rate"
                 >
@@ -162,8 +208,8 @@ function LearningRate(props) {
 
 function Epochs(props) {
     const handleEpochsChange = (event, value) => {
-        let newHP = props.hyperparameters;
-        newHP.epochs = value;
+        let newHP = props.params;
+        newHP.hyperparameters.epochs = value;
         props.hsetter({...newHP});
     };
 
@@ -190,7 +236,7 @@ function Epochs(props) {
 
 function Optimizer(props) {
     const handleOptimizerChange = (event) => {
-        let newHP = props.hyperparameters;
+        let newHP = props.params;
         newHP.optimization = event.target.value;
         props.hsetter({...newHP});
     };
@@ -203,7 +249,7 @@ function Optimizer(props) {
                 <TextField
                     id="select-optimization"
                     select
-                    value={props.hyperparameters.optimization}
+                    value={props.params.optimization}
                     onChange={handleOptimizerChange}
                     helperText="Optimization"
                 >

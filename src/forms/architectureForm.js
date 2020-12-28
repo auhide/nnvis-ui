@@ -30,8 +30,8 @@ function prepareArchitectureRequest(architecture) {
     return request
 }
 
-function sendArchitecture(architecture) {
-    let preparedRequest = prepareArchitectureRequest(architecture);
+function sendArchitecture(architecture, hyperparams) {
+    let preparedRequest = prepareArchitectureRequest(architecture, hyperparams);
 
     axios
         .post("http://localhost:5000/architecture", preparedRequest)
@@ -40,13 +40,15 @@ function sendArchitecture(architecture) {
 }
 
 export function SendArchitectureButton(props) {
+
+
     return (
         <div>
             <br />
             <Button
                 variant="outlined"
                 size="small"
-                onClick={() => sendArchitecture(props.architecture)}>
+                onClick={() => sendArchitecture(props.architecture, props.hyperparams)}>
                 <p className="mainText">{props.text}</p>
             </Button>
             <br />
