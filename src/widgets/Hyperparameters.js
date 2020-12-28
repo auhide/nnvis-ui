@@ -11,8 +11,8 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 // Hyperparameters to import
 // Optimizer - Done
 // Epochs - Done
-// Learning rate
-// Activation
+// Learning rate - Done
+// Activation - 
 // Random
 // Batch
 // Momentum
@@ -32,6 +32,37 @@ const ParametersSlider = withStyles({
         color: '#3F4D59'
     }
 })(Slider);
+
+const learningRates = [
+    {
+        value: 0.0001,
+        label: '0.0001',
+    },
+    {
+        value: 0.001,
+        label: '0.001',
+    },
+    {
+        value: 0.003,
+        label: '0.003',
+    },
+    {
+        value: 0.1,
+        label: '0.1',
+    },
+    {
+        value: 0.3,
+        label: '0.3',
+    },
+    {
+        value: 1,
+        label: '1',
+    },
+    {
+        value: 3,
+        label: '3',
+    },
+];
 
 const epochMarks = [
     {
@@ -75,6 +106,8 @@ let optimizers = [
     }
 ];
 
+
+
 export function Hyperparameters(props) {
     return (
         <Grid container className={gridStyles.root} spacing={1}>
@@ -84,15 +117,44 @@ export function Hyperparameters(props) {
                 </Grid>
             </Grid>
 
-            <Grid item xs={6}>
-                <Grid container justify="center">
-                    <Optimizer hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
-                </Grid>
-            </Grid>
-            <Grid item xs={6}>
-                <Grid container justify="center">
-                    <Epochs  hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
-                </Grid>
+            {/* First Row */}
+            <Optimizer hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
+            <Epochs hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
+
+            <br />
+            {/* Second Row */}
+            <LearningRate hyperparameters={props.hyperparameters} hsetter={props.hsetter} />
+
+
+        </Grid>
+    )
+}
+
+function LearningRate(props) {
+    const handleLearningRateChange = (event) => {
+        let newHP = props.hyperparameters;
+        newHP.learning_rate = event.target.value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br/>
+                <TextField
+                    id="select-learningrate"
+                    select
+                    value={props.hyperparameters.learning_rate}
+                    onChange={handleLearningRateChange}
+                    helperText="Learning Rate"
+                >
+                    {learningRates.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
             </Grid>
         </Grid>
     )
@@ -106,21 +168,23 @@ function Epochs(props) {
     };
 
     return (
-        <div>
-            <Typography id="discrete-slider-small-steps" gutterBottom>
-                Epochs
-            </Typography>
-            <ParametersSlider
-                defaultValue={1}
-                onChange={handleEpochsChange}
-                aria-labelledby="discrete-slider-small-steps"
-                step={1}
-                min={1}
-                max={1000}
-                marks={epochMarks}
-                valueLabelDisplay="auto"
-            />
-        </div>
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <Typography id="discrete-slider-small-steps" gutterBottom>
+                    Epochs
+                </Typography>
+                <ParametersSlider
+                    defaultValue={1}
+                    onChange={handleEpochsChange}
+                    aria-labelledby="discrete-slider-small-steps"
+                    step={1}
+                    min={1}
+                    max={1000}
+                    marks={epochMarks}
+                    valueLabelDisplay="auto"
+                />
+            </Grid>
+        </Grid>
     )
 }
 
@@ -132,21 +196,24 @@ function Optimizer(props) {
     };
 
     return (
-        <div>
-            <br/>
-            <TextField
-                id="select-optimization"
-                select
-                value={props.hyperparameters.optimization}
-                onChange={handleOptimizerChange}
-                helperText="Optimization Algorithm"
-            >
-                {optimizers.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
-        </div>
+        
+        <Grid item xs={6}>
+            <br />
+            <Grid container justify="center">
+                <TextField
+                    id="select-optimization"
+                    select
+                    value={props.hyperparameters.optimization}
+                    onChange={handleOptimizerChange}
+                    helperText="Optimization"
+                >
+                    {optimizers.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
+        </Grid>
     )
 }

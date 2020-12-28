@@ -25,7 +25,8 @@ function App() {
 
   const [hyperparameters, setHyperparameters] = useState({
     "optimization": "sgd",
-    "epochs": 5
+    "epochs": 5,
+    "learning_rate": 0.1
   })
 
   return (
@@ -36,6 +37,7 @@ function App() {
       <br />
       <h1>Current Optimizer: {hyperparameters.optimization}</h1>
       <h1>Current Epochs: {hyperparameters.epochs}</h1>
+      <h1>Current LRate: {hyperparameters.learning_rate}</h1>
       <DrawGrids architecture={architecture} setter={setArchitecture} 
                  hyperparameters={hyperparameters} hsetter={setHyperparameters}/>
     </div>
