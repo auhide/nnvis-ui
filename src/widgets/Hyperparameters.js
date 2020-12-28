@@ -8,17 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 
-// Hyperparameters to import
-// Optimizer - Done
-// Epochs - Done
-// Learning rate - Done
-// Activation - Done
-// Batch - Done
-// Random - Done
-// Momentum - Done
-// Epsilon - Done
-// Beta 1
-// Beta 2
 
 const gridStyles = makeStyles((theme) => ({
     root: {
@@ -32,6 +21,44 @@ const ParametersSlider = withStyles({
         color: '#3F4D59'
     }
 })(Slider);
+
+const beta2s = [
+    {
+        value: 0.666,
+        label: '0.666',
+    },
+    {
+        value: 0.777,
+        label: '0.777',
+    },
+    {
+        value: 0.888,
+        label: '0.888',
+    },
+    {
+        value: 0.999,
+        label: '0.999',
+    },
+];
+
+const beta1s = [
+    {
+        value: 0.6,
+        label: '0.6',
+    },
+    {
+        value: 0.7,
+        label: '0.7',
+    },
+    {
+        value: 0.8,
+        label: '0.8',
+    },
+    {
+        value: 0.9,
+        label: '0.9',
+    },
+];
 
 const epsilons = [
     {
@@ -242,6 +269,70 @@ export function Hyperparameters(props) {
             <Momentum params={props.params} hsetter={props.hsetter} />
             <Epsilon params={props.params} hsetter={props.hsetter} />
 
+            {/* Fifth Row */}
+            <Beta1 params={props.params} hsetter={props.hsetter} />
+            <Beta2 params={props.params} hsetter={props.hsetter} />
+
+        </Grid>
+    )
+}
+
+function Beta2(props) {
+    const handleBeta2Change = (event) => {
+        let newHP = props.params;
+        newHP.hyperparameters.beta2 = event.target.value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br />
+                <TextField
+                    id="select-beta2"
+                    select
+                    value={props.params.hyperparameters.beta2}
+                    onChange={handleBeta2Change}
+                    helperText="Beta 2"
+                >
+                    {beta2s.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
+        </Grid>
+    )
+}
+
+function Beta1(props) {
+    const handleBeta1Change = (event) => {
+        let newHP = props.params;
+        newHP.hyperparameters.beta1 = event.target.value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br />
+                <TextField
+                    id="select-beta1"
+                    select
+                    value={props.params.hyperparameters.beta1}
+                    onChange={handleBeta1Change}
+                    helperText="Beta 1"
+                >
+                    {beta1s.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
         </Grid>
     )
 }
@@ -259,7 +350,7 @@ function Epsilon(props) {
             <Grid container justify="center">
                 <br />
                 <TextField
-                    id="select-momentum"
+                    id="select-epsilon"
                     select
                     value={props.params.hyperparameters.epsilon}
                     onChange={handleEpsilonChange}

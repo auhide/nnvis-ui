@@ -26,7 +26,7 @@ function App() {
   const [params, setparams] = useState({
     "optimization": "sgd",
     "hyperparameters": {
-      "epochs": 5,
+      "epochs": 1,
       "learning_rate": 0.1,
       "activation": "sigm",
       "batch": 5,
@@ -34,6 +34,8 @@ function App() {
       
       "momentum": 0.1,
       "epsilon": 0.01,
+      "beta1": 0.9,
+      "beta2": 0.999
     }
   })
 
