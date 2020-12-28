@@ -2,9 +2,8 @@
 import { 
     Slider
 } from '@material-ui/core';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 
 
@@ -66,7 +65,7 @@ export function LayersSlider(props) {
         >
             <div>
                 <CustomSlider
-                    defaultValue={props.initLayersN}
+                    defaultValue={2}
                     onChange={(e, value) => updateLayers(e, value, props.architecture, props.setter)}
                     aria-labelledby="discrete-slider-small-steps"
                     step={1}

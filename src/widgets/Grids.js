@@ -34,7 +34,7 @@ export function DrawGrids(props) {
     const classes = useStyles();
   
     return (
-        <Grid container className={classes.root} spacing={4}>
+        <Grid container className={classes.root} spacing={1}>
             <Grid item xs={3} >
               <Grid container justify="center">
                   <Paper className={classes.paperOptions}>

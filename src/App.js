@@ -25,6 +25,7 @@ function App() {
 
   const [hyperparameters, setHyperparameters] = useState({
     "optimization": "sgd",
+    "epochs": 5
   })
 
   return (
@@ -34,6 +35,7 @@ function App() {
       <SendArchitectureButton architecture={architecture} text="Train Network" />
       <br />
       <h1>Current Optimizer: {hyperparameters.optimization}</h1>
+      <h1>Current Epochs: {hyperparameters.epochs}</h1>
       <DrawGrids architecture={architecture} setter={setArchitecture} 
                  hyperparameters={hyperparameters} hsetter={setHyperparameters}/>
     </div>
