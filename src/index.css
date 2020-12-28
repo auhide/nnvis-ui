@@ -5,9 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #D9D9D9;
 
   /* Disable horizontal scrollbar */
   overflow-x: hidden;
+}
+
+.mainText {
+  font-family: 'Jura', sans-serif;
+  color: #212226;
+}
+
+.navbar {
+  background-color: #595959;
+  height: "10%";
 }
 
 code {

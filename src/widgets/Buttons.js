@@ -12,7 +12,8 @@ export function getIncrementalButton(symbol, callback, position){
             <Button 
                 style={{
                     borderRadius: 90, 
-                    fontSize: 30, 
+                    fontSize: 30,
+                    color: "#636D73", 
                     minWidth: '30px',
                     minHeight: '40px',
                     maxWidth: '30px', 

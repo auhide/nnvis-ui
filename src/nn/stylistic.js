@@ -7,12 +7,12 @@ import {
 // Constants - Neurons
 const defaultNeuronRadius = 15;
 const neuronRadiusScale = 2;
-const neuronsColor = "black"
+const neuronsColor = '#212226';
 
 // Constants - Synapses
 const defaultSynapseWidth = 4;
 const synapseWidthScale = 2;
-const synapseColor = "black";
+const synapseColor = '#212226';
 
 // Neurons
 export function getNeuronStyle(xPos, yPos) {

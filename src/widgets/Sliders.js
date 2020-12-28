@@ -2,17 +2,18 @@
 import { 
     Slider
 } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
-import { makeStyles } from '@material-ui/core/styles';
-
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 
-const sliderStyles = makeStyles({
+
+const CustomSlider = withStyles({
     root: {
-        width: 300
-    },
-});
+        width: 300,
+        color: '#3F4D59'
+    }
+})(Slider);
 
 const marks = [
     {
@@ -56,15 +57,15 @@ let updateLayers = (event, value, architecture, setter) => {
 
 
 export function LayersSlider(props) {
-    const styles=sliderStyles();
+    // const styles = sliderStyles();
 
     return (
         <Grid
             container
             justify="center"
         >
-            <div className={styles.root}>
-                <Slider
+            <div>
+                <CustomSlider
                     defaultValue={props.initLayersN}
                     onChange={(e, value) => updateLayers(e, value, props.architecture, props.setter)}
                     aria-labelledby="discrete-slider-small-steps"
