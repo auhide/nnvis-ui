@@ -240,9 +240,8 @@ let optimizers = [
     }
 ];
 
-
-
 export function Hyperparameters(props) {
+
     return (
         <Grid container className={gridStyles.root} spacing={1}>
             <Grid item xs={12}>
@@ -264,7 +263,7 @@ export function Hyperparameters(props) {
             {/* Third Row */}
             <Batches params={props.params} hsetter={props.hsetter} />
             <RandomState params={props.params} hsetter={props.hsetter} />
-
+            
             {/* Fourth Row */}
             <Momentum params={props.params} hsetter={props.hsetter} />
             <Epsilon params={props.params} hsetter={props.hsetter} />
@@ -283,28 +282,30 @@ function Beta2(props) {
         newHP.hyperparameters.beta2 = event.target.value;
         props.hsetter({...newHP});
     };
-
-    return (
-        
-        <Grid item xs={6}>
-            <Grid container justify="center">
-                <br />
-                <TextField
-                    id="select-beta2"
-                    select
-                    value={props.params.hyperparameters.beta2}
-                    onChange={handleBeta2Change}
-                    helperText="Beta 2"
-                >
-                    {beta2s.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
+    if (props.params.optimization == "adam") {
+        return (
+            <Grid item xs={6}>
+                <Grid container justify="center">
+                    <br />
+                    <TextField
+                        id="select-beta2"
+                        select
+                        value={props.params.hyperparameters.beta2}
+                        onChange={handleBeta2Change}
+                        helperText="Beta 2"
+                    >
+                        {beta2s.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
             </Grid>
-        </Grid>
-    )
+        )
+    } else {
+        return (<div> </div>)
+    }
 }
 
 function Beta1(props) {
@@ -314,27 +315,30 @@ function Beta1(props) {
         props.hsetter({...newHP});
     };
 
-    return (
-        
-        <Grid item xs={6}>
-            <Grid container justify="center">
-                <br />
-                <TextField
-                    id="select-beta1"
-                    select
-                    value={props.params.hyperparameters.beta1}
-                    onChange={handleBeta1Change}
-                    helperText="Beta 1"
-                >
-                    {beta1s.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
+    if (props.params.optimization == "adam") {
+        return (
+            <Grid item xs={6}>
+                <Grid container justify="center">
+                    <br />
+                    <TextField
+                        id="select-beta1"
+                        select
+                        value={props.params.hyperparameters.beta1}
+                        onChange={handleBeta1Change}
+                        helperText="Beta 1"
+                    >
+                        {beta1s.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
             </Grid>
-        </Grid>
-    )
+        )
+    } else {
+        return (<div></div>)
+    }
 }
 
 function Epsilon(props) {
@@ -343,28 +347,31 @@ function Epsilon(props) {
         newHP.hyperparameters.epsilon = event.target.value;
         props.hsetter({...newHP});
     };
-
-    return (
-        
-        <Grid item xs={6}>
-            <Grid container justify="center">
-                <br />
-                <TextField
-                    id="select-epsilon"
-                    select
-                    value={props.params.hyperparameters.epsilon}
-                    onChange={handleEpsilonChange}
-                    helperText="Epsilon"
-                >
-                    {epsilons.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
+    if (props.params.optimization == "adam" || props.params.optimization == "adagrad") {
+        return (
+            
+            <Grid item xs={6}>
+                <Grid container justify="center">
+                    <br />
+                    <TextField
+                        id="select-epsilon"
+                        select
+                        value={props.params.hyperparameters.epsilon}
+                        onChange={handleEpsilonChange}
+                        helperText="Epsilon"
+                    >
+                        {epsilons.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
             </Grid>
-        </Grid>
-    )
+        )
+    } else {
+        return (<div></div>)
+    }
 }
 
 function Momentum(props) {
@@ -374,27 +381,31 @@ function Momentum(props) {
         props.hsetter({...newHP});
     };
 
-    return (
-        
-        <Grid item xs={6}>
-            <Grid container justify="center">
-                <br />
-                <TextField
-                    id="select-momentum"
-                    select
-                    value={props.params.hyperparameters.momentum}
-                    onChange={handleMomentumChange}
-                    helperText="Momentum"
-                >
-                    {momentums.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
+    if (props.params.optimization == "sgdm") {
+        return (
+            
+            <Grid item xs={6}>
+                <Grid container justify="center">
+                    <br />
+                    <TextField
+                        id="select-momentum"
+                        select
+                        value={props.params.hyperparameters.momentum}
+                        onChange={handleMomentumChange}
+                        helperText="Momentum"
+                    >
+                        {momentums.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
             </Grid>
-        </Grid>
-    )
+        )
+    } else {
+        return (<div></div>)
+    }
 }
 
 function Batches(props) {
