@@ -16,7 +16,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 // Batch - Done
 // Random - Done
 // Momentum - Done
-// Epsilon
+// Epsilon - Done
 // Beta 1
 // Beta 2
 
@@ -32,6 +32,25 @@ const ParametersSlider = withStyles({
         color: '#3F4D59'
     }
 })(Slider);
+
+const epsilons = [
+    {
+        value: 0.0001,
+        label: '0.0001',
+    },
+    {
+        value: 0.001,
+        label: '0.001',
+    },
+    {
+        value: 0.01,
+        label: '0.01',
+    },
+    {
+        value: 0.1,
+        label: '0.1',
+    },
+];
 
 const momentums = [
     {
@@ -221,7 +240,38 @@ export function Hyperparameters(props) {
 
             {/* Fourth Row */}
             <Momentum params={props.params} hsetter={props.hsetter} />
+            <Epsilon params={props.params} hsetter={props.hsetter} />
 
+        </Grid>
+    )
+}
+
+function Epsilon(props) {
+    const handleEpsilonChange = (event) => {
+        let newHP = props.params;
+        newHP.hyperparameters.epsilon = event.target.value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br />
+                <TextField
+                    id="select-momentum"
+                    select
+                    value={props.params.hyperparameters.epsilon}
+                    onChange={handleEpsilonChange}
+                    helperText="Epsilon"
+                >
+                    {epsilons.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
         </Grid>
     )
 }

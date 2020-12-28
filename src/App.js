@@ -33,6 +33,7 @@ function App() {
       "random": 0,
       
       "momentum": 0.1,
+      "epsilon": 0.01,
     }
   })
 
