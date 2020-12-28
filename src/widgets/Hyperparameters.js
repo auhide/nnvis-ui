@@ -15,7 +15,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 // Activation - Done
 // Batch - Done
 // Random - Done
-// Momentum - 
+// Momentum - Done
 // Epsilon
 // Beta 1
 // Beta 2
@@ -32,6 +32,45 @@ const ParametersSlider = withStyles({
         color: '#3F4D59'
     }
 })(Slider);
+
+const momentums = [
+    {
+        value: 0.1,
+        label: '0.1',
+    },
+    {
+        value: 0.2,
+        label: '0.2',
+    },
+    {
+        value: 0.3,
+        label: '0.3',
+    },
+    {
+        value: 0.4,
+        label: '0.4',
+    },
+    {
+        value: 0.5,
+        label: '0.5',
+    },
+    {
+        value: 0.6,
+        label: '0.6',
+    },
+    {
+        value: 0.7,
+        label: '0.7',
+    },
+    {
+        value: 0.8,
+        label: '0.8',
+    },
+    {
+        value: 0.9,
+        label: '0.9',
+    }
+];
 
 const batches = [
     {
@@ -180,13 +219,45 @@ export function Hyperparameters(props) {
             <Batches params={props.params} hsetter={props.hsetter} />
             <RandomState params={props.params} hsetter={props.hsetter} />
 
+            {/* Fourth Row */}
+            <Momentum params={props.params} hsetter={props.hsetter} />
 
         </Grid>
     )
 }
 
+function Momentum(props) {
+    const handleMomentumChange = (event) => {
+        let newHP = props.params;
+        newHP.hyperparameters.momentum = event.target.value;
+        props.hsetter({...newHP});
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br />
+                <TextField
+                    id="select-momentum"
+                    select
+                    value={props.params.hyperparameters.momentum}
+                    onChange={handleMomentumChange}
+                    helperText="Momentum"
+                >
+                    {momentums.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Grid>
+        </Grid>
+    )
+}
+
 function Batches(props) {
-    const handleBatchsChange = (event) => {
+    const handleBatchesChange = (event) => {
         let newHP = props.params;
         newHP.hyperparameters.batch = event.target.value;
         props.hsetter({...newHP});
@@ -201,7 +272,7 @@ function Batches(props) {
                     id="select-batches"
                     select
                     value={props.params.hyperparameters.batch}
-                    onChange={handleBatchsChange}
+                    onChange={handleBatchesChange}
                     helperText="Batch Size"
                 >
                     {batches.map((option) => (

@@ -31,6 +31,8 @@ function App() {
       "activation": "sigm",
       "batch": 5,
       "random": 0,
+      
+      "momentum": 0.1,
     }
   })
 
