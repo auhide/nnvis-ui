@@ -23,13 +23,19 @@ function App() {
     6: 0
   });
 
+  const [hyperparameters, setHyperparameters] = useState({
+    "optimization": "sgd",
+  })
+
   return (
     <div className="App">
       <CustomNavbar />
       <br />
       <SendArchitectureButton architecture={architecture} text="Train Network" />
       <br />
-      <DrawGrids architecture={architecture} setter={setArchitecture} />
+      <h1>Current Optimizer: {hyperparameters.optimization}</h1>
+      <DrawGrids architecture={architecture} setter={setArchitecture} 
+                 hyperparameters={hyperparameters} hsetter={setHyperparameters}/>
     </div>
   );
 }
