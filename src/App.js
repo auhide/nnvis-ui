@@ -38,10 +38,6 @@ function App() {
       <br />
       <SendArchitectureButton architecture={architecture} params={params} text="Train Network" />
       <br />
-      <h1>Current Optimizer: {params.optimization}</h1>
-      <h1>Current Epochs: {params.hyperparameters.epochs}</h1>
-      <h1>Current LRate: {params.hyperparameters.learning_rate}</h1>
-      <h1>Current Activation: {params.hyperparameters.activation}</h1>
       <DrawGrids architecture={architecture} setter={setArchitecture} 
                  params={params} hsetter={setparams}/>
     </div>
