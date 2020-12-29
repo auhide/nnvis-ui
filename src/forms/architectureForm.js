@@ -41,7 +41,7 @@ export function SendArchitectureButton(props) {
                 variant="outlined"
                 size="small"
                 onClick={() => sendArchitecture(props.architecture, props.params)}>
-                <p className="mainText">{props.text}</p>
+                <p className="mainText"><b>{props.text}</b></p>
             </Button>
             <br />
         </div>
