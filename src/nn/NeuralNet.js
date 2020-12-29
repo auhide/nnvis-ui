@@ -23,7 +23,7 @@ import {
 
 // Buttons Margins
 let minusXSignMargin = 50;
-let yButtonMargin = 0;
+let yButtonMargin = 40;
 let xButtonMargin = 10;
 
 // Neural network margins
@@ -31,7 +31,7 @@ let yNeuronDifference = 80;
 let xStartingPos = 50;
 let layersDistance = 450;
 
-let yTopNeuron = window.innerHeight * 1/7;
+let yTopNeuron = window.innerHeight * 1/8;
 let maxNeurons = 6;
 let minNeurons = 2;
 
@@ -57,6 +57,8 @@ export function Network(props) {
         initLayersN={props.initLayersN}
       />
 
+      <DrawDescriptiveData architecture={props.architecture} />
+
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
           {drawLayers(props.architecture)}
@@ -68,6 +70,34 @@ export function Network(props) {
 
     </div>
   );
+}
+
+function DrawDescriptiveData(props) {
+  let lastLayer = getLastLayerNumber(props.architecture);
+  let layersCount = getArchitectureLayersNumber(props.architecture);
+
+  return (
+    <div>
+      <small className='mainText'><i>Hidden Layers: {layersCount - 1}</i></small>
+      <br />
+      <small className='mainText'><i>Output Neurons: {props.architecture[lastLayer]}</i></small>
+    </div>
+  )
+}
+
+function getLastLayerNumber(architecture) {
+  let currentLayer = 0;
+
+  console.log(architecture);
+
+  for (const layer in architecture) {
+    if (architecture[layer] == 0) {
+      break;
+    }
+    currentLayer = layer
+ }
+
+ return currentLayer;
 }
 
 

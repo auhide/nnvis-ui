@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paperOptions: {
-        height: 600,
+        height: 800,
         width: 400,
         alignItems: "center",
         justify: "center",
@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: paperColor
     },
     paperArch: {
-        height: 600,
+        height: 800,
         width: 600,
         alignItems: "center",
         justify: "center",
