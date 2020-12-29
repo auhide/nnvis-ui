@@ -14,7 +14,8 @@ export function SendArchitectureButton(props) {
                 onClick={() => sendArchitecture(
                                     props.architecture, 
                                     props.params,
-                                    props.rsetter)}>
+                                    props.rsetter,
+                                    props.evalLoadSetter)}>
                 <p className="mainText"><b>{props.text}</b></p>
             </Button>
             <br />
@@ -40,16 +41,17 @@ function prepareArchitectureRequest(architecture, hyperparams) {
     return request
 }
 
-function sendArchitecture(architecture, hyperparams, resultSetter) {
+function sendArchitecture(architecture, hyperparams, resultSetter, evalSetter) {
     let preparedRequest = prepareArchitectureRequest(architecture, hyperparams);
 
+    evalSetter(true);
     axios
         .post("http://localhost:5000/architecture", preparedRequest)
-        .then(res => updateEvaluationResult(res.data, resultSetter))
+        .then(res => updateEvaluationResult(res.data, resultSetter, evalSetter))
         .catch(err => console.log(err));
 }
 
-function updateEvaluationResult(newResult, resultSetter) {
+function updateEvaluationResult(newResult, resultSetter, evalSetter) {
+    evalSetter(false);
     resultSetter({...newResult});
-    console.log(newResult);
 }

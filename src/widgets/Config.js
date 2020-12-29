@@ -12,11 +12,13 @@ export function ArchitectureComponents(props) {
         <br />
         <SendArchitectureButton architecture={props.architecture} params={props.params} 
                                 rsetter={props.rsetter} 
+                                evalLoad={props.evalLoad} evalLoadSetter={props.evalLoadSetter}
                                 text="Train Network" />
         <br />
         <DrawGrids architecture={props.architecture} setter={props.setter} 
                    params={props.params} hsetter={props.hsetter}
-                   result={props.result} rsetter={props.rsetter}/>
+                   result={props.result} rsetter={props.rsetter}
+                   evalLoad={props.evalLoad} />
       </>
     )
   }

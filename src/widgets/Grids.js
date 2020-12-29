@@ -63,7 +63,7 @@ export function DrawGrids(props) {
             <Grid item xs={3} >
               <Grid container justify="center">
                   <Paper className={classes.evaluationsPaperOptions}>
-                    <Evaluations result={props.result} />
+                    <Evaluations result={props.result} isLoading={props.evalLoad} />
                   </Paper>
               </Grid>
             </Grid>

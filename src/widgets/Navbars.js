@@ -52,6 +52,9 @@ export function NNVisNavbar() {
 
     const [evaluationResult, setEvaluationResult] = useState({});
 
+    // Loaders
+    const [evalIsLoading, setEvalIsLoading] = useState(null);
+
     return (
         <Router>
             <Toolbar style={style.navbar}>
@@ -66,7 +69,8 @@ export function NNVisNavbar() {
                 <Route path = "/" exact><ArchitectureComponents 
                                 architecture={architecture} setter={setArchitecture} 
                                 params={params} hsetter={setParams} 
-                                result={evaluationResult} rsetter={setEvaluationResult} /></Route>
+                                result={evaluationResult} rsetter={setEvaluationResult}
+                                evalLoad={evalIsLoading} evalLoadSetter={setEvalIsLoading} /></Route>
                 {/* <Route path = "/datasets" component={ArchitectureComponents}></Route>
                 <Route path = "/conv" component={ArchitectureComponents}></Route> */}
             </Switch>
