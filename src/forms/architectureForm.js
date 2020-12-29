@@ -4,6 +4,24 @@ import {
 } from '@material-ui/core';
 
 
+export function SendArchitectureButton(props) {
+    return (
+        <div>
+            <br />
+            <Button
+                variant="outlined"
+                size="small"
+                onClick={() => sendArchitecture(
+                                    props.architecture, 
+                                    props.params,
+                                    props.rsetter)}>
+                <p className="mainText"><b>{props.text}</b></p>
+            </Button>
+            <br />
+        </div>
+    )
+}
+
 function prepareArchitectureRequest(architecture, hyperparams) {
     let request = {};
     request.architecture = {};
@@ -22,28 +40,16 @@ function prepareArchitectureRequest(architecture, hyperparams) {
     return request
 }
 
-function sendArchitecture(architecture, hyperparams) {
+function sendArchitecture(architecture, hyperparams, resultSetter) {
     let preparedRequest = prepareArchitectureRequest(architecture, hyperparams);
 
     axios
         .post("http://localhost:5000/architecture", preparedRequest)
-        .then(res => console.log(res.data))
+        .then(res => updateEvaluationResult(res.data, resultSetter))
         .catch(err => console.log(err));
 }
 
-export function SendArchitectureButton(props) {
-
-
-    return (
-        <div>
-            <br />
-            <Button
-                variant="outlined"
-                size="small"
-                onClick={() => sendArchitecture(props.architecture, props.params)}>
-                <p className="mainText"><b>{props.text}</b></p>
-            </Button>
-            <br />
-        </div>
-    )
+function updateEvaluationResult(newResult, resultSetter) {
+    resultSetter({...newResult});
+    console.log(newResult);
 }

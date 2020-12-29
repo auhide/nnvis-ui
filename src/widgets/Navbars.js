@@ -50,20 +50,25 @@ export function NNVisNavbar() {
         }
       })
 
+    const [evaluationResult, setEvaluationResult] = useState({"LMAO": 1});
+
+    // setEvaluationResult(testNewEval);
+
     return (
         <Router>
             <Toolbar style={style.navbar}>
                 <Button style={style.button}><Link to={'/'} >Config</Link></Button>
-                <Button style={style.button}><Link to={'/datasets'} >Data</Link></Button>
-                <img style={style.logo} alt="Missing Logo" src={process.env.PUBLIC_URL + "/logo-nn.png"} />
                 <Button style={style.button}><Link to={'/conv'} >Conv2D</Link></Button>
+                <img style={style.logo} alt="Missing Logo" src={process.env.PUBLIC_URL + "/logo-nn.png"} />
+                <Button style={style.button}><Link to={'/add-dataset'} >Add Data</Link></Button>
                 <Button style={style.button}><Link to={'/datasets'} >Data</Link></Button>
             </Toolbar>
 
             <Switch> 
                 <Route path = "/" exact><ArchitectureComponents 
                                 architecture={architecture} setter={setArchitecture} 
-                                params={params} hsetter={setParams} /></Route>
+                                params={params} hsetter={setParams} 
+                                result={evaluationResult} rsetter={setEvaluationResult} /></Route>
                 {/* <Route path = "/datasets" component={ArchitectureComponents}></Route>
                 <Route path = "/conv" component={ArchitectureComponents}></Route> */}
             </Switch>
