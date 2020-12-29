@@ -50,9 +50,7 @@ export function NNVisNavbar() {
         }
       })
 
-    const [evaluationResult, setEvaluationResult] = useState({"LMAO": 1});
-
-    // setEvaluationResult(testNewEval);
+    const [evaluationResult, setEvaluationResult] = useState({});
 
     return (
         <Router>
