@@ -282,7 +282,7 @@ function Beta2(props) {
         newHP.hyperparameters.beta2 = event.target.value;
         props.hsetter({...newHP});
     };
-    if (props.params.optimization == "adam") {
+    if (props.params.optimization === "adam") {
         return (
             <Grid item xs={6}>
                 <Grid container justify="center">
@@ -315,7 +315,7 @@ function Beta1(props) {
         props.hsetter({...newHP});
     };
 
-    if (props.params.optimization == "adam") {
+    if (props.params.optimization === "adam") {
         return (
             <Grid item xs={6}>
                 <Grid container justify="center">
@@ -347,7 +347,7 @@ function Epsilon(props) {
         newHP.hyperparameters.epsilon = event.target.value;
         props.hsetter({...newHP});
     };
-    if (props.params.optimization == "adam" || props.params.optimization == "adagrad") {
+    if (props.params.optimization === "adam" || props.params.optimization === "adagrad") {
         return (
             
             <Grid item xs={6}>
@@ -381,7 +381,7 @@ function Momentum(props) {
         props.hsetter({...newHP});
     };
 
-    if (props.params.optimization == "sgdm") {
+    if (props.params.optimization === "sgdm") {
         return (
             
             <Grid item xs={6}>

@@ -10,7 +10,7 @@ function prepareArchitectureRequest(architecture, hyperparams) {
 
     // Getting the number of neurons for each layer from the UI
     for (const layer in architecture) {
-        if (architecture[layer] != 0) {
+        if (architecture[layer] !== 0) {
             request.architecture[layer] = architecture[layer];
         }
     }

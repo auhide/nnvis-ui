@@ -1,11 +1,7 @@
-import { Grid } from '@material-ui/core';
 import { 
-    Stage, 
-    Layer, 
-    Rect, 
-    Text, 
-    Circle, 
-    Line } from 'react-konva';
+  Stage, 
+  Layer, 
+} from 'react-konva';
 
 import {
   getIncrementalButton
@@ -54,7 +50,7 @@ export function Network(props) {
       <LayersSlider justify="center"
         architecture={props.architecture} 
         setter={props.setter} 
-        initLayersN={props.initLayersN}
+        initLayersN={initLayersN}
       />
 
       <DrawDescriptiveData architecture={props.architecture} />
@@ -88,10 +84,8 @@ function DrawDescriptiveData(props) {
 function getLastLayerNumber(architecture) {
   let currentLayer = 0;
 
-  console.log(architecture);
-
   for (const layer in architecture) {
-    if (architecture[layer] == 0) {
+    if (architecture[layer] === 0) {
       break;
     }
     currentLayer = layer
@@ -105,7 +99,7 @@ function getArchitectureLayersNumber(architecture) {
   let counter = 0;
 
   for (const layer in architecture) {
-    if (architecture[layer] != 0) {
+    if (architecture[layer] !== 0) {
         counter++;
     }
   }
@@ -177,7 +171,7 @@ export function drawButtons(architecture, setter) {
 
 
 function plusFunc(num) {
-  if (num == maxNeurons) {
+  if (num === maxNeurons) {
     return num;
   }
 
@@ -185,7 +179,7 @@ function plusFunc(num) {
 }
 
 function minusFunc(num) {
-  if (num == minNeurons) {
+  if (num === minNeurons) {
     return num;
   }
 
@@ -209,7 +203,7 @@ export function drawSynapses() {
   
   for (let layer in nnData){
     
-    if (layer != lastLayerId){
+    if (layer !== lastLayerId){
 
       for (let neuron in nnData[layer]){
         lines.push(
