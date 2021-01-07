@@ -1,26 +1,56 @@
 import axios from 'axios';
 import {
-    Button
+    Button,
+    CircularProgress,
+    LinearProgress
 } from '@material-ui/core';
 
 
 export function SendArchitectureButton(props) {
-    return (
-        <div>
+    if (!props.isTraining) {
+
+        // Returning a normal button
+        return (
+                <div>
+                <br />
+                <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={() => sendArchitecture(
+                                        props.architecture, 
+                                        props.params,
+                                        props.rsetter,
+                                        props.evalLoadSetter,
+                                        props.trainButtonSetter)}>
+                    <p className="mainText"><b>{props.text}</b></p>
+                </Button>
+                <br />
+            </div>
+        );
+
+    } else {
+
+        // Returning a disabled button with a spinner
+        return (
+            <div>
             <br />
-            <Button
-                variant="outlined"
-                size="small"
-                onClick={() => sendArchitecture(
-                                    props.architecture, 
-                                    props.params,
-                                    props.rsetter,
-                                    props.evalLoadSetter)}>
-                <p className="mainText"><b>{props.text}</b></p>
-            </Button>
-            <br />
-        </div>
-    )
+                <Button
+                    variant="outlined"
+                    size="small"
+                    disabled={true}
+                    onClick={() => sendArchitecture(
+                                        props.architecture, 
+                                        props.params,
+                                        props.rsetter,
+                                        props.evalLoadSetter,
+                                        props.trainButtonSetter)}>
+                    <CircularProgress size={20} color="#212226" />
+                    <p className="mainText" style={{marginLeft: 5}}><b>Training...</b></p>
+                </Button>
+                <br />
+            </div>
+        );
+    }
 }
 
 function prepareArchitectureRequest(architecture, hyperparams) {
@@ -41,17 +71,19 @@ function prepareArchitectureRequest(architecture, hyperparams) {
     return request
 }
 
-function sendArchitecture(architecture, hyperparams, resultSetter, evalSetter) {
+function sendArchitecture(architecture, hyperparams, resultSetter, evalIsLoading, trainButtonIsLoading) {
     let preparedRequest = prepareArchitectureRequest(architecture, hyperparams);
 
-    evalSetter(true);
+    evalIsLoading(true);
+    trainButtonIsLoading(true);
     axios
         .post("http://localhost:5000/architecture", preparedRequest)
-        .then(res => updateEvaluationResult(res.data, resultSetter, evalSetter))
+        .then(res => updateEvaluationResult(res.data, resultSetter, evalIsLoading, trainButtonIsLoading))
         .catch(err => console.log(err));
 }
 
-function updateEvaluationResult(newResult, resultSetter, evalSetter) {
-    evalSetter(false);
+function updateEvaluationResult(newResult, resultSetter, evalIsLoading, trainButtonIsLoading) {
+    evalIsLoading(false);
+    trainButtonIsLoading(false);
     resultSetter({...newResult});
 }

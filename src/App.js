@@ -2,7 +2,7 @@ import './App.css';
 
 // Local Imports
 import {
-  NNVisNavbar
+  NNVis
 } from './widgets/Navbars';
 
 
@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      <NNVisNavbar />
+      <NNVis />
     </div>
   );
 }

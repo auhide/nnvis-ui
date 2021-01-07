@@ -24,7 +24,7 @@ const style = {
     }
 }
 
-export function NNVisNavbar() {
+export function NNVis() {
     const [architecture, setArchitecture] = useState({
         1: 2,
         2: 3,
@@ -54,6 +54,7 @@ export function NNVisNavbar() {
 
     // Loaders
     const [evalIsLoading, setEvalIsLoading] = useState(null);
+    const [trainButton, trainButtonSetter] = useState(null);
 
     return (
         <Router>
@@ -70,7 +71,8 @@ export function NNVisNavbar() {
                                 architecture={architecture} setter={setArchitecture} 
                                 params={params} hsetter={setParams} 
                                 result={evaluationResult} rsetter={setEvaluationResult}
-                                evalLoad={evalIsLoading} evalLoadSetter={setEvalIsLoading} /></Route>
+                                evalLoad={evalIsLoading} evalLoadSetter={setEvalIsLoading}
+                                trainButton={trainButton} trainButtonSetter={trainButtonSetter} /></Route>
                 {/* <Route path = "/datasets" component={ArchitectureComponents}></Route>
                 <Route path = "/conv" component={ArchitectureComponents}></Route> */}
             </Switch>

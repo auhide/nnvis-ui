@@ -1,5 +1,6 @@
-import { resultIsValid } from '../validators/ResultValidators'
+import { evaluationResultIsValid } from '../validators/ResultValidators'
 import evalSpinner from '../spinners/eval-spinner.gif'
+import { JellyfishSpinner } from "react-spinners-kit";
 
 
 export function Evaluations(props) {
@@ -16,7 +17,10 @@ export function Evaluations(props) {
         return (
             <>
                 <h1 className="mainText">Evaluation</h1>
-                <img style={{width: 60, height: 60}}src={evalSpinner} alt="Loading..." />
+                <br />
+                <br />
+                <br />
+                <center><JellyfishSpinner size={200} color="#212226"/></center>
             </>
         );
     } else {
@@ -31,7 +35,7 @@ export function Evaluations(props) {
 
 function Accuracy(props) {
     
-    if (resultIsValid(props.result)) {
+    if (evaluationResultIsValid(props.result)) {
         return (
             <h1>Accuracy: {props.result["Data"]["Accuracy"]}</h1>
             )

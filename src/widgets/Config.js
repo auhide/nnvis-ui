@@ -13,6 +13,7 @@ export function ArchitectureComponents(props) {
         <SendArchitectureButton architecture={props.architecture} params={props.params} 
                                 rsetter={props.rsetter} 
                                 evalLoad={props.evalLoad} evalLoadSetter={props.evalLoadSetter}
+                                isTraining={props.trainButton} trainButtonSetter={props.trainButtonSetter}
                                 text="Train Network" />
         <br />
         <DrawGrids architecture={props.architecture} setter={props.setter} 

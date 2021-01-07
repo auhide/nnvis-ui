@@ -1,5 +1,5 @@
 
-export function resultIsValid(resultJSON) {
+export function evaluationResultIsValid(resultJSON) {
     
     if (Object.entries(resultJSON).length) {
         
