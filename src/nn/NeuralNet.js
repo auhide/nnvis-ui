@@ -57,7 +57,7 @@ export function Network(props) {
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 600 600">
         {drawLayers(props.architecture, props.isLoading)}
-        {drawSynapses()}
+        {drawSynapses(props.isLoading)}
       </motion.svg>
 
       {drawButtons(props.architecture, props.setter)}
@@ -195,7 +195,7 @@ function buttonCallback(architecture, setter, layer, func) {
 }
 
 
-export function drawSynapses() {
+export function drawSynapses(isLoading) {
   let lines = [];
   let lastLayerId = Math.max(...Object.keys(nnData));
   
@@ -205,7 +205,7 @@ export function drawSynapses() {
 
       for (let neuron in nnData[layer]){
         lines.push(
-          ...singleNeuronSynapses(layer, neuron)
+          ...singleNeuronSynapses(layer, neuron, isLoading)
         );
       }
 
@@ -217,7 +217,7 @@ export function drawSynapses() {
 }
 
 
-export function singleNeuronSynapses(layer, neuron) {
+export function singleNeuronSynapses(layer, neuron, isLoading) {
   let synapses = [];
   let layerInt = parseInt(layer);
   let nextLayer = layerInt + 1;
@@ -230,7 +230,8 @@ export function singleNeuronSynapses(layer, neuron) {
     synapses.push(
       getSynapseStyle(
         nnData[layer][neuron][0], nnData[layer][neuron][1],
-        nnData[nextLayer][nextLayerNeuron][0], nnData[nextLayer][nextLayerNeuron][1]
+        nnData[nextLayer][nextLayerNeuron][0], nnData[nextLayer][nextLayerNeuron][1],
+        isLoading
       )
     );
   }

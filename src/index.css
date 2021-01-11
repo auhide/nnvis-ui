@@ -34,3 +34,7 @@ code {
   maxWidth: '30px';
   maxHeight: '40px';
 }
+
+.synapse {
+  stroke: linear-gradient(to right, red , yellow);;
+}
