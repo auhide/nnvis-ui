@@ -55,7 +55,10 @@ export function DrawGrids(props) {
             <Grid item xs={6} >
               <Grid container justify="center">
                   <Paper className={classes.paperArch}>
-                    <Network architecture={props.architecture} setter={props.setter} />
+                    <Network 
+                    architecture={props.architecture} setter={props.setter} 
+                    isLoading={props.evalLoad}
+                    />
                   </Paper>
               </Grid>
             </Grid>

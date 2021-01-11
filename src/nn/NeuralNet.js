@@ -1,20 +1,18 @@
-import { 
-  Stage, 
-  Layer, 
-} from 'react-konva';
 
 import {
   getIncrementalButton
 } from '../widgets/Buttons';
 
 import {
-  getNeuronStyle,
+  GetNeuronStyle,
   getSynapseStyle
 } from './stylistic';
 
 import {
   LayersSlider
 } from '../widgets/Sliders'
+
+import { motion } from 'framer-motion';
 
 
 // Buttons Margins
@@ -55,12 +53,12 @@ export function Network(props) {
 
       <DrawDescriptiveData architecture={props.architecture} />
 
-      <Stage width={window.innerWidth} height={window.innerHeight}>
-        <Layer>
-          {drawLayers(props.architecture)}
-          {drawSynapses()}
-        </Layer>
-      </Stage>
+      <motion.svg
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 600 600">
+        {drawLayers(props.architecture, props.isLoading)}
+        {drawSynapses()}
+      </motion.svg>
 
       {drawButtons(props.architecture, props.setter)}
 
@@ -113,7 +111,7 @@ function scaleNN(newArchitecture) {
   layersDistance = layersScales[nLayers];
 }
 
-export function drawLayers(architecture) {
+export function drawLayers(architecture, isLoading) {
   // console.log(architecture)
   let xPos = xStartingPos;
   let neurons = [];
@@ -122,7 +120,7 @@ export function drawLayers(architecture) {
 
   for (let layerN in architecture) {
     neurons.push(
-      ...drawNeurons(layerN, architecture[layerN], xPos)
+      ...drawNeurons(layerN, architecture[layerN], xPos, isLoading)
     );
     xPos += layersDistance;
   }
@@ -131,14 +129,14 @@ export function drawLayers(architecture) {
 }
 
 
-export function drawNeurons(layerIndex, neuronsN, xPos) {
+export function drawNeurons(layerIndex, neuronsN, xPos, isLoading) {
   let neurons = [];
   let yPos = yTopNeuron;
   nnData[layerIndex] = {};
   
   for (let i = 0; i < neuronsN; i++){
     nnData[layerIndex][i] = [xPos, yPos];
-    neurons.push(getNeuronStyle(xPos, yPos));
+    neurons.push(<GetNeuronStyle xPos={xPos} yPos={yPos} isLoading={isLoading} />);
     yPos += yNeuronDifference;
   }
 
