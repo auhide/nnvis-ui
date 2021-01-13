@@ -7,7 +7,9 @@ import {
     YAxis, 
     VerticalGridLines, 
     HorizontalGridLines, 
-    LineSeries
+    LineSeries,
+    HeatmapSeries, 
+    ContinuousColorLegend
 } from 'react-vis';
 
 
@@ -42,12 +44,62 @@ export function Evaluations(props) {
                 <Divider />
                 <br />
                 <Charts result={props.result} />
-                <br />
-                <br />
-                <Divider />
             </>
         )
     }
+}
+
+function Heatmap({data}) {
+    let axesValues = getAxesValues(data);
+    // data = prepareConfusionMatrix(data, axesValues.reverse());
+
+    // return (
+    //     <h1>{JSON.stringify(data)}</h1>
+    // );
+
+    return (
+        <>
+            <XYPlot width={200} height={200}>
+                <XAxis tickValues={axesValues} tickFormat={ v => Math.floor(v) } />
+                <XAxis orientation="left" tickValues={axesValues} tickFormat={ v => Math.floor(v) } />
+                <HeatmapSeries 
+                    colorRange={["black", "gray"]}
+                    data={
+                        data
+                    } />
+            </XYPlot>
+            <ContinuousColorLegend
+                width={100}
+                startColor="black"
+                endColor="gray"
+            />
+            <span style={{ fontSize: 12 }}>
+                <small style={{ position: "absolute", marginTop: -20, marginLeft: -50 }} >LOW</small>
+                <small style={{ position: "absolute", marginTop: -20, marginLeft: 25 }}>HIGH</small>
+            </span>
+        </>
+    );
+}
+
+function prepareConfusionMatrix(data, newYs) {
+    let currYIndex = 0;
+
+    for (let i in data) {
+        data[i].y = newYs[currYIndex];
+        currYIndex++;
+    }
+
+    return data;
+}
+
+function getAxesValues(data) {
+    let axisValues = [];
+
+    for (let i in data) {
+        axisValues.push(data[i].y);
+    }
+
+    return axisValues;
 }
 
 function TrainChart({data}) {
@@ -73,8 +125,17 @@ function Charts(props) {
     if (evaluationResultIsValid(props.result)) {
         return (
             <>
-                <center><TrainChart data={props.result["Data"]["EpochsAccuracy"]} /></center>
                 <small class="mainText" style={{ margin: 0 }}><i>Training Accuracy</i></small>
+                <center><TrainChart data={props.result["Data"]["EpochsAccuracy"]} /></center>
+                <br />
+                <br />
+                <Divider />
+                <br />
+                <small class="mainText" style={{ margin: 0 }}><i>Confusion Matrix</i></small>
+                <center><Heatmap data={props.result["Data"]["ConfusionMatrix"]} /></center>
+                <br />
+                <br />
+                <Divider />
             </>
         );
     } else {
