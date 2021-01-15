@@ -12,6 +12,8 @@ import {
     ContinuousColorLegend
 } from 'react-vis';
 
+import Popup, { evaluationText } from './Popups';
+
 
 let greyColor = "#212226";
 
@@ -19,7 +21,7 @@ export function Evaluations(props) {
     if (props.isLoading == null) {
         return( 
             <>
-                <h1 className="mainText">Evaluation</h1>
+                <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
                 <p>Click <b><i>TRAIN NETWORK</i></b> to Evaluate</p>
             </>
         )
@@ -28,7 +30,7 @@ export function Evaluations(props) {
     if (props.isLoading) {
         return (
             <>
-                <h1 className="mainText">Evaluation</h1>
+                <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
                 <br />
                 <br />
                 <br />
@@ -38,7 +40,7 @@ export function Evaluations(props) {
     } else {
         return (
             <>
-                <h1 className="mainText">Evaluation</h1>
+                <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
                 <Divider />
                 <Accuracy result={props.result} />
                 <Divider />

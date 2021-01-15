@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Popup, { hyperparametersText } from './Popups';
 
 
 
@@ -246,7 +247,7 @@ export function Hyperparameters(props) {
         <Grid container className={gridStyles.root} spacing={1}>
             <Grid item xs={12}>
                 <Grid container justify="center">
-                    <h1 className="mainText">Hyperparameters</h1>
+                    <h1 className="mainText">Hyperparameters<Popup text={hyperparametersText} /></h1>
                 </Grid>
             </Grid>
 
