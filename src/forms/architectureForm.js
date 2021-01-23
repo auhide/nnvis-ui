@@ -66,7 +66,8 @@ function prepareArchitectureRequest(architecture, hyperparams) {
 
     // Adding Hyperparameters
     request.optimization = hyperparams.optimization;
-    request.hyperparameters = hyperparams.hyperparameters
+    request.hyperparameters = hyperparams.hyperparameters;
+    request.dataset = "iris";
 
     return request
 }

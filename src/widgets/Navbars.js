@@ -34,21 +34,20 @@ export function NNVis() {
         6: 0
       });
     
-      const [params, setParams] = useState({
+    const [params, setParams] = useState({
         "optimization": "sgd",
         "hyperparameters": {
-          "epochs": 1,
-          "learning_rate": 0.1,
-          "activation": "sigm",
-          "batch": 5,
-          "random": 0,
-          
-          "momentum": 0.1,
-          "epsilon": 0.01,
-          "beta1": 0.9,
-          "beta2": 0.999
+            "epochs": 1,
+            "learning_rate": 0.1,
+            "activation": "sigm",
+            "batch": 5,
+            "random": 0,
+            "momentum": 0.1,
+            "epsilon": 0.01,
+            "beta1": 0.9,
+            "beta2": 0.999
         }
-      })
+    })
 
     const [evaluationResult, setEvaluationResult] = useState({});
 
