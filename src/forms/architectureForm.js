@@ -4,18 +4,23 @@ import {
     CircularProgress,
     LinearProgress
 } from '@material-ui/core';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 
-export function SendArchitectureButton(props) {
+export function SendArchitectureButton({ text }) {
+    // Architecture Management
     const architecture = useSelector(state => state.architecture);
     const hyperparams = useSelector(state => state.params);
     
-    if (!props.isTraining) {
+    // Result Management
+    const dispatchResult = useDispatch();
+    const isEvaluating = useSelector(state => state.isEvaluating);
+    
+    if (!isEvaluating) {
 
         // Returning a normal button
         return (
-                <div>
+            <div>
                 <br />
                 <Button
                     variant="outlined"
@@ -23,10 +28,9 @@ export function SendArchitectureButton(props) {
                     onClick={() => sendArchitecture(
                                         architecture, 
                                         hyperparams,
-                                        props.rsetter,
-                                        props.evalLoadSetter,
-                                        props.trainButtonSetter)}>
-                    <p className="mainText"><b>{props.text}</b></p>
+                                        dispatchResult
+                    )}>
+                    <p className="mainText"><b>{text}</b></p>
                 </Button>
                 <br />
             </div>
@@ -37,7 +41,7 @@ export function SendArchitectureButton(props) {
         // Returning a disabled button with a spinner
         return (
             <div>
-            <br />
+                <br />
                 <Button
                     variant="outlined"
                     size="small"
@@ -45,9 +49,8 @@ export function SendArchitectureButton(props) {
                     onClick={() => sendArchitecture(
                                         architecture, 
                                         hyperparams,
-                                        props.rsetter,
-                                        props.evalLoadSetter,
-                                        props.trainButtonSetter)}>
+                                        dispatchResult
+                    )}>
                     <CircularProgress size={20} color="#212226" />
                     <p className="mainText" style={{marginLeft: 5}}><b>Training...</b></p>
                 </Button>
@@ -76,19 +79,19 @@ function prepareArchitectureRequest(architecture, hyperparams) {
     return request
 }
 
-function sendArchitecture(architecture, hyperparams, resultSetter, evalIsLoading, trainButtonIsLoading) {
+function sendArchitecture(architecture, hyperparams, dispatcher) {
     let preparedRequest = prepareArchitectureRequest(architecture, hyperparams);
-
-    evalIsLoading(true);
-    trainButtonIsLoading(true);
+    
+    // Setting the Evaluation flag to `true`
+    dispatcher({ type: "IS_EVALUATING", isEvaluating: true });
     axios
         .post("http://localhost:5000/architecture", preparedRequest)
-        .then(res => updateEvaluationResult(res.data, resultSetter, evalIsLoading, trainButtonIsLoading))
+        .then(res => updateEvaluationResult(res.data, dispatcher))
         .catch(err => console.log(err));
 }
 
-function updateEvaluationResult(newResult, resultSetter, evalIsLoading, trainButtonIsLoading) {
-    evalIsLoading(false);
-    trainButtonIsLoading(false);
-    resultSetter({...newResult});
+function updateEvaluationResult(newResult, dispatcher) {
+    // Setting the flag for Evaluation to `false` and updating the result.
+    dispatcher({ type: "IS_EVALUATING", isEvaluating: false });
+    dispatcher({ type: "UPDATE_RESULT", result: { ...newResult } });
 }

@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { 
     ArchitectureComponents, 
     DatasetsComponents 
-} from './Config';
+} from './widgets/Config';
 
 const style = {
     navbar: {
@@ -28,26 +28,6 @@ const style = {
 }
 
 export function NNVis() {
-    const [params, setParams] = useState({
-        "optimization": "sgd",
-        "hyperparameters": {
-            "epochs": 1,
-            "learning_rate": 0.1,
-            "activation": "sigm",
-            "batch": 5,
-            "random": 0,
-            "momentum": 0.1,
-            "epsilon": 0.01,
-            "beta1": 0.9,
-            "beta2": 0.999
-        }
-    })
-
-    const [evaluationResult, setEvaluationResult] = useState({});
-
-    // Loaders
-    const [evalIsLoading, setEvalIsLoading] = useState(null);
-    const [trainButton, trainButtonSetter] = useState(null);
 
     return (
         <Router>
@@ -60,22 +40,16 @@ export function NNVis() {
             </Toolbar>
 
             <Switch> 
+
                 <Route path = "/" exact>
-                    <ArchitectureComponents 
-                                params={params} hsetter={setParams} 
-                                result={evaluationResult} rsetter={setEvaluationResult}
-                                evalLoad={evalIsLoading} evalLoadSetter={setEvalIsLoading}
-                                trainButton={trainButton} trainButtonSetter={trainButtonSetter} 
-                    />
+                    <ArchitectureComponents />
                 </Route>
+
                 <Route path="/datasets" exact>
                     <DatasetsComponents />
                 </Route>
+            
             </Switch>
         </Router>
-    // <ArchitectureComponents 
-    //                             architecture={architecture} setter={setArchitecture} 
-    //                             params={params} hsetter={setParams} />
-
-    )
+    );
 }

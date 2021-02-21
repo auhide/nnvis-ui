@@ -9,24 +9,18 @@ import {
 } from './Grids';
 
 
-export function ArchitectureComponents(props) {
+export function ArchitectureComponents({}) {
     return (
       <>
         <br />
-        <SendArchitectureButton params={props.params} 
-                                rsetter={props.rsetter} 
-                                evalLoad={props.evalLoad} evalLoadSetter={props.evalLoadSetter}
-                                isTraining={props.trainButton} trainButtonSetter={props.trainButtonSetter}
-                                text="Train Network" />
+        <SendArchitectureButton text="Train Network" />
         <br />
-        <DrawGrids params={props.params} hsetter={props.hsetter}
-                   result={props.result} rsetter={props.rsetter}
-                   evalLoad={props.evalLoad} />
+        <DrawGrids />
     </>
   )
 }
 
-export function DatasetsComponents(props) {
+export function DatasetsComponents({}) {
     return (
         <>
             <Datasets />

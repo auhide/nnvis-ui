@@ -40,10 +40,13 @@ let layersScales = {
 
 let nnData = {};
 
-export function Network(props) {
+export function Network({}) {
   // Using Redux's useSelector and useDispatch to manage the architecture.
   const architecture = useSelector(state => state.architecture);
   const dispatch = useDispatch();
+
+  // A Flag for when the NeuralNetwork is Evaluating a Model
+  const isEvaluating = useSelector(state => state.isEvaluating);
 
   return (
     <div className="network">
@@ -59,8 +62,8 @@ export function Network(props) {
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 600 600"
       >
-        <DrawNeurons architecture={architecture} isLoading={props.isLoading} />
-        <DrawSynapses isLoading={props.isLoading} />
+        <DrawNeurons architecture={architecture} isLoading={isEvaluating} />
+        <DrawSynapses isLoading={isEvaluating} />
       </motion.svg>
       
       <DrawButtons architecture={architecture} dispatch={dispatch}/>

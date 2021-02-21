@@ -47,7 +47,7 @@ export const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function DrawGrids(props) {
+export function DrawGrids({}) {
     const classes = useStyles();
   
     return (
@@ -55,7 +55,7 @@ export function DrawGrids(props) {
             <Grid item xs={3} >
               <Grid container justify="center">
                   <Paper className={classes.hyperparamsPaperOptions}>
-                    <Hyperparameters params={props.params} hsetter={props.hsetter} />
+                    <Hyperparameters />
                   </Paper>
               </Grid>
             </Grid>
@@ -63,9 +63,7 @@ export function DrawGrids(props) {
             <Grid item xs={6} >
               <Grid container justify="center">
                   <Paper className={classes.paperArch}>
-                    <Network
-                      isLoading={props.evalLoad}
-                    />
+                    <Network />
                   </Paper>
               </Grid>
             </Grid>
@@ -73,7 +71,7 @@ export function DrawGrids(props) {
             <Grid item xs={3} >
               <Grid container justify="center">
                   <Paper className={classes.evaluationsPaperOptions}>
-                    <Evaluations result={props.result} isLoading={props.evalLoad} />
+                    <Evaluations />
                   </Paper>
               </Grid>
             </Grid>

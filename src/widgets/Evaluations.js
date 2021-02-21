@@ -11,14 +11,17 @@ import {
     HeatmapSeries, 
     ContinuousColorLegend
 } from 'react-vis';
-
 import Popup, { evaluationText } from './Popups';
+import { useSelector } from 'react-redux';
 
 
 let greyColor = "#212226";
 
-export function Evaluations(props) {
-    if (props.isLoading == null) {
+export function Evaluations({}) {
+    const result = useSelector(state => state.evaluationResult);
+    const isEvaluating = useSelector(state => state.isEvaluating);
+
+    if (isEvaluating == null) {
         return( 
             <>
                 <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
@@ -27,7 +30,7 @@ export function Evaluations(props) {
         )
     }
     
-    if (props.isLoading) {
+    if (isEvaluating) {
         return (
             <>
                 <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
@@ -42,10 +45,10 @@ export function Evaluations(props) {
             <>
                 <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
                 <Divider />
-                <Accuracy result={props.result} />
+                <Accuracy result={result} />
                 <Divider />
                 <br />
-                <Charts result={props.result} />
+                <Charts result={result} />
             </>
         )
     }
@@ -53,11 +56,6 @@ export function Evaluations(props) {
 
 function Heatmap({data}) {
     let axesValues = getAxesValues(data);
-    // data = prepareConfusionMatrix(data, axesValues.reverse());
-
-    // return (
-    //     <h1>{JSON.stringify(data)}</h1>
-    // );
 
     return (
         <>
@@ -83,16 +81,6 @@ function Heatmap({data}) {
     );
 }
 
-function prepareConfusionMatrix(data, newYs) {
-    let currYIndex = 0;
-
-    for (let i in data) {
-        data[i].y = newYs[currYIndex];
-        currYIndex++;
-    }
-
-    return data;
-}
 
 function getAxesValues(data) {
     let axisValues = [];
@@ -103,6 +91,7 @@ function getAxesValues(data) {
 
     return axisValues;
 }
+
 
 function TrainChart({data}) {
     data = prepareForChart(data);
@@ -123,18 +112,20 @@ function TrainChart({data}) {
       
 }
 
-function Charts(props) {
-    if (evaluationResultIsValid(props.result)) {
+
+function Charts({ result }) {
+
+    if (evaluationResultIsValid(result)) {
         return (
             <>
                 <small class="mainText" style={{ margin: 0 }}><i>Training Accuracy</i></small>
-                <center><TrainChart data={props.result["Data"]["EpochsAccuracy"]} /></center>
+                <center><TrainChart data={result["Data"]["EpochsAccuracy"]} /></center>
                 <br />
                 <br />
                 <Divider />
                 <br />
                 <small class="mainText" style={{ margin: 0 }}><i>Confusion Matrix</i></small>
-                <center><Heatmap data={props.result["Data"]["ConfusionMatrix"]} /></center>
+                <center><Heatmap data={result["Data"]["ConfusionMatrix"]} /></center>
                 <br />
                 <br />
                 <Divider />
@@ -144,6 +135,7 @@ function Charts(props) {
         return <></>
     }
 }
+
 
 function prepareForChart(rawData) {
     let data = [];
@@ -156,17 +148,18 @@ function prepareForChart(rawData) {
     return data
 }
 
-function Accuracy(props) {
+
+function Accuracy({ result }) {
     
-    if (evaluationResultIsValid(props.result)) {
+    if (evaluationResultIsValid(result)) {
         return (
             <>
-                <p class="mainText">Test Accuracy: <b>{props.result["Data"]["Accuracy"]}</b></p>
+                <p class="mainText">Test Accuracy: <b>{result["Data"]["Accuracy"]}</b></p>
             </>
         )
     }
     
     return ( 
-        <p>{JSON.stringify(props.result)}</p>
+        <p>{JSON.stringify(result)}</p>
     )
 }
