@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { Toolbar } from '@material-ui/core'
 import {
     Button
 } from '@material-ui/core';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { ArchitectureComponents } from './Config';
-import { useState } from 'react';
+import { 
+    ArchitectureComponents, 
+    DatasetsComponents 
+} from './Config';
 
 const style = {
     navbar: {
@@ -25,15 +28,6 @@ const style = {
 }
 
 export function NNVis() {
-    const [architecture, setArchitecture] = useState({
-        1: 2,
-        2: 3,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0
-      });
-    
     const [params, setParams] = useState({
         "optimization": "sgd",
         "hyperparameters": {
@@ -66,14 +60,17 @@ export function NNVis() {
             </Toolbar>
 
             <Switch> 
-                <Route path = "/" exact><ArchitectureComponents 
-                                architecture={architecture} setter={setArchitecture} 
+                <Route path = "/" exact>
+                    <ArchitectureComponents 
                                 params={params} hsetter={setParams} 
                                 result={evaluationResult} rsetter={setEvaluationResult}
                                 evalLoad={evalIsLoading} evalLoadSetter={setEvalIsLoading}
-                                trainButton={trainButton} trainButtonSetter={trainButtonSetter} /></Route>
-                {/* <Route path = "/datasets" component={ArchitectureComponents}></Route>
-                <Route path = "/conv" component={ArchitectureComponents}></Route> */}
+                                trainButton={trainButton} trainButtonSetter={trainButtonSetter} 
+                    />
+                </Route>
+                <Route path="/datasets" exact>
+                    <DatasetsComponents />
+                </Route>
             </Switch>
         </Router>
     // <ArchitectureComponents 

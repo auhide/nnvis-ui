@@ -13,6 +13,7 @@ import {
 } from '../widgets/Sliders'
 
 import { motion } from 'framer-motion';
+import { useSelector, useDispatch } from "react-redux";
 
 
 // Buttons Margins
@@ -37,44 +38,46 @@ let layersScales = {
   "6": 100
 };
 
-export let nnData = {};
-let initLayersN = 2;
-
-
+let nnData = {};
 
 export function Network(props) {
+  // Using Redux's useSelector and useDispatch to manage the architecture.
+  const architecture = useSelector(state => state.architecture);
+  const dispatch = useDispatch();
+
   return (
     <div className="network">
-      <LayersSlider justify="center"
-        architecture={props.architecture} 
-        setter={props.setter} 
-        initLayersN={initLayersN}
+      <LayersSlider 
+        justify="center"
+        architecture={architecture}
+        dispatch={dispatch} 
       />
 
-      <DrawDescriptiveData architecture={props.architecture} />
+      <DrawDescriptiveData architecture={architecture} />
 
       <motion.svg
         xmlns="http://www.w3.org/2000/svg" 
-        viewBox="0 0 600 600">
-        {drawLayers(props.architecture, props.isLoading)}
-        {drawSynapses(props.isLoading)}
+        viewBox="0 0 600 600"
+      >
+        <DrawNeurons architecture={architecture} isLoading={props.isLoading} />
+        <DrawSynapses isLoading={props.isLoading} />
       </motion.svg>
-
-      {drawButtons(props.architecture, props.setter)}
+      
+      <DrawButtons architecture={architecture} dispatch={dispatch}/>
 
     </div>
   );
 }
 
-function DrawDescriptiveData(props) {
-  let lastLayer = getLastLayerNumber(props.architecture);
-  let layersCount = getArchitectureLayersNumber(props.architecture);
+function DrawDescriptiveData({ architecture }) {
+  let lastLayer = getLastLayerNumber(architecture);
+  let layersCount = getArchitectureLayersNumber(architecture);
 
   return (
     <div>
       <small className='mainText'><i>Hidden Layers: {layersCount - 1}</i></small>
       <br />
-      <small className='mainText'><i>Output Neurons: {props.architecture[lastLayer]}</i></small>
+      <small className='mainText'><i>Output Neurons: {architecture[lastLayer]}</i></small>
     </div>
   )
 }
@@ -111,8 +114,8 @@ function scaleNN(newArchitecture) {
   layersDistance = layersScales[nLayers];
 }
 
-export function drawLayers(architecture, isLoading) {
-  // console.log(architecture)
+
+export function DrawNeurons({ architecture, isLoading }) {
   let xPos = xStartingPos;
   let neurons = [];
 
@@ -120,7 +123,7 @@ export function drawLayers(architecture, isLoading) {
 
   for (let layerN in architecture) {
     neurons.push(
-      ...drawNeurons(layerN, architecture[layerN], xPos, isLoading)
+      ...getNeurons(layerN, architecture[layerN], xPos, isLoading)
     );
     xPos += layersDistance;
   }
@@ -129,7 +132,7 @@ export function drawLayers(architecture, isLoading) {
 }
 
 
-export function drawNeurons(layerIndex, neuronsN, xPos, isLoading) {
+export function getNeurons(layerIndex, neuronsN, xPos, isLoading) {
   let neurons = [];
   let yPos = yTopNeuron;
   nnData[layerIndex] = {};
@@ -144,7 +147,7 @@ export function drawNeurons(layerIndex, neuronsN, xPos, isLoading) {
 }
 
 
-export function drawButtons(architecture, setter) {
+export function DrawButtons({ architecture, dispatch }) {
   let buttons = [];
 
   for (let layerIndex in nnData) {
@@ -152,13 +155,13 @@ export function drawButtons(architecture, setter) {
     if (nnData[layerIndex][0]) {
       // Plus Button
       buttons.push(
-        getIncrementalButton("+", () => buttonCallback(architecture, setter, layerIndex.toString(), plusFunc), 
+        getIncrementalButton("+", () => buttonCallback(architecture, dispatch, layerIndex.toString(), plusFunc), 
         [nnData[layerIndex][0][0] + xButtonMargin, nnData[layerIndex][0][1] + yButtonMargin])
       );
 
       // Minus Button
       buttons.push(
-        getIncrementalButton("-", () => buttonCallback(architecture, setter, layerIndex.toString(), minusFunc), 
+        getIncrementalButton("-", () => buttonCallback(architecture, dispatch, layerIndex.toString(), minusFunc), 
         [nnData[layerIndex][0][0] + xButtonMargin - minusXSignMargin, nnData[layerIndex][0][1] + yButtonMargin])
       );
     }
@@ -185,17 +188,17 @@ function minusFunc(num) {
 }
 
 
-function buttonCallback(architecture, setter, layer, func) {
+function buttonCallback(architecture, dispatch, layer, func) {
   // Changing the number of neurons of a certain layer with `func`
   let newArchitecture = architecture;
   newArchitecture[layer] = func(architecture[layer]);
   let mergedArchitecture = Object.assign(architecture, newArchitecture);
 
-  setter({...mergedArchitecture});
+  dispatch({type: "UPDATE_LAYERS", architecture: { ...mergedArchitecture }})
 }
 
 
-export function drawSynapses(isLoading) {
+export function DrawSynapses({ isLoading }) {
   let lines = [];
   let lastLayerId = Math.max(...Object.keys(nnData));
   
@@ -223,8 +226,6 @@ export function singleNeuronSynapses(layer, neuron, isLoading) {
   let nextLayer = layerInt + 1;
   nextLayer = nextLayer.toString();
 
-  // console.log("Layer: " + layer);
-  // console.log(nnData[layer][neuron][1]);
   for (let nextLayerNeuron in nnData[nextLayer]){
 
     synapses.push(

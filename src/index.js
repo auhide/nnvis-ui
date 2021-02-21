@@ -5,6 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import WebFont from 'webfontloader';
 
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+import rootReducer from "./reducers/rootReducer";
+
+const store = createStore(rootReducer);
+
 WebFont.load({
   google: {
     families: ['Jura:300', 'sans-serif']
@@ -12,7 +19,9 @@ WebFont.load({
 });
 
 ReactDOM.render(
-    <App />,
+    <Provider store={store} >
+      <App />
+    </Provider>,
   document.getElementById('root')
 );
 

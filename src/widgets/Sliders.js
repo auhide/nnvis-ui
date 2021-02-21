@@ -38,8 +38,8 @@ const marks = [
 ];
 
 
-let updateLayers = (event, value, architecture, setter) => {
-    let newArchitecture = architecture;
+let updateLayers = (event, value, architecture, dispatch) => {
+    const newArchitecture = architecture;
 
     for (let layersN in architecture) {
         
@@ -51,11 +51,12 @@ let updateLayers = (event, value, architecture, setter) => {
 
     }
 
-    setter({...newArchitecture});
+    dispatch({type: "UPDATE_LAYERS", architecture: { ...newArchitecture }})
 }
 
 
-export function LayersSlider(props) {
+export function LayersSlider({ architecture, dispatch }) {
+
     return (
         <Grid
             container
@@ -64,7 +65,7 @@ export function LayersSlider(props) {
             <div>
                 <CustomSlider
                     defaultValue={2}
-                    onChange={(e, value) => updateLayers(e, value, props.architecture, props.setter)}
+                    onChange={(e, value) => updateLayers(e, value, architecture, dispatch)}
                     aria-labelledby="discrete-slider-small-steps"
                     step={1}
                     min={2}

@@ -37,6 +37,14 @@ export const useStyles = makeStyles((theme) => ({
       position: "absolute",
       backgroundColor: paperColor
   },
+  datasetsPaperOptions: {
+    height: 300,
+    width: 300,
+    alignItems: "center",
+    justify: "center",
+    position: "absolute",
+    backgroundColor: paperColor
+  }
 }));
 
 export function DrawGrids(props) {
@@ -55,9 +63,8 @@ export function DrawGrids(props) {
             <Grid item xs={6} >
               <Grid container justify="center">
                   <Paper className={classes.paperArch}>
-                    <Network 
-                    architecture={props.architecture} setter={props.setter} 
-                    isLoading={props.evalLoad}
+                    <Network
+                      isLoading={props.evalLoad}
                     />
                   </Paper>
               </Grid>

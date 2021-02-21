@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Popup, { hyperparametersText } from './Popups';
 
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const gridStyles = makeStyles((theme) => ({
@@ -242,6 +243,9 @@ let optimizers = [
 ];
 
 export function Hyperparameters(props) {
+    // Accessing the Hyperparameters in the Redux State Storage
+    const params = useSelector(state => state.params);
+    const dispatch = useDispatch();
 
     return (
         <Grid container className={gridStyles.root} spacing={1}>
@@ -252,38 +256,38 @@ export function Hyperparameters(props) {
             </Grid>
 
             {/* First Row */}
-            <Optimizer params={props.params} hsetter={props.hsetter} />
-            <Epochs params={props.params} hsetter={props.hsetter} />
+            <Optimizer params={params} dispatch={dispatch} />
+            <Epochs params={params} dispatch={dispatch} />
 
             <br />
             {/* Second Row */}
-            <LearningRate params={props.params} hsetter={props.hsetter} />
-            <Activation params={props.params} hsetter={props.hsetter} />
+            <LearningRate params={params} dispatch={dispatch} />
+            <Activation params={params} dispatch={dispatch} />
 
             <br />
             {/* Third Row */}
-            <Batches params={props.params} hsetter={props.hsetter} />
-            <RandomState params={props.params} hsetter={props.hsetter} />
+            <Batches params={params} dispatch={dispatch} />
+            <RandomState params={params} dispatch={dispatch} />
             
             {/* Fourth Row */}
-            <Momentum params={props.params} hsetter={props.hsetter} />
-            <Epsilon params={props.params} hsetter={props.hsetter} />
+            <Momentum params={params} dispatch={dispatch} />
+            <Epsilon params={params} dispatch={dispatch} />
 
             {/* Fifth Row */}
-            <Beta1 params={props.params} hsetter={props.hsetter} />
-            <Beta2 params={props.params} hsetter={props.hsetter} />
+            <Beta1 params={params} dispatch={dispatch} />
+            <Beta2 params={params} dispatch={dispatch} />
 
         </Grid>
     )
 }
 
-function Beta2(props) {
+function Beta2({ params, dispatch }) {
     const handleBeta2Change = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.beta2 = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }});
     };
-    if (props.params.optimization === "adam") {
+    if (params.optimization === "adam") {
         return (
             <Grid item xs={6}>
                 <Grid container justify="center">
@@ -291,7 +295,7 @@ function Beta2(props) {
                     <TextField
                         id="select-beta2"
                         select
-                        value={props.params.hyperparameters.beta2}
+                        value={params.hyperparameters.beta2}
                         onChange={handleBeta2Change}
                         helperText="Beta 2"
                     >
@@ -309,14 +313,14 @@ function Beta2(props) {
     }
 }
 
-function Beta1(props) {
+function Beta1({ params, dispatch }) {
     const handleBeta1Change = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.beta1 = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
-    if (props.params.optimization === "adam") {
+    if (params.optimization === "adam") {
         return (
             <Grid item xs={6}>
                 <Grid container justify="center">
@@ -324,7 +328,7 @@ function Beta1(props) {
                     <TextField
                         id="select-beta1"
                         select
-                        value={props.params.hyperparameters.beta1}
+                        value={params.hyperparameters.beta1}
                         onChange={handleBeta1Change}
                         helperText="Beta 1"
                     >
@@ -342,13 +346,13 @@ function Beta1(props) {
     }
 }
 
-function Epsilon(props) {
+function Epsilon({ params, dispatch }) {
     const handleEpsilonChange = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.epsilon = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
-    if (props.params.optimization === "adam" || props.params.optimization === "adagrad") {
+    if (params.optimization === "adam" || params.optimization === "adagrad") {
         return (
             
             <Grid item xs={6}>
@@ -357,7 +361,7 @@ function Epsilon(props) {
                     <TextField
                         id="select-epsilon"
                         select
-                        value={props.params.hyperparameters.epsilon}
+                        value={params.hyperparameters.epsilon}
                         onChange={handleEpsilonChange}
                         helperText="Epsilon"
                     >
@@ -375,14 +379,14 @@ function Epsilon(props) {
     }
 }
 
-function Momentum(props) {
+function Momentum({ params, dispatch }) {
     const handleMomentumChange = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.momentum = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
-    if (props.params.optimization === "sgdm") {
+    if (params.optimization === "sgdm") {
         return (
             
             <Grid item xs={6}>
@@ -391,7 +395,7 @@ function Momentum(props) {
                     <TextField
                         id="select-momentum"
                         select
-                        value={props.params.hyperparameters.momentum}
+                        value={params.hyperparameters.momentum}
                         onChange={handleMomentumChange}
                         helperText="Momentum"
                     >
@@ -409,11 +413,11 @@ function Momentum(props) {
     }
 }
 
-function Batches(props) {
+function Batches({ params, dispatch }) {
     const handleBatchesChange = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.batch = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
     return (
@@ -424,7 +428,7 @@ function Batches(props) {
                 <TextField
                     id="select-batches"
                     select
-                    value={props.params.hyperparameters.batch}
+                    value={params.hyperparameters.batch}
                     onChange={handleBatchesChange}
                     helperText="Batch Size"
                 >
@@ -439,11 +443,11 @@ function Batches(props) {
     )
 }
 
-function RandomState(props) {
+function RandomState({ params, dispatch }) {
     const handleRandomStatesChange = (event, value) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.random = value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
     return (
@@ -468,11 +472,11 @@ function RandomState(props) {
     )
 }
 
-function Activation(props) {
+function Activation({ params, dispatch }) {
     const handleActivationsChange = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.activation = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
     return (
@@ -483,7 +487,7 @@ function Activation(props) {
                 <TextField
                     id="select-activation"
                     select
-                    value={props.params.hyperparameters.activation}
+                    value={params.hyperparameters.activation}
                     onChange={handleActivationsChange}
                     helperText="Activation"
                 >
@@ -498,11 +502,11 @@ function Activation(props) {
     )
 }
 
-function LearningRate(props) {
+function LearningRate({ params, dispatch }) {
     const handleLearningRateChange = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.learning_rate = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
     return (
@@ -513,7 +517,7 @@ function LearningRate(props) {
                 <TextField
                     id="select-learningrate"
                     select
-                    value={props.params.hyperparameters.learning_rate}
+                    value={params.hyperparameters.learning_rate}
                     onChange={handleLearningRateChange}
                     helperText="Learning Rate"
                 >
@@ -528,11 +532,11 @@ function LearningRate(props) {
     )
 }
 
-function Epochs(props) {
+function Epochs({ params, dispatch }) {
     const handleEpochsChange = (event, value) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.hyperparameters.epochs = value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
     return (
@@ -556,11 +560,11 @@ function Epochs(props) {
     )
 }
 
-function Optimizer(props) {
+function Optimizer({ params, dispatch }) {
     const handleOptimizerChange = (event) => {
-        let newHP = props.params;
+        let newHP = params;
         newHP.optimization = event.target.value;
-        props.hsetter({...newHP});
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
     };
 
     return (
@@ -571,7 +575,7 @@ function Optimizer(props) {
                 <TextField
                     id="select-optimization"
                     select
-                    value={props.params.optimization}
+                    value={params.optimization}
                     onChange={handleOptimizerChange}
                     helperText="Optimization"
                 >

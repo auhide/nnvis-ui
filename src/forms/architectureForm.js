@@ -4,9 +4,13 @@ import {
     CircularProgress,
     LinearProgress
 } from '@material-ui/core';
+import { useSelector } from "react-redux";
 
 
 export function SendArchitectureButton(props) {
+    const architecture = useSelector(state => state.architecture);
+    const hyperparams = useSelector(state => state.params);
+    
     if (!props.isTraining) {
 
         // Returning a normal button
@@ -17,8 +21,8 @@ export function SendArchitectureButton(props) {
                     variant="outlined"
                     size="small"
                     onClick={() => sendArchitecture(
-                                        props.architecture, 
-                                        props.params,
+                                        architecture, 
+                                        hyperparams,
                                         props.rsetter,
                                         props.evalLoadSetter,
                                         props.trainButtonSetter)}>
@@ -39,8 +43,8 @@ export function SendArchitectureButton(props) {
                     size="small"
                     disabled={true}
                     onClick={() => sendArchitecture(
-                                        props.architecture, 
-                                        props.params,
+                                        architecture, 
+                                        hyperparams,
                                         props.rsetter,
                                         props.evalLoadSetter,
                                         props.trainButtonSetter)}>
