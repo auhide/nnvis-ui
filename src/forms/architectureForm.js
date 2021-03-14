@@ -11,6 +11,7 @@ export function SendArchitectureButton({ text }) {
     // Architecture Management
     const architecture = useSelector(state => state.architecture);
     const hyperparams = useSelector(state => state.params);
+    const dataset = useSelector(state => state.dataset);
     
     // Result Management
     const dispatchResult = useDispatch();
@@ -28,7 +29,8 @@ export function SendArchitectureButton({ text }) {
                     onClick={() => sendArchitecture(
                                         architecture, 
                                         hyperparams,
-                                        dispatchResult
+                                        dispatchResult,
+                                        dataset
                     )}>
                     <p className="mainText"><b>{text}</b></p>
                 </Button>
@@ -49,7 +51,8 @@ export function SendArchitectureButton({ text }) {
                     onClick={() => sendArchitecture(
                                         architecture, 
                                         hyperparams,
-                                        dispatchResult
+                                        dispatchResult,
+                                        dataset
                     )}>
                     <CircularProgress size={20} color="#212226" />
                     <p className="mainText" style={{marginLeft: 5}}><b>Training...</b></p>
@@ -60,7 +63,8 @@ export function SendArchitectureButton({ text }) {
     }
 }
 
-function prepareArchitectureRequest(architecture, hyperparams) {
+function prepareArchitectureRequest(architecture, hyperparams, dataset) {
+    
     let request = {};
     request.architecture = {};
 
@@ -74,13 +78,13 @@ function prepareArchitectureRequest(architecture, hyperparams) {
     // Adding Hyperparameters
     request.optimization = hyperparams.optimization;
     request.hyperparameters = hyperparams.hyperparameters;
-    request.dataset = "iris";
+    request.dataset = dataset;
 
     return request
 }
 
-function sendArchitecture(architecture, hyperparams, dispatcher) {
-    let preparedRequest = prepareArchitectureRequest(architecture, hyperparams);
+function sendArchitecture(architecture, hyperparams, dispatcher, dataset) {
+    let preparedRequest = prepareArchitectureRequest(architecture, hyperparams, dataset);
     
     // Setting the Evaluation flag to `true`
     dispatcher({ type: "IS_EVALUATING", isEvaluating: true });

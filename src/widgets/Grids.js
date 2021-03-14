@@ -39,7 +39,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   datasetsPaperOptions: {
     height: 300,
-    width: 300,
+    width: 500,
     alignItems: "center",
     justify: "center",
     position: "absolute",

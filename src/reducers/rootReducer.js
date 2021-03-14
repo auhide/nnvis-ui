@@ -2,6 +2,7 @@ const UPDATE_LAYERS = "UPDATE_LAYERS";
 const UPDATE_HPARAMS = "UPDATE_HPARAMS"
 const UPDATE_RESULT = "UPDATE_RESULT";
 const IS_EVALUATING = "IS_EVALUATING";
+const UPDATE_DATASET = "UPDATE_DATASET";
 
 
 // A Global State used for the Neural Network Visualization
@@ -28,6 +29,7 @@ const initialState = {
             beta2: 0.999
         }
     },
+    dataset: "iris",
     evaluationResult: {},
     isEvaluating: null,
 
@@ -50,6 +52,10 @@ export default function rootReducer(state=initialState, action) {
         
         case IS_EVALUATING:
             state.isEvaluating = action.isEvaluating;
+            return state;
+
+        case UPDATE_DATASET:
+            state.dataset = action.dataset;
             return state;
 
         default:

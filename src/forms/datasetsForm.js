@@ -16,19 +16,34 @@ import {
     MarkSeriesCanvas,
     Borders
 } from 'react-vis';
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
+import { useSelector, useDispatch } from "react-redux";
+import {
+    CircularProgress
+} from '@material-ui/core';
+
 import { datasetsNamesEndpoint } from '../apiEndpoints';
 
 
+const radioButtonBorderColor = '#212226';
+
 export function Datasets(props) {
     const classes = useStyles();
+    let currDataset = useSelector(state => state.dataset);
 
     return (
         <>
-        <br />
-        <br />
+            <br />
+            <br />
             <Grid container justify="center">
                 <Paper className={classes.datasetsPaperOptions}>
-                    <SingleDataset />
+                    <SingleDataset /> 
+                </Paper>
+            </Grid>
+            <br /><br /><br />
+            <Grid container justify="center">
+                <Paper className={classes.datasetsPaperOptions}>
+                    <h1>Selected Dataset Name: {currDataset}</h1>
                 </Paper>
             </Grid>
         </>
@@ -36,9 +51,7 @@ export function Datasets(props) {
 }
 
 
-// TODO: Fix this, it is currently sending an infinite number of requests
 function SingleDataset(props) {
-    let datasetName = "iris";
     const [data, setData] = useState();
 
     useEffect(() => {
@@ -49,8 +62,32 @@ function SingleDataset(props) {
     }, [null])
 
     return (
-        <>
-            <p>Iris Dataset: {data}</p>
-        </>
+        <DatasetsRadioButtons datasetsNames={data} />
     );
+}
+
+function DatasetsRadioButtons({ datasetsNames }) {
+    const datasetDispatcher = useDispatch();
+
+    if (datasetsNames === undefined) {
+        return (
+            <div>
+                <br />
+                <CircularProgress size={20} color={radioButtonBorderColor} />
+            </div>
+        );
+    }
+    return (
+        <RadioGroup horizontal={true} group='datasetsNames' onChange={(value) => datasetDispatcher({ type: "UPDATE_DATASET", dataset: value })}>
+            {datasetsNames.map(({ presentable_name, name }) => (
+                <RadioButton 
+                    disabledColor={radioButtonBorderColor}
+                    pointColor={radioButtonBorderColor}
+                    rootColor={radioButtonBorderColor} 
+                    value={name}>
+                        <div className="mainText">{presentable_name}</div>
+                    </RadioButton>
+            ))}
+        </RadioGroup>
+    )
 }
