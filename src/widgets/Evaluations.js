@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 
 let greyColor = "#212226";
 
-export function Evaluations({}) {
+export function Evaluations() {
     const result = useSelector(state => state.evaluationResult);
     const isEvaluating = useSelector(state => state.isEvaluating);
 
@@ -93,7 +93,7 @@ function getAxesValues(data) {
 }
 
 
-function TrainChart({data}) {
+function TrainChart({ data }) {
     data = prepareForChart(data);
 
     return (

@@ -40,7 +40,7 @@ let layersScales = {
 
 let nnData = {};
 
-export function Network({}) {
+export function Network() {
   // Using Redux's useSelector and useDispatch to manage the architecture.
   const architecture = useSelector(state => state.architecture);
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
@@ -16,6 +16,7 @@ import {
     MarkSeriesCanvas,
     Borders
 } from 'react-vis';
+import { datasetsNamesEndpoint } from '../apiEndpoints';
 
 
 export function Datasets(props) {
@@ -27,36 +28,29 @@ export function Datasets(props) {
         <br />
             <Grid container justify="center">
                 <Paper className={classes.datasetsPaperOptions}>
-                    <DatasetContour />
+                    <SingleDataset />
                 </Paper>
             </Grid>
         </>
     );
 }
 
-function DatasetContour(props) {
-    return (
-        <SingleDataset />
-    );
-}
-
-function getDatasets(requestResult, data) {
-    data = requestResult;
-}
 
 // TODO: Fix this, it is currently sending an infinite number of requests
 function SingleDataset(props) {
     let datasetName = "iris";
     const [data, setData] = useState();
 
-    axios
-        .get("http://localhost:5000/datasets")
-        .then(res => setData(res.data))
-        .catch(err => console.log(err));
+    useEffect(() => {
+        axios
+            .get(datasetsNamesEndpoint)
+            .then(res => setData(res.data))
+            .catch(err => console.log(err));
+    }, [null])
 
     return (
         <>
-            <p>Iris Dataset:</p>
+            <p>Iris Dataset: {data}</p>
         </>
     );
 }

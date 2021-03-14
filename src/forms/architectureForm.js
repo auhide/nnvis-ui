@@ -1,10 +1,10 @@
 import axios from 'axios';
 import {
     Button,
-    CircularProgress,
-    LinearProgress
+    CircularProgress
 } from '@material-ui/core';
 import { useSelector, useDispatch } from "react-redux";
+import { architectureEndpoint } from "../apiEndpoints";
 
 
 export function SendArchitectureButton({ text }) {
@@ -85,7 +85,7 @@ function sendArchitecture(architecture, hyperparams, dispatcher) {
     // Setting the Evaluation flag to `true`
     dispatcher({ type: "IS_EVALUATING", isEvaluating: true });
     axios
-        .post("http://localhost:5000/architecture", preparedRequest)
+        .post(architectureEndpoint, preparedRequest)
         .then(res => updateEvaluationResult(res.data, dispatcher))
         .catch(err => console.log(err));
 }

@@ -47,7 +47,7 @@ export const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export function DrawGrids({}) {
+export function DrawGrids() {
     const classes = useStyles();
   
     return (

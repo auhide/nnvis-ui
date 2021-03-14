@@ -1,15 +1,10 @@
 
-import { useState, useEffect, triggerRender } from 'react';
-
 import { motion } from 'framer-motion';
 // Constants - Neurons
 const defaultNeuronRadius = 15;
-const neuronRadiusScale = 2;
-const neuronsColor = '#212226';
 
 // Constants - Synapses
 const defaultSynapseWidth = 4;
-const synapseWidthScale = 2;
 const synapseColor = '#212226';
 
 // Animation Delays

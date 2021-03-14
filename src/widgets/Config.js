@@ -9,7 +9,7 @@ import {
 } from './Grids';
 
 
-export function ArchitectureComponents({}) {
+export function ArchitectureComponents() {
     return (
       <>
         <br />
@@ -20,7 +20,7 @@ export function ArchitectureComponents({}) {
   )
 }
 
-export function DatasetsComponents({}) {
+export function DatasetsComponents() {
     return (
         <>
             <Datasets />
