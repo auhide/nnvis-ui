@@ -13,11 +13,11 @@ export function NNVis() {
 
     return (
         <Router>
-            <ul>
-                <li className="mainText"><Link to={'/'} >Config</Link></li>
-                <li className="mainText"><Link to={'/conv'} >Conv2D</Link></li>
-                <li className="mainText"><Link to={'/preprocess'} >Preprocess</Link></li>
-                <li className="mainText"><Link to={'/datasets'} >Data</Link></li>
+            <ul class="navbar">
+                <li className="mainText navbarTab"><Link to={'/'} ><b>Config</b></Link></li>
+                <li className="mainText navbarTab"><Link to={'/datasets'} ><b>Data</b></Link></li>
+                <li className="mainText navbarTab"><Link to={'/conv'} ><b>Conv2D</b></Link></li>
+                <li className="mainText navbarTab"><Link to={'/preprocess'} ><b>Preprocess</b></Link></li>
             </ul>
 
             <Switch> 

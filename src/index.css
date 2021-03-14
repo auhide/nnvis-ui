@@ -41,7 +41,7 @@ code {
 
 
 /* NAVBAR */
-ul {
+ul.navbar {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -49,11 +49,12 @@ ul {
   background-color: #595959;
 }
 
-li {
+li.navbarTab {
   float: left;
 }
 
 li a {
+  font-size: 85%;
   display: block;
   color: #F2F2F2;
   text-align: center;
