@@ -3,6 +3,7 @@ const UPDATE_HPARAMS = "UPDATE_HPARAMS"
 const UPDATE_RESULT = "UPDATE_RESULT";
 const IS_EVALUATING = "IS_EVALUATING";
 const UPDATE_DATASET = "UPDATE_DATASET";
+const UPDATE_PRESENTABLE_DATASET = "UPDATE_PRESENTABLE_DATASET";
 
 
 // A Global State used for the Neural Network Visualization
@@ -30,6 +31,7 @@ const initialState = {
         }
     },
     dataset: "iris",
+    presentableDataset: "Iris",
     evaluationResult: {},
     isEvaluating: null,
 
@@ -56,6 +58,10 @@ export default function rootReducer(state=initialState, action) {
 
         case UPDATE_DATASET:
             state.dataset = action.dataset;
+            return state;
+
+        case UPDATE_PRESENTABLE_DATASET:
+            state.presentableDataset = action.presentableDataset;
             return state;
 
         default:

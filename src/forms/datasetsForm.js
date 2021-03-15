@@ -22,14 +22,16 @@ import {
     CircularProgress
 } from '@material-ui/core';
 
-import { datasetsNamesEndpoint } from '../apiEndpoints';
+import { datasetsNamesEndpoint, datasetsEndpoint } from '../apiEndpoints';
 
 
 const radioButtonBorderColor = '#212226';
 
+
 export function Datasets(props) {
     const classes = useStyles();
-    let currDataset = useSelector(state => state.dataset);
+    let selectedDataset = useSelector(state => state.dataset);
+    const [datasetOptions, setDatasetOptions] = useState();
 
     return (
         <>
@@ -37,13 +39,13 @@ export function Datasets(props) {
             <br />
             <Grid container justify="center">
                 <Paper className={classes.datasetsPaperOptions}>
-                    <SingleDataset /> 
+                    <DatasetsOptions datasetOptions={datasetOptions} setDatasetOptions={setDatasetOptions} /> 
                 </Paper>
             </Grid>
             <br /><br /><br />
             <Grid container justify="center">
                 <Paper className={classes.datasetsPaperOptions}>
-                    <h1>Selected Dataset Name: {currDataset}</h1>
+                    <DatasetVisualization datasetName={selectedDataset} options={datasetOptions} />
                 </Paper>
             </Grid>
         </>
@@ -51,20 +53,20 @@ export function Datasets(props) {
 }
 
 
-function SingleDataset(props) {
-    const [data, setData] = useState();
+function DatasetsOptions({ datasetOptions, setDatasetOptions }) {
 
     useEffect(() => {
         axios
             .get(datasetsNamesEndpoint)
-            .then(res => setData(res.data))
+            .then(res => setDatasetOptions(res.data))
             .catch(err => console.log(err));
     }, [null])
 
     return (
-        <DatasetsRadioButtons datasetsNames={data} />
+        <DatasetsRadioButtons datasetsNames={datasetOptions} />
     );
 }
+
 
 function DatasetsRadioButtons({ datasetsNames }) {
     const datasetDispatcher = useDispatch();
@@ -90,4 +92,69 @@ function DatasetsRadioButtons({ datasetsNames }) {
             ))}
         </RadioGroup>
     )
+}
+
+
+function DatasetVisualization({ datasetName, options }) {
+    const [visualizationData, setVisualizationData] = useState();
+    const [visualizationIsLoading, setVisIsLoading] = useState(false);
+
+    useEffect(() => {
+        setVisIsLoading(true);
+        axios
+            .get(datasetsEndpoint + datasetName)
+            .then(res => setVisualizationData(res.data))
+            .then(set => setVisIsLoading(false))
+            .catch(err => console.log(err));
+    }, [datasetName])
+
+    // If the UI is currently sending a GET request to the NN API.
+    if (visualizationIsLoading === true) {
+        return (
+            <div align="center">
+                <p class="mainText">Dataset: <b>{getPresentableDatasetByName(datasetName)}</b></p>
+                <CircularProgress size={20} color="#212226" />
+                <p class="mainText">Dataset Information...</p>
+            </div>
+        )
+    }
+
+    return (
+        <div align="center">
+            <p class="mainText">Dataset: <b>{getPresentableDatasetByName(datasetName)}</b></p>
+            <XYPlot
+                xDomain={[-1, 1]}
+                yDomain={[-1, 1]}
+                width={400}
+                height={200}>
+                    <ContourSeries
+                        style={{
+                        stroke: '#125C77',
+                        strokeLinejoin: 'round'
+                        }}
+                        colorRange={[
+                        '#79C7E3',
+                        '#FF9833'
+                        ]}
+                        data={visualizationData}/>
+                    <MarkSeriesCanvas animation data={visualizationData} size={2.5} color={'#125C77'} />
+            </XYPlot>
+            <p class="mainText">Dataset Information...</p>
+
+        </div>
+    )
+}
+
+
+function getPresentableDatasetByName(rawName) {
+    let nameArray = rawName.split("_")
+    let capitalizedNameArray = [];
+
+    for (let i = 0; i < nameArray.length; i++) {
+        capitalizedNameArray[i] = nameArray[i].replace(/^\w/, (c) => c.toUpperCase());
+    }
+
+    let presentableName = capitalizedNameArray.join(" ");
+
+    return presentableName;
 }
