@@ -38,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: paperColor
   },
   datasetsPaperOptions: {
-    height: 300,
+    height: 350,
     width: 500,
     alignItems: "center",
     justify: "center",

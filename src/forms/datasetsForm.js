@@ -22,7 +22,11 @@ import {
     CircularProgress
 } from '@material-ui/core';
 
-import { datasetsNamesEndpoint, datasetsEndpoint } from '../apiEndpoints';
+import { 
+    datasetsNamesEndpoint, 
+    datasetsEndpoint, 
+    datasetsInformationEndpoint 
+} from '../apiEndpoints';
 
 
 const radioButtonBorderColor = '#212226';
@@ -46,6 +50,7 @@ export function Datasets(props) {
             <Grid container justify="center">
                 <Paper className={classes.datasetsPaperOptions}>
                     <DatasetVisualization datasetName={selectedDataset} options={datasetOptions} />
+                    <DatasetDescription datasetName={selectedDataset} />
                 </Paper>
             </Grid>
         </>
@@ -114,7 +119,6 @@ function DatasetVisualization({ datasetName, options }) {
             <div align="center">
                 <p class="mainText">Dataset: <b>{getPresentableDatasetByName(datasetName)}</b></p>
                 <CircularProgress size={20} color="#212226" />
-                <p class="mainText">Dataset Information...</p>
             </div>
         )
     }
@@ -139,12 +143,42 @@ function DatasetVisualization({ datasetName, options }) {
                         data={visualizationData}/>
                     <MarkSeriesCanvas animation data={visualizationData} size={2.5} color={'#125C77'} />
             </XYPlot>
-            <p class="mainText">Dataset Information...</p>
-
         </div>
     )
 }
 
+function DatasetDescription({ datasetName }) {
+    const datasetInformationDispatcher = useDispatch();
+    let numberOfFeatures = useSelector(state => state.features);
+    let numberOfLabels = useSelector(state => state.labels);
+    const [descriptionIsLoading, setDescriptionIsLoading] = useState(false);
+
+    useEffect(() => {
+        setDescriptionIsLoading(true);
+        axios
+            .get(datasetsInformationEndpoint + datasetName)
+            .then(res => parseDatasetInformation(res.data, datasetInformationDispatcher))
+            .then(set => setDescriptionIsLoading(false))
+            .catch(err => console.log(err));
+    }, [datasetName])
+
+    if (descriptionIsLoading) {
+        return <CircularProgress size={20} color="#212226" />
+    }
+
+    return (
+        <div>
+            <span class="mainText">Features: <b>{numberOfFeatures}</b></span>
+            <span>   |   </span>
+            <span class="mainText">Labels: <b>{numberOfLabels}</b></span>
+        </div>
+    )
+}
+
+function parseDatasetInformation(informationJSON, dispatcher) {
+    dispatcher({ type: "UPDATE_N_FEATURES", features: informationJSON.Features });
+    dispatcher({ type: "UPDATE_N_LABELS", labels: informationJSON.Labels });
+}
 
 function getPresentableDatasetByName(rawName) {
     let nameArray = rawName.split("_")
