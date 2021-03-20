@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import { useSelector, useDispatch } from "react-redux";
 import { architectureEndpoint } from "../apiEndpoints";
+import { paperColor } from "../widgets/Grids";
 
 
 export function SendArchitectureButton({ text }) {
@@ -45,6 +46,7 @@ export function SendArchitectureButton({ text }) {
             <div>
                 <br />
                 <Button
+                    color="default"
                     variant="outlined"
                     size="small"
                     disabled={true}
@@ -54,8 +56,8 @@ export function SendArchitectureButton({ text }) {
                                         dispatchResult,
                                         dataset
                     )}>
-                    <CircularProgress size={20} color="#212226" />
-                    <p className="mainText" style={{marginLeft: 5}}><b>Training...</b></p>
+                    <CircularProgress size={20} color="inherit" />
+                    <p className="mainText" style={{ marginLeft: 5 }}><b>Training...</b></p>
                 </Button>
                 <br />
             </div>

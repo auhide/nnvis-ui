@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // Buttons Margins
 let minusXSignMargin = 50;
-let yButtonMargin = 40;
+let yButtonMargin = 150;
 let xButtonMargin = 10;
 
 // Neural network margins
@@ -31,9 +31,9 @@ let maxNeurons = 6;
 let minNeurons = 2;
 
 let layersScales = {
-  "2": 450,
-  "3": 225,
-  "4": 150,
+  "2": 500,
+  "3": 250,
+  "4": 165,
   "5": 125,
   "6": 100
 };

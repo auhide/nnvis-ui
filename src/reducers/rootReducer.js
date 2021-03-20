@@ -31,9 +31,9 @@ const initialState = {
             beta2: 0.999
         }
     },
-    dataset: "iris",
+    dataset: "gender_voice",
     features: null,
-    labels: 3,
+    labels: 2,
     evaluationResult: {},
     isEvaluating: null
 };
