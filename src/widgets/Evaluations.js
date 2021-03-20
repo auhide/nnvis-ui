@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { evaluationResultIsValid } from '../validators/ResultValidators'
 import { JellyfishSpinner } from "react-spinners-kit";
 import { Divider } from '@material-ui/core';
@@ -14,12 +16,85 @@ import {
 import Popup, { evaluationText } from './Popups';
 import { useSelector } from 'react-redux';
 
+// The dropdown needs these imports:
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 let greyColor = "#212226";
+
+
+const options = [
+    'Training Accuracy Graph',
+    'Confusion Matrix'
+];
+
+function DropDown({ evalChoice, setEvalChoice }) {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            backgroundColor: theme.palette.background.paper,
+        },
+    }));
+
+    const classes = useStyles();
+
+    const handleClickListItem = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    
+    const handleMenuItemClick = (event, index) => {
+        setEvalChoice(index);
+        setAnchorEl(null);
+    };
+
+    const handleClose = () => {
+    setAnchorEl(null);
+    };
+
+    return (
+    <div className={classes.root}>
+        <List component="nav" aria-label="Device settings">
+        <ListItem
+            button
+            aria-haspopup="true"
+            aria-controls="lock-menu"
+            aria-label="evaluation type"
+            onClick={handleClickListItem}
+        >
+            <ListItemText primary="Evaluation type" secondary={options[evalChoice]} />
+        </ListItem>
+        </List>
+        <Menu
+        id="lock-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        >
+        {options.map((option, index) => (
+            <MenuItem
+            key={option}
+            selected={index === evalChoice}
+            onClick={(event) => handleMenuItemClick(event, index)}
+            >
+            {option}
+            </MenuItem>
+        ))}
+        </Menu>
+    </div>
+    );
+}
 
 export function Evaluations() {
     const result = useSelector(state => state.evaluationResult);
     const isEvaluating = useSelector(state => state.isEvaluating);
+    let [evaluationType, setEvalType] = useState(0);
 
     if (isEvaluating == null) {
         return( 
@@ -46,9 +121,10 @@ export function Evaluations() {
                 <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
                 <Divider />
                 <Accuracy result={result} />
+                <DropDown evalChoice={evaluationType} setEvalChoice={setEvalType} />
                 <Divider />
                 <br />
-                <Charts result={result} />
+                <Charts result={result} evalType={evaluationType} />
             </>
         )
     }
@@ -113,24 +189,27 @@ function TrainChart({ data }) {
 }
 
 
-function Charts({ result }) {
+function Charts({ result, evalType }) {
 
     if (evaluationResultIsValid(result)) {
-        return (
-            <>
-                <small class="mainText" style={{ margin: 0 }}><i>Training Accuracy</i></small>
-                <center><TrainChart data={result["Data"]["EpochsAccuracy"]} /></center>
-                <br />
-                <br />
-                <Divider />
-                <br />
-                <small class="mainText" style={{ margin: 0 }}><i>Confusion Matrix</i></small>
-                <center><Heatmap data={result["Data"]["ConfusionMatrix"]} /></center>
-                <br />
-                <br />
-                <Divider />
-            </>
-        );
+        if (evalType === 0) {
+            return (
+                <>
+                    <small class="mainText" style={{ margin: 0 }}><i>Training Accuracy</i></small>
+                    <center><TrainChart data={result["Data"]["EpochsAccuracy"]} /></center>
+                    <br />
+                    <br />
+                </>
+            );
+        } else if (evalType === 1) {
+            return (
+                <>
+                    <br />
+                    <small class="mainText" style={{ margin: 0 }}><i>Confusion Matrix</i></small>
+                    <center><Heatmap data={result["Data"]["ConfusionMatrix"]} /></center>
+                </>
+            )
+        }
     } else {
         return <></>
     }
