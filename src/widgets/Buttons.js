@@ -7,7 +7,7 @@ import {
     getLastLayerNumber
 } from '../nn/NeuralNet';
 
-export function getIncrementalButton(symbol, callback, position, currLayer, architecture){
+export function getIncrementalButton(symbol, callback, position, currLayer, architecture, isLoading){
     const [x, y] = position;
 
     let lastLayerNum = getLastLayerNumber(architecture)
@@ -29,7 +29,8 @@ export function getIncrementalButton(symbol, callback, position, currLayer, arch
                     }}
                     onClick={callback}
                     size="small" 
-                    color="primary">{symbol}</Button>
+                    color="primary"
+                    disabled={isLoading}>{symbol}</Button>
             </Box>
         );    
     }

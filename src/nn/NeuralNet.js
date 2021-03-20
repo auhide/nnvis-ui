@@ -72,9 +72,9 @@ export function Network() {
         <DrawNeurons architecture={architecture} isLoading={isEvaluating} />
       </motion.svg>
       
-      <DrawButtons architecture={architecture} dispatch={dispatch}/>
+      <DrawButtons architecture={architecture} dispatch={dispatch} isLoading={isEvaluating}/>
       {setLastLayerNeurons(labelsNumber, architecture, dispatch)}
-
+      {JSON.stringify(architecture)}
     </div>
   );
 }
@@ -157,7 +157,7 @@ export function getNeurons(layerIndex, neuronsN, xPos, isLoading) {
 }
 
 
-export function DrawButtons({ architecture, dispatch }) {
+export function DrawButtons({ architecture, dispatch, isLoading }) {
   let buttons = [];
 
   for (let layerIndex in nnData) {
@@ -168,7 +168,7 @@ export function DrawButtons({ architecture, dispatch }) {
         getIncrementalButton(
           "+", () => buttonCallback(architecture, dispatch, layerIndex.toString(), plusFunc), 
           [nnData[layerIndex][0][0] + xButtonMargin, nnData[layerIndex][0][1] + yButtonMargin],
-          layerIndex, architecture
+          layerIndex, architecture, isLoading
         )
       );
 
@@ -177,7 +177,7 @@ export function DrawButtons({ architecture, dispatch }) {
         getIncrementalButton(
           "-", () => buttonCallback(architecture, dispatch, layerIndex.toString(), minusFunc), 
           [nnData[layerIndex][0][0] + xButtonMargin - minusXSignMargin, nnData[layerIndex][0][1] + yButtonMargin],
-          layerIndex, architecture
+          layerIndex, architecture, isLoading
         )
       );
     }
