@@ -23,10 +23,18 @@ function getRandomInt(max) {
 
 
 // Neurons
-function AnimatedNeuron({x, y}) {
+function AnimatedNeuron({x, y, layerIndex}) {
+  let architecture = useSelector(state => state.architecture);
+  let lastLayerIndex = getLastLayerNumber(architecture);
+  let neuronColor = synapseColor;
+
+  if (layerIndex == lastLayerIndex) {
+    neuronColor = outputNeuronColor;
+  }
+
   return (
     <motion.circle
-      x={x} y={y} r="10" fill={synapseColor} stroke-width="3" 
+      x={x} y={y} r="10" fill={neuronColor} stroke-width="3" stroke={synapseColor}
       style={{ x: x, y: y }}
       animate={{
         scale: [1, 1, 1.5, 1, 1],
@@ -68,7 +76,7 @@ export function GetNeuronStyle(props) {
 
     if (isLoading) {
       return (
-        <AnimatedNeuron x={xPos} y={yPos} />
+        <AnimatedNeuron x={xPos} y={yPos} layerIndex={layerIndex} />
       )
     }
 

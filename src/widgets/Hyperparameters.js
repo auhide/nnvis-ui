@@ -458,7 +458,7 @@ function RandomState({ params, dispatch }) {
                     Random State
                 </Typography>
                 <ParametersSlider
-                    defaultValue={0}
+                    defaultValue={params.hyperparameters.random}
                     onChange={handleRandomStatesChange}
                     aria-labelledby="discrete-slider-small-steps"
                     step={1}
@@ -546,7 +546,7 @@ function Epochs({ params, dispatch }) {
                     Epochs
                 </Typography>
                 <ParametersSlider
-                    defaultValue={1}
+                    defaultValue={params.hyperparameters.epochs}
                     onChange={handleEpochsChange}
                     aria-labelledby="discrete-slider-small-steps"
                     step={1}

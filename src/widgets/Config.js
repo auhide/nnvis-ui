@@ -20,10 +20,11 @@ export function ArchitectureComponents() {
     let datasetName = useSelector(state => state.dataset);
     datasetName = getPresentableDatasetByName(datasetName);
     let datasetLength = datasetName.length * datasetNameScaleFactor;
+
     return (
       <>
         <br />
-        <div style={{ width: datasetLength, margin: "auto"}}>
+        <div style={{ width: datasetLength, margin: "auto", marginTop: -10}}>
           <p class="dataset-border mainText">{datasetName}</p>
         </div>
         <SendArchitectureButton text="Train Network" />
