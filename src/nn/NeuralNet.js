@@ -74,7 +74,6 @@ export function Network() {
       
       <DrawButtons architecture={architecture} dispatch={dispatch} isLoading={isEvaluating}/>
       {setLastLayerNeurons(labelsNumber, architecture, dispatch)}
-      {JSON.stringify(architecture)}
     </div>
   );
 }
