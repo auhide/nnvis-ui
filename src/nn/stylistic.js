@@ -1,11 +1,18 @@
 
+import { useSelector, useDispatch } from "react-redux";
 import { motion } from 'framer-motion';
+import {
+  getLastLayerNumber
+} from './NeuralNet';
+
+
 // Constants - Neurons
 const defaultNeuronRadius = 15;
 
 // Constants - Synapses
 const defaultSynapseWidth = 4;
 const synapseColor = '#212226';
+const outputNeuronColor = "#F2F2F2";
 
 // Animation Delays
 let repeatDelays = [0.1, 0.2, 0.3, 0.4, 0.5];
@@ -37,10 +44,17 @@ function AnimatedNeuron({x, y}) {
   );
 }
 
-function Neuron({x, y}) {
+function Neuron({x, y, layerIndex}) {
+  let architecture = useSelector(state => state.architecture);
+  let lastLayerIndex = getLastLayerNumber(architecture);
+  let neuronColor = synapseColor;
+
+  if (layerIndex == lastLayerIndex) {
+    neuronColor = outputNeuronColor;
+  }
   return (
     <motion.circle
-      x={x} y={y} r={defaultNeuronRadius} fill={synapseColor} stroke-width="3" 
+      x={x} y={y} r={defaultNeuronRadius} fill={neuronColor} stroke-width="3" stroke={synapseColor}
       whileHover={{ scale: 1.2 }}
     />
   );
@@ -50,6 +64,7 @@ export function GetNeuronStyle(props) {
     let xPos = props.xPos;
     let yPos = props.yPos;
     let isLoading = props.isLoading;
+    let layerIndex = props.layerIndex;
 
     if (isLoading) {
       return (
@@ -58,7 +73,7 @@ export function GetNeuronStyle(props) {
     }
 
     return (
-        <Neuron x={xPos} y={yPos} />
+        <Neuron x={xPos} y={yPos} layerIndex={layerIndex}/>
     );
 }
 

@@ -3,29 +3,38 @@ import {
     Button
 } from '@material-ui/core';
 
+import {
+    getLastLayerNumber
+} from '../nn/NeuralNet';
 
-export function getIncrementalButton(symbol, callback, position){
+export function getIncrementalButton(symbol, callback, position, currLayer, architecture){
     const [x, y] = position;
-    
-    return (
-        <Box>
-            <Button 
-                style={{
-                    borderRadius: 90, 
-                    fontSize: 30,
-                    color: "#636D73", 
-                    minWidth: '30px',
-                    minHeight: '40px',
-                    maxWidth: '30px', 
-                    maxHeight: '40px',
-                    position: 'absolute',   
-                    left:`${x}px`, 
-                    top:`${y}px`
-                }}
-                onClick={callback}
-                size="small" 
-                color="primary">{symbol}</Button>
-        </Box>
-    );
+
+    let lastLayerNum = getLastLayerNumber(architecture)
+    if (currLayer !== lastLayerNum) {
+        return (
+            <Box>
+                <Button 
+                    style={{
+                        borderRadius: 90, 
+                        fontSize: 30,
+                        color: "#636D73", 
+                        minWidth: '30px',
+                        minHeight: '40px',
+                        maxWidth: '30px', 
+                        maxHeight: '40px',
+                        position: 'absolute',   
+                        left:`${x}px`, 
+                        top:`${y}px`
+                    }}
+                    onClick={callback}
+                    size="small" 
+                    color="primary">{symbol}</Button>
+            </Box>
+        );    
+    }
+
+    return <></>;
+
 }
 

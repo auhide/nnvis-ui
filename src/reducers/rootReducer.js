@@ -33,7 +33,7 @@ const initialState = {
     },
     dataset: "iris",
     features: null,
-    labels: null,
+    labels: 3,
     evaluationResult: {},
     isEvaluating: null
 };

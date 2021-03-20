@@ -48,6 +48,8 @@ export function Network() {
   // A Flag for when the NeuralNetwork is Evaluating a Model
   const isEvaluating = useSelector(state => state.isEvaluating);
 
+  const labelsNumber = useSelector(state => state.labels);
+
   return (
     <div className="network">
       <LayersSlider 
@@ -61,12 +63,17 @@ export function Network() {
       <motion.svg
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 600 600"
-      >
+        >
         <DrawNeurons architecture={architecture} isLoading={isEvaluating} />
         <DrawSynapses isLoading={isEvaluating} />
+        {/* Drawing the Neurons twice, because the synapses need the 
+            information from the neurons component and we need the neurons 
+            to be on top*/}
+        <DrawNeurons architecture={architecture} isLoading={isEvaluating} />
       </motion.svg>
       
       <DrawButtons architecture={architecture} dispatch={dispatch}/>
+      {setLastLayerNeurons(labelsNumber, architecture, dispatch)}
 
     </div>
   );
@@ -85,7 +92,7 @@ function DrawDescriptiveData({ architecture }) {
   )
 }
 
-function getLastLayerNumber(architecture) {
+export function getLastLayerNumber(architecture) {
   let currentLayer = 0;
 
   for (const layer in architecture) {
@@ -142,7 +149,7 @@ export function getNeurons(layerIndex, neuronsN, xPos, isLoading) {
   
   for (let i = 0; i < neuronsN; i++){
     nnData[layerIndex][i] = [xPos, yPos];
-    neurons.push(<GetNeuronStyle xPos={xPos} yPos={yPos} isLoading={isLoading} />);
+    neurons.push(<GetNeuronStyle xPos={xPos} yPos={yPos} isLoading={isLoading} layerIndex={layerIndex} />);
     yPos += yNeuronDifference;
   }
 
@@ -158,14 +165,20 @@ export function DrawButtons({ architecture, dispatch }) {
     if (nnData[layerIndex][0]) {
       // Plus Button
       buttons.push(
-        getIncrementalButton("+", () => buttonCallback(architecture, dispatch, layerIndex.toString(), plusFunc), 
-        [nnData[layerIndex][0][0] + xButtonMargin, nnData[layerIndex][0][1] + yButtonMargin])
+        getIncrementalButton(
+          "+", () => buttonCallback(architecture, dispatch, layerIndex.toString(), plusFunc), 
+          [nnData[layerIndex][0][0] + xButtonMargin, nnData[layerIndex][0][1] + yButtonMargin],
+          layerIndex, architecture
+        )
       );
 
       // Minus Button
       buttons.push(
-        getIncrementalButton("-", () => buttonCallback(architecture, dispatch, layerIndex.toString(), minusFunc), 
-        [nnData[layerIndex][0][0] + xButtonMargin - minusXSignMargin, nnData[layerIndex][0][1] + yButtonMargin])
+        getIncrementalButton(
+          "-", () => buttonCallback(architecture, dispatch, layerIndex.toString(), minusFunc), 
+          [nnData[layerIndex][0][0] + xButtonMargin - minusXSignMargin, nnData[layerIndex][0][1] + yButtonMargin],
+          layerIndex, architecture
+        )
       );
     }
   }
@@ -241,4 +254,12 @@ export function singleNeuronSynapses(layer, neuron, isLoading) {
   }
 
   return synapses;
+}
+
+
+function setLastLayerNeurons(labelsNumber, architecture, dispatchArchitecture) {
+  let lastLayerNumber = getLastLayerNumber(architecture);
+
+  let newArchitecture = architecture;
+  newArchitecture[lastLayerNumber] = labelsNumber
 }

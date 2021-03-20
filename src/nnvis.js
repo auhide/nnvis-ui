@@ -1,7 +1,3 @@
-import { Toolbar } from '@material-ui/core'
-import {
-    Button
-} from '@material-ui/core';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { 
     ArchitectureComponents, 
@@ -16,8 +12,8 @@ export function NNVis() {
             <ul class="navbar">
                 <li className="mainText navbarTab"><Link to={'/'} ><b>Config</b></Link></li>
                 <li className="mainText navbarTab"><Link to={'/datasets'} ><b>Data</b></Link></li>
-                <li className="mainText navbarTab"><Link to={'/conv'} ><b>Conv2D</b></Link></li>
                 <li className="mainText navbarTab"><Link to={'/preprocess'} ><b>Preprocess</b></Link></li>
+                <li className="mainText navbarTab"><Link to={'/conv'} ><b>HowTo</b></Link></li>
             </ul>
 
             <Switch> 
