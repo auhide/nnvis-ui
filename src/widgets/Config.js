@@ -24,11 +24,11 @@ export function ArchitectureComponents() {
     return (
       <>
         <br />
-        <div style={{ width: datasetLength, margin: "auto", marginTop: -10}}>
-          <p class="dataset-border mainText">{datasetName}</p>
-        </div>
         <SendArchitectureButton text="Train Network" />
         <br />
+        <div style={{ width: datasetLength, margin: "auto", marginTop: -10, marginBottom: -10}}>
+          <p class="dataset-border mainText">{datasetName}</p>
+        </div>
         <DrawGrids />
     </>
   )
