@@ -180,7 +180,7 @@ function parseDatasetInformation(informationJSON, dispatcher) {
     dispatcher({ type: "UPDATE_N_LABELS", labels: informationJSON.Labels });
 }
 
-function getPresentableDatasetByName(rawName) {
+export function getPresentableDatasetByName(rawName) {
     let nameArray = rawName.split("_")
     let capitalizedNameArray = [];
 

@@ -69,3 +69,10 @@ li a:hover:not(.active) {
 .active {
   background-color: #4CAF50;
 }
+
+.dataset-border {
+  position: "center";
+  padding: 5px 0;
+  border: 2px solid #73AD21;
+  border-radius: 25px;
+}
