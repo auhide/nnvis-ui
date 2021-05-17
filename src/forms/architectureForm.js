@@ -3,6 +3,7 @@ import {
     Button,
     CircularProgress
 } from '@material-ui/core';
+import { borders } from '@material-ui/system';
 import { useSelector, useDispatch } from "react-redux";
 import { architectureEndpoint } from "../apiEndpoints";
 import { paperColor } from "../widgets/Grids";
@@ -27,6 +28,7 @@ export function SendArchitectureButton({ text }) {
                 <Button
                     variant="outlined"
                     size="small"
+                    style={{ borderRadius: 50 }}
                     onClick={() => sendArchitecture(
                                         architecture, 
                                         hyperparams,
@@ -49,6 +51,7 @@ export function SendArchitectureButton({ text }) {
                     color="default"
                     variant="outlined"
                     size="small"
+                    style={{ borderRadius: 50 }}
                     disabled={true}
                     onClick={() => sendArchitecture(
                                         architecture, 
