@@ -58,36 +58,36 @@ function DropDown({ evalChoice, setEvalChoice }) {
     };
 
     return (
-    <div className={classes.root}>
-        <List component="nav" aria-label="Device settings">
-        <ListItem
-            button
-            aria-haspopup="true"
-            aria-controls="lock-menu"
-            aria-label="evaluation type"
-            onClick={handleClickListItem}
-        >
-            <ListItemText primary="Evaluation type" secondary={options[evalChoice]} />
-        </ListItem>
-        </List>
-        <Menu
-        id="lock-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        >
-        {options.map((option, index) => (
-            <MenuItem
-            key={option}
-            selected={index === evalChoice}
-            onClick={(event) => handleMenuItemClick(event, index)}
+        <div className={classes.root}>
+            <List component="nav" aria-label="Device settings">
+            <ListItem
+                button
+                aria-haspopup="true"
+                aria-controls="lock-menu"
+                aria-label="evaluation type"
+                onClick={handleClickListItem}
             >
-            {option}
-            </MenuItem>
-        ))}
-        </Menu>
-    </div>
+                <ListItemText primary="Evaluation type" secondary={options[evalChoice]} />
+            </ListItem>
+            </List>
+            <Menu
+            id="lock-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            >
+            {options.map((option, index) => (
+                <MenuItem
+                key={option}
+                selected={index === evalChoice}
+                onClick={(event) => handleMenuItemClick(event, index)}
+                >
+                {option}
+                </MenuItem>
+            ))}
+            </Menu>
+        </div>
     );
 }
 

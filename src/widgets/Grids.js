@@ -46,15 +46,23 @@ export const useStyles = makeStyles((theme) => ({
       justify: "center",
       position: "absolute",
       backgroundColor: paperColor
-  },
-  datasetsPaperOptions: {
-    height: 350,
-    width: 500,
-    alignItems: "center",
-    justify: "center",
-    position: "absolute",
-    backgroundColor: paperColor
-  }
+    },
+    datasetsPaperOptions: {
+      height: 350,
+      width: 500,
+      alignItems: "center",
+      justify: "center",
+      position: "absolute",
+      backgroundColor: paperColor
+    },
+    dataParamsPaperOptions: {
+      height: 350,
+      width: 300,
+      alignItems: "center",
+      justify: "center",
+      position: "absolute",
+      backgroundColor: paperColor
+    }
 }));
 
 let datasetNameScaleFactor = 13;

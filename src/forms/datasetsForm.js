@@ -41,17 +41,31 @@ export function Datasets(props) {
         <>
             <br />
             <br />
-            <Grid container justify="center">
-                <Paper className={classes.datasetsPaperOptions}>
-                    <DatasetsOptions datasetOptions={datasetOptions} setDatasetOptions={setDatasetOptions} /> 
-                </Paper>
-            </Grid>
-            <br /><br /><br />
-            <Grid container justify="center">
-                <Paper className={classes.datasetsPaperOptions}>
-                    <DatasetVisualization datasetName={selectedDataset} options={datasetOptions} />
-                    <DatasetDescription datasetName={selectedDataset} />
-                </Paper>
+
+            <Grid container className={classes.root} spacing={1}>
+
+                <Grid item xs={3} >
+                    <Grid container justify="center">
+                        <Paper className={classes.dataParamsPaperOptions}><p>Something</p></Paper>
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={6} >
+                    <Grid container justify="center">
+                        <Paper className={classes.datasetsPaperOptions}>
+                            <DatasetsOptions datasetOptions={datasetOptions} setDatasetOptions={setDatasetOptions} /> 
+                            <DatasetVisualization datasetName={selectedDataset} options={datasetOptions} />
+                            <DatasetDescription datasetName={selectedDataset} />
+                        </Paper>
+                    </Grid>
+                </Grid>
+                
+                <Grid item xs={3} >
+                    <Grid container justify="center">
+                        <Paper className={classes.dataParamsPaperOptions}><p>Something</p></Paper>
+                    </Grid>
+                </Grid>
+            
             </Grid>
         </>
     );
