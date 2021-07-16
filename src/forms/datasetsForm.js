@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CircleChecked from '@material-ui/icons/CheckCircleOutline';
+import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
+import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
+
 import axios from 'axios';
 
 import {
     useStyles
 } from '../widgets/Grids';
 
-// TODO: Use these for the Contour Series
+
 import { 
     XYPlot,
     XAxis,
@@ -30,6 +38,7 @@ import {
 
 
 const radioButtonBorderColor = '#212226';
+const featuresPaperMaxSize = 290
 
 
 export function Datasets(props) {
@@ -42,11 +51,14 @@ export function Datasets(props) {
             <br />
             <br />
 
-            <Grid container className={classes.root} spacing={1}>
+            <Grid container className={classes.root} spacing={-2}>
 
                 <Grid item xs={3} >
                     <Grid container justify="center">
-                        <Paper className={classes.dataParamsPaperOptions}><p>Something</p></Paper>
+                        <Paper className={classes.dataParamsPaperOptions}>
+                            <p>Features</p>
+                            <FeaturesSelection datasetName={selectedDataset} />
+                        </Paper>
                     </Grid>
                 </Grid>
 
@@ -107,7 +119,7 @@ function DatasetsRadioButtons({ datasetsNames }) {
                     rootColor={radioButtonBorderColor} 
                     value={name}>
                         <div className="mainText">{presentable_name}</div>
-                    </RadioButton>
+                </RadioButton>
             ))}
         </RadioGroup>
     )
@@ -161,6 +173,7 @@ function DatasetVisualization({ datasetName, options }) {
     )
 }
 
+
 function DatasetDescription({ datasetName }) {
     const datasetInformationDispatcher = useDispatch();
     let numberOfFeatures = useSelector(state => state.features);
@@ -189,10 +202,58 @@ function DatasetDescription({ datasetName }) {
     )
 }
 
+
+function FeaturesSelection({ datasetName }) {
+    const featureNamesDispatcher = useDispatch();
+    let featureNames = useSelector(state => state.featureNames);
+    const [featureNamesAreLoading, setFeatureNamesAreLoading] = useState(false);
+
+    useEffect(() => {
+        setFeatureNamesAreLoading(true);
+        axios
+            .get(datasetsInformationEndpoint + datasetName)
+            .then(res => parseFeatureNames(res.data, featureNamesDispatcher))
+            .then(set => setFeatureNamesAreLoading(false))
+            .catch(err => console.log(err));
+    }, [datasetName])
+
+    return (
+
+        <div style={{ height: featuresPaperMaxSize, marginLeft: "30%", overflowY: "auto" }}>
+            <FormGroup style={{ textAlign: "left" }} col>
+                {
+                    featureNames.map((feature, index) => {
+                        return (
+                            <div>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox 
+                                            icon={<CircleUnchecked />}
+                                            checkedIcon={<CircleCheckedFilled />}
+                                            color="default" 
+                                        />}
+                                    label={feature}
+                                />
+                            </div>
+                        )
+                    })
+                }
+            </FormGroup>
+        </div>
+    )
+}
+
+
 function parseDatasetInformation(informationJSON, dispatcher) {
     dispatcher({ type: "UPDATE_N_FEATURES", features: informationJSON.Features });
     dispatcher({ type: "UPDATE_N_LABELS", labels: informationJSON.Labels });
 }
+
+
+function parseFeatureNames(datasetJSON, dispatcher) {
+    dispatcher({ type: "UPDATE_FEATURE_NAMES", featureNames: datasetJSON.FeatureNames });
+}
+
 
 export function getPresentableDatasetByName(rawName) {
     let nameArray = rawName.split("_")

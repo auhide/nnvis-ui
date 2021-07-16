@@ -5,6 +5,7 @@ const IS_EVALUATING = "IS_EVALUATING";
 const UPDATE_DATASET = "UPDATE_DATASET";
 const UPDATE_N_FEATURES = "UPDATE_N_FEATURES";
 const UPDATE_N_LABELS = "UPDATE_N_LABELS";
+const UPDATE_FEATURE_NAMES = "UPDATE_FEATURE_NAMES"
 
 
 // A Global State used for the Neural Network Visualization
@@ -33,6 +34,7 @@ const initialState = {
     },
     dataset: "gender_voice",
     features: null,
+    featureNames: ["all"],
     labels: 2,
     evaluationResult: {},
     isEvaluating: null
@@ -67,6 +69,10 @@ export default function rootReducer(state=initialState, action) {
 
         case UPDATE_N_LABELS:
             state.labels = action.labels;
+            return state;
+
+        case UPDATE_FEATURE_NAMES:
+            state.featureNames = action.featureNames;
             return state;
 
         default:
