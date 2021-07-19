@@ -8,6 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CircleChecked from '@material-ui/icons/CheckCircleOutline';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
+import { Divider } from '@material-ui/core';
 
 import axios from 'axios';
 
@@ -56,7 +57,8 @@ export function Datasets(props) {
                 <Grid item xs={3} >
                     <Grid container justify="center">
                         <Paper className={classes.dataParamsPaperOptions}>
-                            <p>Features</p>
+                            <p class="mainText"><b>Features Selection</b></p>
+                            <Divider />
                             <FeaturesSelectionOptions datasetName={selectedDataset} />
                         </Paper>
                     </Grid>
@@ -218,6 +220,10 @@ function FeaturesSelectionOptions({ datasetName }) {
             .catch(err => console.log(err));
     }, [datasetName])
 
+    if (featureNamesAreLoading) {
+        return <CircularProgress size={20} color="#212226" />
+    }
+
     return (
         <FeaturesSelection />
     )
@@ -235,7 +241,7 @@ function FeaturesSelection({ }) {
 
         <div style={{ height: featuresPaperMaxSize, marginLeft: "30%", overflowY: "auto" }}>
             <FormGroup style={{ textAlign: "left" }} col>
-                {JSON.stringify(featuresMap)}
+                {/* {JSON.stringify(featuresMap)} */}
                 <FormControlLabel 
                     control={
                         <Checkbox 
@@ -273,6 +279,7 @@ function FeaturesSelection({ }) {
                     }
                     label="None"
                 />
+                <hr />
                 {
                     Object.keys(featuresMap).map((feature, index) => {
                         return (
