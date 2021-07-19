@@ -82,14 +82,6 @@ export default function rootReducer(state=initialState, action) {
             state.featuresMap = { ...action.featuresMap };
             return state;
 
-        case UPDATE_SINGLE_FEATURE:
-            if (state.featuresMap[action.updatedFeature] == true) {
-                state.featuresMap[action.updatedFeature] = false;
-            } else {
-                state.featuresMap[action.updatedFeature] = true;
-            }
-            return state;
-
         default:
             return state;
     }

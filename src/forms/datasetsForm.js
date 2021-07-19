@@ -76,7 +76,10 @@ export function Datasets(props) {
                 
                 <Grid item xs={3} >
                     <Grid container justify="center">
-                        <Paper className={classes.dataParamsPaperOptions}><p>Something</p></Paper>
+                        <Paper className={classes.dataParamsPaperOptions}>
+                            <p class="mainText"><b>Principle Component Analysis</b></p>
+                            <Divider />
+                        </Paper>
                     </Grid>
                 </Grid>
             
