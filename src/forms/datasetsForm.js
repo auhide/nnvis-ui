@@ -57,7 +57,7 @@ export function Datasets(props) {
                     <Grid container justify="center">
                         <Paper className={classes.dataParamsPaperOptions}>
                             <p>Features</p>
-                            <FeaturesSelection datasetName={selectedDataset} />
+                            <FeaturesSelectionOptions datasetName={selectedDataset} />
                         </Paper>
                     </Grid>
                 </Grid>
@@ -203,34 +203,91 @@ function DatasetDescription({ datasetName }) {
 }
 
 
-function FeaturesSelection({ datasetName }) {
+function FeaturesSelectionOptions({ datasetName }) {
     const featureNamesDispatcher = useDispatch();
     let featureNames = useSelector(state => state.featureNames);
+    let featuresMap = useSelector(state => state.featuresMap);
     const [featureNamesAreLoading, setFeatureNamesAreLoading] = useState(false);
 
     useEffect(() => {
         setFeatureNamesAreLoading(true);
         axios
             .get(datasetsInformationEndpoint + datasetName)
-            .then(res => parseFeatureNames(res.data, featureNamesDispatcher))
+            .then(res => parseFeatureNames(res.data, featureNamesDispatcher, featuresMap))
             .then(set => setFeatureNamesAreLoading(false))
             .catch(err => console.log(err));
     }, [datasetName])
 
     return (
+        <FeaturesSelection />
+    )
+}
+
+
+function FeaturesSelection({ }) {
+    let featuresMap = useSelector(state => state.featuresMap);
+    let featuresMapDispatcher = useDispatch();
+
+    let [allCheckboxesAreChecked, allChangeState] = useState(false);
+    let [noneCheckboxesAreSelected, noneChangeState] = useState(false);
+
+    return (
 
         <div style={{ height: featuresPaperMaxSize, marginLeft: "30%", overflowY: "auto" }}>
             <FormGroup style={{ textAlign: "left" }} col>
+                {JSON.stringify(featuresMap)}
+                <FormControlLabel 
+                    control={
+                        <Checkbox 
+                            onChange={
+                                (event) => selectAllFeatures(
+                                    featuresMap, 
+                                    featuresMapDispatcher, 
+                                    allCheckboxesAreChecked,
+                                    allChangeState
+                            )}
+                            icon={<CircleUnchecked />}
+                            checkedIcon={<CircleCheckedFilled />}
+                            color="default"
+                            checked={allCheckboxesAreChecked}
+                            
+                        />
+                    }
+                    label="All"
+                />
+                <FormControlLabel 
+                    control={
+                        <Checkbox 
+                            onChange={
+                                (event) => deselectAllFeatures(
+                                    featuresMap, 
+                                    featuresMapDispatcher, 
+                                    noneCheckboxesAreSelected,
+                                    noneChangeState
+                            )}
+                            icon={<CircleUnchecked />}
+                            checkedIcon={<CircleCheckedFilled />}
+                            color="default"
+                            checked={noneCheckboxesAreSelected}
+                        />
+                    }
+                    label="None"
+                />
                 {
-                    featureNames.map((feature, index) => {
+                    Object.keys(featuresMap).map((feature, index) => {
                         return (
                             <div>
                                 <FormControlLabel
                                     control={
-                                        <Checkbox 
+                                        <Checkbox
+                                            onChange={
+                                                (event) => updateSingleValue(featuresMap, featuresMapDispatcher, event.target.name)
+                                            } 
                                             icon={<CircleUnchecked />}
                                             checkedIcon={<CircleCheckedFilled />}
                                             color="default" 
+                                            checked={featuresMap[feature]}
+                                            name={feature}
                                         />}
                                     label={feature}
                                 />
@@ -250,8 +307,66 @@ function parseDatasetInformation(informationJSON, dispatcher) {
 }
 
 
-function parseFeatureNames(datasetJSON, dispatcher) {
+function parseFeatureNames(datasetJSON, dispatcher, prevFeatureNames) {
     dispatcher({ type: "UPDATE_FEATURE_NAMES", featureNames: datasetJSON.FeatureNames });
+
+    let currentFeatureNames = datasetJSON.FeatureNames;
+    let currentFeatureMap = {}
+
+    currentFeatureNames.forEach(element => {
+        currentFeatureMap[element] = true;
+    });
+
+    dispatcher({ type: "UPDATE_FEATURES_MAP", featuresMap: currentFeatureMap })
+
+    return datasetJSON.featureNames;
+}
+
+
+function selectAllFeatures(featuresMap, dispatcher, isChecked, setAllCheckedState) {
+    if (isChecked) {
+        setAllCheckedState(false);
+    } else {
+        setAllCheckedState(true);
+    }
+
+    if (!isChecked) {
+        for (const featureName in featuresMap) {
+            featuresMap[featureName] = true
+        }
+
+        dispatcher({ type: "UPDATE_FEATURES_MAP", featuresMap: featuresMap })
+    }
+
+}
+
+
+function deselectAllFeatures(featuresMap, dispatcher, isChecked, setNoneCheckedState) {
+    if (isChecked) {
+        setNoneCheckedState(false);
+    } else {
+        setNoneCheckedState(true);
+    }
+
+    if (!isChecked) {
+        for (const featureName in featuresMap) {
+            featuresMap[featureName] = false
+        }
+
+        dispatcher({ type: "UPDATE_FEATURES_MAP", featuresMap: featuresMap })
+    }
+
+}
+
+
+function updateSingleValue(featuresMap, dispatcher, updatedFeature) {
+    if (featuresMap[updatedFeature]) {
+        featuresMap[updatedFeature] = false;
+    } else {
+        featuresMap[updatedFeature] = true;
+    }
+
+    dispatcher({ type: "UPDATE_FEATURES_MAP", featuresMap: featuresMap });
 }
 
 
