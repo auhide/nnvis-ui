@@ -77,7 +77,7 @@ export function Datasets(props) {
                 <Grid item xs={3} >
                     <Grid container justify="center">
                         <Paper className={classes.dataParamsPaperOptions}>
-                            <p class="mainText"><b>Principle Component Analysis</b></p>
+                            <p class="mainText"><b>Principal Component Analysis</b></p>
                             <Divider />
                         </Paper>
                     </Grid>
@@ -218,13 +218,18 @@ function FeaturesSelectionOptions({ datasetName }) {
         setFeatureNamesAreLoading(true);
         axios
             .get(datasetsInformationEndpoint + datasetName)
-            .then(res => parseFeatureNames(res.data, featureNamesDispatcher, featuresMap))
+            .then(res => parseFeatureNames(res.data, featureNamesDispatcher, featureNames))
             .then(set => setFeatureNamesAreLoading(false))
             .catch(err => console.log(err));
     }, [datasetName])
 
     if (featureNamesAreLoading) {
-        return <CircularProgress size={20} color="#212226" />
+        return (
+            <>
+                <br />
+                <CircularProgress size={20} color="#212226" />
+            </>
+        )
     }
 
     return (
@@ -328,6 +333,7 @@ function parseFeatureNames(datasetJSON, dispatcher, prevFeatureNames) {
     });
 
     dispatcher({ type: "UPDATE_FEATURES_MAP", featuresMap: currentFeatureMap })
+
 
     return datasetJSON.featureNames;
 }

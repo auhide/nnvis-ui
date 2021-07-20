@@ -14,6 +14,7 @@ export function SendArchitectureButton({ text }) {
     const architecture = useSelector(state => state.architecture);
     const hyperparams = useSelector(state => state.params);
     const dataset = useSelector(state => state.dataset);
+    const featuresMap = useSelector(state => state.featuresMap);
     
     // Result Management
     const dispatchResult = useDispatch();
@@ -24,6 +25,7 @@ export function SendArchitectureButton({ text }) {
         // Returning a normal button
         return (
             <div>
+                {/* {JSON.stringify(featuresMap)} */}
                 <br />
                 <Button
                     variant="outlined"
@@ -33,7 +35,8 @@ export function SendArchitectureButton({ text }) {
                                         architecture, 
                                         hyperparams,
                                         dispatchResult,
-                                        dataset
+                                        dataset,
+                                        featuresMap
                     )}>
                     <p className="mainText"><b>{text}</b></p>
                 </Button>
@@ -57,7 +60,8 @@ export function SendArchitectureButton({ text }) {
                                         architecture, 
                                         hyperparams,
                                         dispatchResult,
-                                        dataset
+                                        dataset,
+                                        featuresMap
                     )}>
                     <CircularProgress size={20} color="inherit" />
                     <p className="mainText" style={{ marginLeft: 5 }}><b>Training...</b></p>
@@ -68,7 +72,7 @@ export function SendArchitectureButton({ text }) {
     }
 }
 
-function prepareArchitectureRequest(architecture, hyperparams, dataset) {
+function prepareArchitectureRequest(architecture, hyperparams, dataset, featuresMap) {
     
     let request = {};
     request.architecture = {};
@@ -85,11 +89,28 @@ function prepareArchitectureRequest(architecture, hyperparams, dataset) {
     request.hyperparameters = hyperparams.hyperparameters;
     request.dataset = dataset;
 
+    // Adding the list of features to the request
+    request.features = parseFeaturesMap(featuresMap)
+
     return request
 }
 
-function sendArchitecture(architecture, hyperparams, dispatcher, dataset) {
-    let preparedRequest = prepareArchitectureRequest(architecture, hyperparams, dataset);
+
+function parseFeaturesMap(featuresMap) {
+    let featureNames = [];
+
+    Object.keys(featuresMap).forEach((featureName, index) => {
+        if (featuresMap[featureName] === true) {
+            featureNames.push(featureName)
+        }
+    });
+
+    return featureNames;
+}
+
+
+function sendArchitecture(architecture, hyperparams, dispatcher, dataset, featuresMap) {
+    let preparedRequest = prepareArchitectureRequest(architecture, hyperparams, dataset, featuresMap);
     
     // Setting the Evaluation flag to `true`
     dispatcher({ type: "IS_EVALUATING", isEvaluating: true });
