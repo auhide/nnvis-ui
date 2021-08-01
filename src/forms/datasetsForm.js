@@ -8,11 +8,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CircleChecked from '@material-ui/icons/CheckCircleOutline';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
-import { Divider } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Box from '@material-ui/core/Box';
 
 import {
     CircularProgress
@@ -390,6 +391,8 @@ function TopNFeatures({ }) {
     }, [topN, featureNames])
 
 
+    let orderedBySignificance = orderTopNFeatures(featuresSignificance);
+
     if (topNfeaturesAreLoading) {
         return (
             <>
@@ -400,15 +403,41 @@ function TopNFeatures({ }) {
         )
     }
 
-
     return (
         <div style={{ height: featuresPaperMaxSize / 1.4, marginLeft: "30%", overflowY: "auto" }}>
             <List dense={true}>
                 {
-                    Object.keys(featuresSignificance).map((feature, percentages) => {
+                    orderedBySignificance.map((featureAndSignificance, _) => {
+                        let feature = featureAndSignificance[0];
+                        let significance = featureAndSignificance[1];
+                        
                         return (
                             <ListItem>
-                                <span>(Insert Loader Here)</span>
+                                <span>
+                                    <CircularProgress 
+                                        size={30} 
+                                        style={{
+                                            marginRight: 10,
+                                            marginTop: 5
+                                        }}
+                                        variant="determinate" 
+                                        color="#212226" 
+                                        value={Math.round(significance)} 
+                                    />
+                                    <Box
+                                        style={{marginLeft: 20, marginTop: 14}}
+                                        top={0}
+                                        left={0}
+                                        bottom={0}
+                                        right={0}
+                                        position="absolute"
+                                        display="flex"
+                                    >
+                                        <Typography variant="caption" component="div" color="textSecondary">
+                                            <small>{`${Math.round(significance)}%`}</small>
+                                        </Typography>
+                                    </Box>
+                                </span>
                                 <ListItemText primary={feature}/>
                             </ListItem>
                         )
@@ -465,6 +494,21 @@ function TopNSelection({ }) {
 
 function parseTopNResponse(responseJSON, dispatcher) {
     dispatcher({ type: "UPDATE_FEATURES_SIGNIFICANCE", featuresSignificance: responseJSON.FeatureWeights });
+}
+
+
+function orderTopNFeatures(featuresSignificance) {
+    let sortableBySignificance = [];
+
+    for (let feature in featuresSignificance) {
+        sortableBySignificance.push([feature, featuresSignificance[feature]]);
+    }
+
+    sortableBySignificance.sort((a, b) => {
+        return b[1] - a[1];
+    });
+
+    return sortableBySignificance;
 }
 
 
