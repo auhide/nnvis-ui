@@ -9,6 +9,8 @@ import CircleChecked from '@material-ui/icons/CheckCircleOutline';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import { Divider } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import axios from 'axios';
 
@@ -30,6 +32,9 @@ import { useSelector, useDispatch } from "react-redux";
 import {
     CircularProgress
 } from '@material-ui/core';
+import {
+    Slider
+} from '@material-ui/core';
 
 import { 
     datasetsNamesEndpoint, 
@@ -40,6 +45,38 @@ import {
 
 const radioButtonBorderColor = '#212226';
 const featuresPaperMaxSize = 290
+
+
+const ТopNFeaturesSlider = withStyles({
+    root: {
+        width: 150,
+        color: '#3F4D59'
+    }
+})(Slider);
+
+
+const topNMarks = [
+    {
+        value: 2,
+        label: '2',
+    },
+    {
+        value: 4,
+        label: '4',
+    },
+    {
+        value: 6,
+        label: '6',
+    },
+    {
+        value: 8,
+        label: '8',
+    },
+    {
+        value: 10,
+        label: '10',
+    },
+];
 
 
 export function Datasets(props) {
@@ -77,8 +114,9 @@ export function Datasets(props) {
                 <Grid item xs={3} >
                     <Grid container justify="center">
                         <Paper className={classes.dataParamsPaperOptions}>
-                            <p class="mainText"><b>Principal Component Analysis</b></p>
+                            <p class="mainText"><b>Features Significance</b></p>
                             <Divider />
+                            <FeaturesSignificance />
                         </Paper>
                     </Grid>
                 </Grid>
@@ -90,6 +128,7 @@ export function Datasets(props) {
 
 
 function DatasetsOptions({ datasetOptions, setDatasetOptions }) {
+    let selectedDataset = useSelector(state => state.dataset);
 
     useEffect(() => {
         axios
@@ -316,6 +355,78 @@ function FeaturesSelection({ }) {
 }
 
 
+// TODO: Remove this after using it as a reference
+// function Epochs({ params, dispatch }) {
+//     const handleEpochsChange = (event, value) => {
+//         let newHP = params;
+//         newHP.hyperparameters.epochs = value;
+//         dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
+//     };
+
+//     return (
+//         <Grid item xs={6}>
+//             <Grid container justify="center">
+//                 <Typography id="discrete-slider-small-steps" gutterBottom>
+//                     Epochs
+//                 </Typography>
+//                 <ParametersSlider
+//                     defaultValue={params.hyperparameters.epochs}
+//                     onChange={handleEpochsChange}
+//                     aria-labelledby="discrete-slider-small-steps"
+//                     step={1}
+//                     min={1}
+//                     max={500}
+//                     marks={epochMarks}
+//                     valueLabelDisplay="auto"
+//                 />
+//             </Grid>
+//         </Grid>
+//     )
+// }
+
+
+function FeaturesSignificance({ }) {
+    let features = useSelector(state => state.featureNames);
+    let topN = useSelector(state => state.topN);
+    let featuresN = features.length;
+    let topThreshold = 10;
+
+    let topNDispatch = useDispatch();
+
+    if (featuresN < topThreshold) {
+        topThreshold = featuresN
+    }
+
+    // Defining it here, because it is needed for the access to the topNDispatch variable
+    const handleTopNChange = (event, value) => {
+        topNDispatch({type: "UPDATE_TOP_N", topN: value})
+    };
+
+    return (
+        <>
+            <br />
+            <Typography id="discrete-slider-small-steps" gutterBottom>
+                Top N
+            </Typography>
+            <ТopNFeaturesSlider
+                onChange={handleTopNChange}
+                step={1}
+                min={2}
+                max={topThreshold}
+                marks={topNMarks}
+                valueLabelDisplay="auto"
+            />
+            <p>Top N: {topN}</p>
+        </>
+    )
+}
+
+
+function TopNFeaturesSelection({ }) {
+
+}
+
+
 function parseDatasetInformation(informationJSON, dispatcher) {
     dispatcher({ type: "UPDATE_N_FEATURES", features: informationJSON.Features });
     dispatcher({ type: "UPDATE_N_LABELS", labels: informationJSON.Labels });
@@ -333,7 +444,6 @@ function parseFeatureNames(datasetJSON, dispatcher, prevFeatureNames) {
     });
 
     dispatcher({ type: "UPDATE_FEATURES_MAP", featuresMap: currentFeatureMap })
-
 
     return datasetJSON.featureNames;
 }
