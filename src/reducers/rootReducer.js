@@ -7,7 +7,8 @@ const UPDATE_N_FEATURES = "UPDATE_N_FEATURES";
 const UPDATE_N_LABELS = "UPDATE_N_LABELS";
 const UPDATE_FEATURE_NAMES = "UPDATE_FEATURE_NAMES"
 const UPDATE_FEATURES_MAP = "UPDATE_FEATURES_MAP";
-const UPDATE_TOP_N = "UPDATE_TOP_N"
+const UPDATE_TOP_N = "UPDATE_TOP_N";
+const UPDATE_FEATURES_SIGNIFICANCE = "UPDATE_FEATURES_SIGNIFICANCE";
 
 
 // A Global State used for the Neural Network Visualization
@@ -40,6 +41,7 @@ const initialState = {
     featureNames: "all",
     featuresMap: {},
     topN: 2,
+    featuresSignificance: {},
 
     labels: 2,
     evaluationResult: {},
@@ -86,7 +88,12 @@ export default function rootReducer(state=initialState, action) {
             return state;
 
         case UPDATE_TOP_N:
-            state.topN = action.topN
+            state.topN = action.topN;
+            return state;
+
+        case UPDATE_FEATURES_SIGNIFICANCE:
+            state.featuresSignificance = { ...action.featuresSignificance };
+            return state;
 
         default:
             return state;

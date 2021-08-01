@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -10,14 +10,18 @@ import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import { Divider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-
-import axios from 'axios';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import {
-    useStyles
-} from '../widgets/Grids';
+    CircularProgress
+} from '@material-ui/core';
+import {
+    Slider
+} from '@material-ui/core';
 
+import axios from 'axios';
 
 import { 
     XYPlot,
@@ -29,17 +33,15 @@ import {
 } from 'react-vis';
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import { useSelector, useDispatch } from "react-redux";
-import {
-    CircularProgress
-} from '@material-ui/core';
-import {
-    Slider
-} from '@material-ui/core';
 
+import {
+    useStyles
+} from '../widgets/Grids';
 import { 
     datasetsNamesEndpoint, 
     datasetsEndpoint, 
-    datasetsInformationEndpoint 
+    datasetsInformationEndpoint ,
+    pcaEndpoint
 } from '../apiEndpoints';
 
 
@@ -288,7 +290,6 @@ function FeaturesSelection({ }) {
 
         <div style={{ height: featuresPaperMaxSize, marginLeft: "30%", overflowY: "auto" }}>
             <FormGroup style={{ textAlign: "left" }} col>
-                {/* {JSON.stringify(featuresMap)} */}
                 <FormControlLabel 
                     control={
                         <Checkbox 
@@ -355,37 +356,71 @@ function FeaturesSelection({ }) {
 }
 
 
-// TODO: Remove this after using it as a reference
-// function Epochs({ params, dispatch }) {
-//     const handleEpochsChange = (event, value) => {
-//         let newHP = params;
-//         newHP.hyperparameters.epochs = value;
-//         dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
-//     };
-
-//     return (
-//         <Grid item xs={6}>
-//             <Grid container justify="center">
-//                 <Typography id="discrete-slider-small-steps" gutterBottom>
-//                     Epochs
-//                 </Typography>
-//                 <ParametersSlider
-//                     defaultValue={params.hyperparameters.epochs}
-//                     onChange={handleEpochsChange}
-//                     aria-labelledby="discrete-slider-small-steps"
-//                     step={1}
-//                     min={1}
-//                     max={500}
-//                     marks={epochMarks}
-//                     valueLabelDisplay="auto"
-//                 />
-//             </Grid>
-//         </Grid>
-//     )
-// }
-
-
 function FeaturesSignificance({ }) {
+
+    return (
+        <>
+            <TopNSelection />
+            <TopNFeatures />
+        </>
+    )
+}
+
+
+function TopNFeatures({ }) {
+    let featuresSignificance = useSelector(state => state.featuresSignificance);
+    let featureNames = useSelector(state => state.featureNames)
+    let topN = useSelector(state => state.topN);
+    let datasetName = useSelector(state => state.dataset);
+    let [topNfeaturesAreLoading, setTopNFeaturesLoading] = useState(false);
+    let dispatchTopNFeatures = useDispatch();
+
+    let pcaRequest = {};
+    pcaRequest["dataset_name"] = datasetName;
+    pcaRequest["n_components"] = topN;
+    pcaRequest["features"] = featureNames
+
+    useEffect(() => {
+        setTopNFeaturesLoading(true);
+        axios
+            .post(pcaEndpoint, pcaRequest)
+            .then(res => parseTopNResponse(res.data, dispatchTopNFeatures))
+            .then(set => setTopNFeaturesLoading(false))
+            .catch(err => console.log(err));
+    }, [topN, featureNames])
+
+
+    if (topNfeaturesAreLoading) {
+        return (
+            <>
+                <br />
+                <br />
+                <CircularProgress size={20} color="#212226" />
+            </>
+        )
+    }
+
+
+    return (
+        <div style={{ height: featuresPaperMaxSize / 1.4, marginLeft: "30%", overflowY: "auto" }}>
+            <List dense={true}>
+                {
+                    Object.keys(featuresSignificance).map((feature, percentages) => {
+                        return (
+                            <ListItem>
+                                <span>(Insert Loader Here)</span>
+                                <ListItemText primary={feature}/>
+                            </ListItem>
+                        )
+                    })
+                }
+            </List>
+        </div>
+    )
+}
+
+
+function TopNSelection({ }) {
     let features = useSelector(state => state.featureNames);
     let topN = useSelector(state => state.topN);
     let featuresN = features.length;
@@ -402,13 +437,20 @@ function FeaturesSignificance({ }) {
         topNDispatch({type: "UPDATE_TOP_N", topN: value})
     };
 
+    if (features == "all") {
+        return (
+            <>
+                <br />
+                <CircularProgress size={20} color="#212226" />
+            </>
+        )
+    }
+
     return (
         <>
             <br />
-            <Typography id="discrete-slider-small-steps" gutterBottom>
-                Top N
-            </Typography>
             <ТopNFeaturesSlider
+                defaultValue={topN}
                 onChange={handleTopNChange}
                 step={1}
                 min={2}
@@ -416,14 +458,13 @@ function FeaturesSignificance({ }) {
                 marks={topNMarks}
                 valueLabelDisplay="auto"
             />
-            <p>Top N: {topN}</p>
         </>
     )
 }
 
 
-function TopNFeaturesSelection({ }) {
-
+function parseTopNResponse(responseJSON, dispatcher) {
+    dispatcher({ type: "UPDATE_FEATURES_SIGNIFICANCE", featuresSignificance: responseJSON.FeatureWeights });
 }
 
 

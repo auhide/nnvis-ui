@@ -6,3 +6,4 @@ export const datasetsNamesEndpoint = baseUrl + "datasets/names";
 export const datasetsInformationEndpoint = baseUrl + "datasets/info/";
 export const datasetsEndpoint = baseUrl + "datasets/";
 export const architectureEndpoint = baseUrl + "architecture";
+export const pcaEndpoint = baseUrl + "pca"
