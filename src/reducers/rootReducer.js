@@ -9,6 +9,7 @@ const UPDATE_FEATURE_NAMES = "UPDATE_FEATURE_NAMES"
 const UPDATE_FEATURES_MAP = "UPDATE_FEATURES_MAP";
 const UPDATE_TOP_N = "UPDATE_TOP_N";
 const UPDATE_FEATURES_SIGNIFICANCE = "UPDATE_FEATURES_SIGNIFICANCE";
+const UPDATE_PCA = "UPDATE_PCA";
 
 
 // A Global State used for the Neural Network Visualization
@@ -45,7 +46,9 @@ const initialState = {
 
     labels: 2,
     evaluationResult: {},
-    isEvaluating: null
+    isEvaluating: null,
+
+    pca: false
 };
 
 
@@ -93,6 +96,10 @@ export default function rootReducer(state=initialState, action) {
 
         case UPDATE_FEATURES_SIGNIFICANCE:
             state.featuresSignificance = { ...action.featuresSignificance };
+            return state;
+
+        case UPDATE_PCA:
+            state.pca = action.pca;
             return state;
 
         default:

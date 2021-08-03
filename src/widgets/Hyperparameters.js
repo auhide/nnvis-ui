@@ -1,6 +1,8 @@
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {
     Slider
 } from '@material-ui/core';
@@ -270,6 +272,7 @@ export function Hyperparameters(props) {
             <RandomState params={params} dispatch={dispatch} />
             
             {/* Fourth Row */}
+            <Pca />
             <Momentum params={params} dispatch={dispatch} />
             <Epsilon params={params} dispatch={dispatch} />
 
@@ -412,6 +415,40 @@ function Momentum({ params, dispatch }) {
         return (<div></div>)
     }
 }
+
+
+function Pca({ }) {
+    let pcaIsOn = useSelector(state => state.pca);
+    const dispatchPca = useDispatch(state => state.pca);
+
+    const handlePcaChange = (event) => {
+        let newPca = event.target.checked;
+        dispatchPca({type: "UPDATE_PCA", pca: newPca})
+    };
+
+    return (
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <br />
+                <FormControlLabel 
+                    control={
+                        <Checkbox
+                            checked={pcaIsOn}
+                            onChange={handlePcaChange}
+                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                            label="PCA"
+                            color="default"
+                        />
+                    } 
+                    label="PCA"
+                    labelPlacement="start"
+
+                />
+            </Grid>
+        </Grid>
+    )
+}
+
 
 function Batches({ params, dispatch }) {
     const handleBatchesChange = (event) => {

@@ -15,6 +15,7 @@ export function SendArchitectureButton({ text }) {
     const hyperparams = useSelector(state => state.params);
     const dataset = useSelector(state => state.dataset);
     const featuresMap = useSelector(state => state.featuresMap);
+    const pca = useSelector(state => state.pca);
     
     // Result Management
     const dispatchResult = useDispatch();
@@ -36,7 +37,8 @@ export function SendArchitectureButton({ text }) {
                                         hyperparams,
                                         dispatchResult,
                                         dataset,
-                                        featuresMap
+                                        featuresMap,
+                                        pca
                     )}>
                     <p className="mainText"><b>{text}</b></p>
                 </Button>
@@ -61,7 +63,8 @@ export function SendArchitectureButton({ text }) {
                                         hyperparams,
                                         dispatchResult,
                                         dataset,
-                                        featuresMap
+                                        featuresMap,
+                                        pca
                     )}>
                     <CircularProgress size={20} color="inherit" />
                     <p className="mainText" style={{ marginLeft: 5 }}><b>Training...</b></p>
@@ -72,7 +75,7 @@ export function SendArchitectureButton({ text }) {
     }
 }
 
-function prepareArchitectureRequest(architecture, hyperparams, dataset, featuresMap) {
+function prepareArchitectureRequest(architecture, hyperparams, dataset, featuresMap, pca) {
     
     let request = {};
     request.architecture = {};
@@ -91,6 +94,13 @@ function prepareArchitectureRequest(architecture, hyperparams, dataset, features
 
     // Adding the list of features to the request
     request.features = parseFeaturesMap(featuresMap)
+    
+    // Adding the settings for the PCA
+    request.pca = pca;
+    if (pca) {
+        request.pca_options = {};
+        request.pca_options.n_components = request.features.length;
+    }
 
     return request
 }
@@ -109,8 +119,8 @@ function parseFeaturesMap(featuresMap) {
 }
 
 
-function sendArchitecture(architecture, hyperparams, dispatcher, dataset, featuresMap) {
-    let preparedRequest = prepareArchitectureRequest(architecture, hyperparams, dataset, featuresMap);
+function sendArchitecture(architecture, hyperparams, dispatcher, dataset, featuresMap, pca) {
+    let preparedRequest = prepareArchitectureRequest(architecture, hyperparams, dataset, featuresMap, pca);
     
     // Setting the Evaluation flag to `true`
     dispatcher({ type: "IS_EVALUATING", isEvaluating: true });
