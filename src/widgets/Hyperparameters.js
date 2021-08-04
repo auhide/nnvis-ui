@@ -3,6 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
+import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import {
     Slider
 } from '@material-ui/core';
@@ -433,6 +435,8 @@ function Pca({ }) {
                 <FormControlLabel 
                     control={
                         <Checkbox
+                            icon={<CircleUnchecked />}
+                            checkedIcon={<CircleCheckedFilled />}
                             checked={pcaIsOn}
                             onChange={handlePcaChange}
                             inputProps={{ 'aria-label': 'primary checkbox' }}

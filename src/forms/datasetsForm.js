@@ -422,7 +422,7 @@ function TopNFeatures({ }) {
                                         }}
                                         variant="determinate" 
                                         color="#212226" 
-                                        value={Math.round(significance)} 
+                                        value={Math.ceil(significance)} 
                                     />
                                     <Box
                                         style={{marginLeft: 20, marginTop: 14}}
@@ -434,7 +434,7 @@ function TopNFeatures({ }) {
                                         display="flex"
                                     >
                                         <Typography variant="caption" component="div" color="textSecondary">
-                                            <small>{`${Math.round(significance)}%`}</small>
+                                            <small>{`${Math.ceil(significance)}%`}</small>
                                         </Typography>
                                     </Box>
                                 </span>
