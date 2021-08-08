@@ -3,6 +3,9 @@ import {
     ArchitectureComponents, 
     DatasetsComponents 
 } from './widgets/Config';
+import {
+    Learn
+} from './widgets/Learn';
 
 
 export function NNVis() {
@@ -16,6 +19,9 @@ export function NNVis() {
             </ul>
 
             <Switch> 
+                <Route path="/learn" exact>
+                    <Learn />
+                </Route>
 
                 <Route path = "/" exact>
                     <ArchitectureComponents />
