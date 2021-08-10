@@ -1,153 +1,28 @@
+import { useState } from 'react';
+
 import { motion, useAnimation } from 'framer-motion';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowForwardIosRounded from '@material-ui/icons/ArrowForwardIosRounded';
+import ArrowBackIosRounded from '@material-ui/icons/ArrowBackIosRounded';
 
 
-const neuronColor = '#212226';
+import { TutorialNetwork } from './TutorialNetwork';
+
+
+let maxStep = 3;
+let minStep = 0;
 
 
 export function Learn({ }) {
-    const controls = useAnimation();
+    let [tutorialStep, setTutorialStep] = useState(0);
 
     return (
         <>
-            <Button variant="contained" onClick={
-                () => controls.start({
-                    x: 500
-                })
-            }>Default</Button>
-            
-            {/* Activation 1 moving Xs*/}
-            <MovingValue 
-                startPos={[445, 100]} endPos={[670, 100]} 
-                label={"x"} index={1}
-            />
-            <MovingValue 
-                startPos={[445, 215]} endPos={[670, 100]} 
-                label={"x"} index={2}
-            />
-
-            {/* Activation 2 moving Xs */}
-            <MovingValue 
-                startPos={[445, 100]} endPos={[670, 215]} 
-                label={"x"} index={1}
-            />
-            <MovingValue 
-                startPos={[445, 215]} endPos={[670, 215]} 
-                label={"x"} index={2}
-            />
-            {/* Inputs */}
-            <StaticValue x={445} y={100} value={"x"} subIndex={1} valueColor="white" />
-            <StaticValue x={445} y={215} value={"x"} subIndex={2} valueColor="white" />
-
-            {/* Activations */}
-            <StaticValue x={670} y={100} value={"a"} subIndex={1} valueColor="white" />
-            <StaticValue x={670} y={215} value={"a"} subIndex={2} valueColor="white" />
-
-            {/* Outputs */}
-            <StaticValue x={895} y={100} value={"o"} subIndex={1} valueColor="white" />
-            <StaticValue x={895} y={215} value={"o"} subIndex={2} valueColor="white" />
-
-            {/* Activation Weights */}
-            {/* For a1 */}
-            <StaticValue x={560} y={85} value={"w"} subIndex={11} supIndex={1} />
-            <StaticValue x={480} y={175} value={"w"} subIndex={12} supIndex={1} />
-
-            {/* For a2 */}
-            <StaticValue x={480} y={135} value={"w"} subIndex={21} supIndex={1} />
-            <StaticValue x={560} y={200} value={"w"} subIndex={22} supIndex={1} />
-
-            {/* Activation Weights */}
-            {/* For o1 */}
-            <StaticValue x={780} y={85} value={"w"} subIndex={11} supIndex={2} />
-            <StaticValue x={700} y={175} value={"w"} subIndex={12} supIndex={2} />
-
-            {/* For o2 */}
-            <StaticValue x={700} y={135} value={"w"} subIndex={21} supIndex={2} />
-            <StaticValue x={780} y={200} value={"w"} subIndex={22} supIndex={2} />
-
-            <motion.svg
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 600 600"
-            >
-                {/* Input layer */}
-                <TutorialNeuron x={200} y={50} />
-                <TutorialNeuron x={200} y={100} />
-
-                {/* Hidden layer */}
-                <TutorialSynapse 
-                    x1={200} y1={50} 
-                    x2={300} y2={50} 
-                />
-                <TutorialSynapse 
-                    x1={200} y1={100} 
-                    x2={300} y2={50} 
-                />
-                <TutorialNeuron x={300} y={50} />
-
-                <TutorialSynapse 
-                    x1={200} y1={50} 
-                    x2={300} y2={100} 
-                />
-                <TutorialSynapse 
-                    x1={200} y1={100} 
-                    x2={300} y2={100} 
-                />
-                <TutorialNeuron x={300} y={100} />
-
-                {/* Output layer */}
-                <TutorialSynapse 
-                    x1={300} y1={50} 
-                    x2={400} y2={50} 
-                />
-                <TutorialSynapse 
-                    x1={300} y1={100} 
-                    x2={400} y2={50} 
-                />
-                <TutorialNeuron x={400} y={50} />
-
-                <TutorialSynapse 
-                    x1={300} y1={50} 
-                    x2={400} y2={100} 
-                />
-                <TutorialSynapse 
-                    x1={300} y1={100} 
-                    x2={400} y2={100} 
-                />
-                <TutorialNeuron x={400} y={100} />
-
-                    
-            </motion.svg>
+            {tutorialStep}
+            <ChangeStepButtons tutorialStep={tutorialStep} stepSetter={setTutorialStep} />
+            <TutorialAnimation tutorialStep={tutorialStep} />
+            <TutorialNetwork />
         </>
-    )
-}
-
-
-function TutorialNeuron({ x, y }) {
-    return (
-        <motion.circle
-            x={x} y={y} r={10} fill={neuronColor} stroke-width="3" stroke={neuronColor}
-            // whileHover={{ scale: 1.1 }} 
-            // animate={{
-            //     scale: [1, 1, 1.1, 1, 1],
-            // }}
-            // transition={{
-            //     type: "spring",
-            //     duration: 0.6,
-            //     ease: "easeInOut",
-            //     times: [0, 0.2, 0.5, 0.8, 1],
-            //     loop: Infinity
-            // }}
-        />
-    )
-}
-
-function TutorialSynapse({ x1, y1, x2, y2 }) {
-    return (
-        <motion.line
-            x1={x1} y1={y1} 
-            x2={x2} y2={y2} 
-            fill={neuronColor} stroke-width="3" stroke={neuronColor}
-        />
     )
 }
 
@@ -160,10 +35,14 @@ function MovingValue({ startPos, endPos, label, index }) {
         <>
             <motion.div style={{ position: "absolute" }}
                 x={startX} y={startY}
-                animate={{x: endX, y: endY, opacity: 0.2}}
+                animate={{
+                    x: endX, y: endY, 
+                    opacity: 0.2,
+                    scale: [2, 1.5, 1, 1, 1]
+                }}
                 transition={{
                     type: "spring",
-                    duration: 2.0,
+                    duration: 2,
                     ease: "easeInOut",
                     times: [0, 0.4, 0.7, 0.8, 1],
                     loop: Infinity
@@ -181,41 +60,95 @@ function MovingValue({ startPos, endPos, label, index }) {
     );
 }
 
-function StaticValue({ x, y, value, subIndex, supIndex, valueColor }) {
-    let color = neuronColor;
 
-    if (valueColor != null) {
-        color = valueColor;
+function TutorialAnimation({ tutorialStep }) {
+
+    switch (tutorialStep) {
+        case 0:
+            return (
+                <>
+                    <MovingValue 
+                        startPos={[445, 100]} endPos={[670, 100]} 
+                        label={"x"} index={1}
+                    />
+                    <MovingValue 
+                        startPos={[445, 215]} endPos={[670, 100]} 
+                        label={"x"} index={2}
+                    />
+                </>
+            );
+        case 1:
+            return (
+                <>
+                    <MovingValue 
+                        startPos={[445, 100]} endPos={[670, 215]} 
+                        label={"x"} index={1}
+                    />
+                    <MovingValue 
+                        startPos={[445, 215]} endPos={[670, 215]} 
+                        label={"x"} index={2}
+                    />
+                </>
+            );
+        case 2:
+            return (
+                <>
+                    <MovingValue 
+                        startPos={[670, 100]} endPos={[895, 100]} 
+                        label={"a"} index={1}
+                    />
+                    <MovingValue 
+                        startPos={[670, 215]} endPos={[895, 100]} 
+                        label={"a"} index={2}
+                    />
+                </>
+            );
+        case 3:
+            return (
+                <>
+                    <MovingValue 
+                        startPos={[670, 100]} endPos={[895, 215]} 
+                        label={"a"} index={1}
+                    />
+                    <MovingValue 
+                        startPos={[670, 215]} endPos={[895, 215]} 
+                        label={"a"} index={2}
+                    />
+                </>
+            );
+        default:
+            return <></>;
     }
+}
 
-    if (supIndex != null && subIndex != null) {
-        return (
-            <motion.div style={{ position: "absolute", color: color }}
-                x={x} y={y}
-            >
-                {value}<sup>{supIndex}</sup><sub>{subIndex}</sub>
-            </motion.div>
-        );
+
+function ChangeStepButtons({ tutorialStep, stepSetter }) {
+    return (
+        <>
+            <br />
+            <IconButton onClick={() => decrementStep(tutorialStep, stepSetter)} aria-label="arrow-backward">
+                <ArrowBackIosRounded />
+            </IconButton>
+
+            <IconButton onClick={() => incrementStep(tutorialStep, stepSetter)} aria-label="arrow-forward">
+                <ArrowForwardIosRounded />
+            </IconButton>
+        </>
+    );
+}
+
+
+function incrementStep(currentStep, stepSetter) {
+    
+    if (currentStep < maxStep) {
+        stepSetter(++currentStep);
     }
+}
 
-    if (subIndex != null){
-        return (
-            <motion.div style={{ position: "absolute", color: color }}
-                x={x} y={y}
-            >
-                {value}<sub>{subIndex}</sub>
-            </motion.div>
-        );
+
+function decrementStep(currentStep, stepSetter) {
+    
+    if (currentStep > minStep) {
+        stepSetter(--currentStep);
     }
-
-    if (subIndex == null && supIndex == null) {
-        return (
-            <motion.div style={{ position: "absolute", color: color }}
-                x={x} y={y}
-            >
-                {value}
-            </motion.div>
-        );
-    }
-
 }
