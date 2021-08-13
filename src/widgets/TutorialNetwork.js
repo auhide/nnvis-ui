@@ -41,9 +41,6 @@ export function TutorialNetwork({  }) {
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 600 600"
             >
-                {/* Input layer */}
-                <TutorialNeuron x={200} y={50} />
-                <TutorialNeuron x={200} y={100} />
 
                 {/* Hidden layer */}
                 <TutorialSynapse 
@@ -54,7 +51,6 @@ export function TutorialNetwork({  }) {
                     x1={200} y1={100} 
                     x2={300} y2={50} 
                 />
-                <TutorialNeuron x={300} y={50} />
 
                 <TutorialSynapse 
                     x1={200} y1={50} 
@@ -64,7 +60,6 @@ export function TutorialNetwork({  }) {
                     x1={200} y1={100} 
                     x2={300} y2={100} 
                 />
-                <TutorialNeuron x={300} y={100} />
 
                 {/* Output layer */}
                 <TutorialSynapse 
@@ -75,7 +70,6 @@ export function TutorialNetwork({  }) {
                     x1={300} y1={100} 
                     x2={400} y2={50} 
                 />
-                <TutorialNeuron x={400} y={50} />
 
                 <TutorialSynapse 
                     x1={300} y1={50} 
@@ -85,6 +79,17 @@ export function TutorialNetwork({  }) {
                     x1={300} y1={100} 
                     x2={400} y2={100} 
                 />
+
+                {/* Input layer */}
+                <TutorialNeuron x={200} y={50} />
+                <TutorialNeuron x={200} y={100} />
+
+                {/* Hidden layer */}
+                <TutorialNeuron x={300} y={50} />
+                <TutorialNeuron x={300} y={100} />
+
+                {/* Output layer */}
+                <TutorialNeuron x={400} y={50} />
                 <TutorialNeuron x={400} y={100} />
             </motion.svg>
         </>
@@ -96,17 +101,6 @@ function TutorialNeuron({ x, y }) {
     return (
         <motion.circle
             x={x} y={y} r={10} fill={neuronColor} stroke-width="3" stroke={neuronColor}
-            // whileHover={{ scale: 1.1 }} 
-            // animate={{
-            //     scale: [1, 1, 1.1, 1, 1],
-            // }}
-            // transition={{
-            //     type: "spring",
-            //     duration: 0.6,
-            //     ease: "easeInOut",
-            //     times: [0, 0.2, 0.5, 0.8, 1],
-            //     loop: Infinity
-            // }}
         />
     )
 }

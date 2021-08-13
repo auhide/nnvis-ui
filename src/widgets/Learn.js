@@ -5,8 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIosRounded from '@material-ui/icons/ArrowForwardIosRounded';
 import ArrowBackIosRounded from '@material-ui/icons/ArrowBackIosRounded';
 
-
 import { TutorialNetwork } from './TutorialNetwork';
+import { EquationGenerator } from './Formulas';
 
 
 let maxStep = 3;
@@ -19,6 +19,7 @@ export function Learn({ }) {
     return (
         <>
             {tutorialStep}
+            <EquationGenerator tutorialStep={tutorialStep} />
             <ChangeStepButtons tutorialStep={tutorialStep} stepSetter={setTutorialStep} />
             <TutorialAnimation tutorialStep={tutorialStep} />
             <TutorialNetwork />
