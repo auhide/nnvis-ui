@@ -27,9 +27,13 @@ export function Learn({ }) {
 }
 
 
-function MovingValue({ startPos, endPos, label, index }) {
+function MovingValue({ startPos, endPos, label, index, isVisible }) {
     let [startX, startY] = startPos;
     let [endX, endY] = endPos;
+
+    if (!isVisible) {
+        return <></>
+    }
 
     return (
         <>
@@ -38,7 +42,7 @@ function MovingValue({ startPos, endPos, label, index }) {
                 animate={{
                     x: endX, y: endY, 
                     opacity: 0.2,
-                    scale: [2, 1.5, 1, 1, 1]
+                    scale: [2, 1.5, 1, 1, 1],
                 }}
                 transition={{
                     type: "spring",
@@ -50,75 +54,70 @@ function MovingValue({ startPos, endPos, label, index }) {
             >
                 {label}<sub>{index}</sub>
             </motion.div>
-
-            <motion.div style={{ position: "absolute" }}
-                x={startX} y={startY}
-            >
-                {label}<sub>{index}</sub>
-            </motion.div>
         </>
     );
 }
 
 
 function TutorialAnimation({ tutorialStep }) {
-
-    switch (tutorialStep) {
-        case 0:
-            return (
-                <>
-                    <MovingValue 
-                        startPos={[445, 100]} endPos={[670, 100]} 
-                        label={"x"} index={1}
-                    />
-                    <MovingValue 
-                        startPos={[445, 215]} endPos={[670, 100]} 
-                        label={"x"} index={2}
-                    />
-                </>
-            );
-        case 1:
-            return (
-                <>
-                    <MovingValue 
-                        startPos={[445, 100]} endPos={[670, 215]} 
-                        label={"x"} index={1}
-                    />
-                    <MovingValue 
-                        startPos={[445, 215]} endPos={[670, 215]} 
-                        label={"x"} index={2}
-                    />
-                </>
-            );
-        case 2:
-            return (
-                <>
-                    <MovingValue 
-                        startPos={[670, 100]} endPos={[895, 100]} 
-                        label={"a"} index={1}
-                    />
-                    <MovingValue 
-                        startPos={[670, 215]} endPos={[895, 100]} 
-                        label={"a"} index={2}
-                    />
-                </>
-            );
-        case 3:
-            return (
-                <>
-                    <MovingValue 
-                        startPos={[670, 100]} endPos={[895, 215]} 
-                        label={"a"} index={1}
-                    />
-                    <MovingValue 
-                        startPos={[670, 215]} endPos={[895, 215]} 
-                        label={"a"} index={2}
-                    />
-                </>
-            );
-        default:
-            return <></>;
+    let chosenAnimation = null;
+    // Doing it that way, because triggering these animations at random times
+    // did some random stuff, not sure why :(.
+    let animationsVisibility = {
+        0: false,
+        1: false,
+        2: false,
+        3: false,
     }
+
+    animationsVisibility[tutorialStep] = true;
+    
+    return (
+        <>
+            <>
+                <MovingValue 
+                    startPos={[445, 100]} endPos={[670, 100]} 
+                    label={"x"} index={1} isVisible={animationsVisibility[0]}
+                />
+                <MovingValue 
+                    startPos={[445, 215]} endPos={[670, 100]} 
+                    label={"x"} index={2} isVisible={animationsVisibility[0]}
+                />
+            </>
+            
+            <>
+                <MovingValue 
+                    startPos={[445, 100]} endPos={[670, 215]} 
+                    label={"x"} index={1} isVisible={animationsVisibility[1]}
+                />
+                <MovingValue 
+                    startPos={[445, 215]} endPos={[670, 215]} 
+                    label={"x"} index={2} isVisible={animationsVisibility[1]}
+                />
+            </>
+
+            <>
+                <MovingValue 
+                    startPos={[670, 100]} endPos={[895, 100]} 
+                    label={"a"} index={1} isVisible={animationsVisibility[2]}
+                />
+                <MovingValue 
+                    startPos={[670, 215]} endPos={[895, 100]} 
+                    label={"a"} index={2} isVisible={animationsVisibility[2]}
+                />
+            </>
+            <>
+                <MovingValue 
+                    startPos={[670, 100]} endPos={[895, 215]} 
+                    label={"a"} index={1} isVisible={animationsVisibility[3]}
+                />
+                <MovingValue 
+                    startPos={[670, 215]} endPos={[895, 215]} 
+                    label={"a"} index={2} isVisible={animationsVisibility[3]}
+                />
+            </>
+        </>
+    );
 }
 
 
