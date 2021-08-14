@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIosRounded from '@material-ui/icons/ArrowForwardIosRounded';
 import ArrowBackIosRounded from '@material-ui/icons/ArrowBackIosRounded';
@@ -19,8 +19,8 @@ export function Learn({ }) {
     return (
         <>
             {tutorialStep}
-            <EquationGenerator tutorialStep={tutorialStep} />
             <ChangeStepButtons tutorialStep={tutorialStep} stepSetter={setTutorialStep} />
+            <EquationGenerator tutorialStep={tutorialStep} />
             <TutorialAnimation tutorialStep={tutorialStep} />
             <TutorialNetwork />
         </>

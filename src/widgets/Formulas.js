@@ -19,3 +19,15 @@ export function EquationGenerator({ tutorialStep }) {
         </MathJaxContext>
     );
 }
+
+export function GeneralEquationGenerator({ tutorialStep }) {
+    const config = {
+        loader: { load: ["input/asciimath"] }
+    };
+
+    return (
+        <MathJaxContext config={config}>
+            <MathJax dynamic>{equations[tutorialStep]}</MathJax>
+        </MathJaxContext>
+    );
+}

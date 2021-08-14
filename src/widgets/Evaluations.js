@@ -231,9 +231,14 @@ function prepareForChart(rawData) {
 function Accuracy({ result }) {
     
     if (evaluationResultIsValid(result)) {
+        let greenColor = result["Data"]["Accuracy"] * 255;
+        let redColor = (255 - greenColor) * 2;
+
         return (
             <>
-                <p class="mainText">Test Accuracy: <b>{result["Data"]["Accuracy"]}</b></p>
+                <p class="mainText">Test Accuracy: <b style={{
+                    color: `rgb(${redColor}, ${greenColor}, 0)`
+                }}>{result["Data"]["Accuracy"]}</b></p>
             </>
         )
     }

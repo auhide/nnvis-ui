@@ -1,8 +1,9 @@
+import { useState } from "react";
+
+import { useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { useSelector } from "react-redux";
-import { Divider } from '@material-ui/core';
 
 import { Network } from '../nn/NeuralNet';
 import { Hyperparameters } from './Hyperparameters';
@@ -71,33 +72,33 @@ export function DrawGrids() {
   const classes = useStyles();
 
   return (
-      <Grid container className={classes.root} spacing={1}>
-          <Grid item xs={3} >
-            <Grid container justify="center">
-                <Paper className={classes.hyperparamsPaperOptions}>
-                  <Hyperparameters />
-                </Paper>
-            </Grid>
+    <Grid container className={classes.root} spacing={1}>
+        <Grid item xs={3} >
+          <Grid container justify="center">
+              <Paper className={classes.hyperparamsPaperOptions}>
+                <Hyperparameters />
+              </Paper>
           </Grid>
-          
-          <Grid item xs={6} >
-            <Grid container justify="center">
-                <Paper className={classes.paperArch}>
-                  <TrainingButtonGrids />
-                  <br />
-                  <Network />
-                </Paper>
-            </Grid>
+        </Grid>
+        
+        <Grid item xs={6} >
+          <Grid container justify="center">
+              <Paper className={classes.paperArch}>
+                <TrainingButtonGrids />
+                <br />
+                <Network />
+              </Paper>
           </Grid>
+        </Grid>
 
-          <Grid item xs={3} >
-            <Grid container justify="center">
-                <Paper className={classes.evaluationsPaperOptions}>
-                  <Evaluations />
-                </Paper>
-            </Grid>
+        <Grid item xs={3} >
+          <Grid container justify="center">
+              <Paper className={classes.evaluationsPaperOptions}>
+                <Evaluations />
+              </Paper>
           </Grid>
-      </Grid>
+        </Grid>
+    </Grid>
   );
 }
 
