@@ -11,8 +11,8 @@ const defaultNeuronRadius = 15;
 
 // Constants - Synapses
 const defaultSynapseWidth = 4;
-const synapseColor = '#212226';
-const outputNeuronColor = "#F2F2F2";
+export const synapseColor = '#212226';
+export const outputNeuronColor = "#F2F2F2";
 
 // Animation Delays
 let repeatDelays = [0.1, 0.2, 0.3, 0.4, 0.5];

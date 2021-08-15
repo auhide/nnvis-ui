@@ -8,24 +8,17 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 import { useStyles } from './Grids';
-import { TutorialNetwork } from './TutorialNetwork';
+import { TutorialNetwork, neuronColor } from './TutorialNetwork';
 import { EquationGenerator, GeneralEquationGenerator } from './Formulas';
 
 
-let maxStep = 3;
+let maxStep = 4;
 let minStep = 0;
 
 
 export function Learn({ }) {
     let [tutorialStep, setTutorialStep] = useState(0);
     let classes = useStyles();
-    let tutorialNetwork = {
-        height: 750,
-        alignItems: "center",
-        justify: "center",
-        position: "absolute",
-        backgroundColor: "blue"
-    }
 
     return (
         <>
@@ -45,7 +38,7 @@ export function Learn({ }) {
                     <Paper style={{ height: 400 }}>
                         <ChangeStepButtons tutorialStep={tutorialStep} stepSetter={setTutorialStep} />
                         <TutorialAnimation tutorialStep={tutorialStep} />
-                        <TutorialNetwork />
+                        <TutorialNetwork tutorialStep={tutorialStep} />
                     </Paper>
                 </Grid>
             </Grid>
@@ -87,7 +80,6 @@ function MovingValue({ startPos, endPos, label, index, isVisible }) {
 
 
 function TutorialAnimation({ tutorialStep }) {
-    let chosenAnimation = null;
     // Doing it that way, because triggering these animations at random times
     // did some bizarre stuff, not sure why :(.
     let animationsVisibility = {
@@ -95,6 +87,7 @@ function TutorialAnimation({ tutorialStep }) {
         1: false,
         2: false,
         3: false,
+        4: false
     }
 
     animationsVisibility[tutorialStep] = true;

@@ -1,10 +1,19 @@
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { synapseColor, outputNeuronColor } from '../nn/stylistic'
 
 
-const neuronColor = '#212226';
+const neuronColor = synapseColor;
 
 
-export function TutorialNetwork({  }) {
+export function TutorialNetwork({ tutorialStep }) {
+    let showExpectedOutputs = false;
+
+    switch(tutorialStep) {
+        case 4:
+            showExpectedOutputs = true;
+            break;
+    }
+
     return (
         <>
             {/* Inputs */}
@@ -36,6 +45,8 @@ export function TutorialNetwork({  }) {
             {/* For o2 */}
             <StaticValue x={700} y={135} value={"w"} subIndex={21} supIndex={2} />
             <StaticValue x={780} y={200} value={"w"} subIndex={22} supIndex={2} />
+
+            <OriginalOutputYs visualized={showExpectedOutputs} />
 
             <motion.svg
                 xmlns="http://www.w3.org/2000/svg" 
@@ -89,18 +100,89 @@ export function TutorialNetwork({  }) {
                 <TutorialNeuron x={300} y={100} />
 
                 {/* Output layer */}
-                <TutorialNeuron x={400} y={50} />
-                <TutorialNeuron x={400} y={100} />
+                <TutorialNeuron x={400} y={50} isAnimated={showExpectedOutputs} destination={[445, 58]} />
+                <TutorialNeuron x={400} y={100} isAnimated={showExpectedOutputs} destination={[445, 88]}/>
+
+                <OriginalOutputNeurons visualized={showExpectedOutputs} />
+
             </motion.svg>
         </>
     );
 }
 
 
-function TutorialNeuron({ x, y }) {
+function OriginalOutputYs({ visualized }) {
+    if (visualized) {
+        return (
+            <>
+                {/* Expected predictions */}
+                {/* For y1 */}
+                <StaticValue x={1000} y={120} value={"y"} subIndex={1} valueColor={neuronColor} />
+
+                {/* For y2 */}
+                <StaticValue x={1000} y={185} value={"y"} subIndex={2} valueColor={neuronColor} />
+            </>
+        );
+    }
+
+    return (
+        <></>
+    );
+}
+
+
+function OriginalOutputNeurons({ visualized }) {
+    if (visualized) {
+        return (
+            <>
+                {/* Expected outputs */}
+                <TutorialNeuron x={445} y={58} color={outputNeuronColor} />
+                <TutorialNeuron x={445} y={88} color={outputNeuronColor} />
+            </>
+        );
+    }
+
+    return (
+        <></>
+    );
+}
+
+
+function TutorialNeuron({ x, y, isAnimated, color, stroke, destination }) {
+    if (color == null) { color = neuronColor; }
+    if (stroke == null) { stroke = neuronColor; }
+
+    if (isAnimated) {
+        let [endX, endY] = destination;
+
+        return (
+            <>
+                <motion.circle
+                    x={x} y={y} r={10} fill={color} stroke-width="3" stroke={stroke}
+                />
+                <motion.circle
+                    x={x} y={y} r={10} fill={color} stroke-width="3" stroke={stroke}
+                    animate={{
+                        x: [x, endX, x],
+                        y: [y, endY, y],
+                        opacity: [1, 1, 0.2],
+                        scale: [1, 1, 1.2, 1, 1],
+                    }}
+                    transition={{
+                        type: "spring",
+                        duration: 2,
+                        ease: "easeInOut",
+                        times: [0, 0.7, 0.8, 0.9, 1],
+                        loop: Infinity
+                    }}
+                />
+            </>
+        );
+    }
+
     return (
         <motion.circle
-            x={x} y={y} r={10} fill={neuronColor} stroke-width="3" stroke={neuronColor}
+            x={x} y={y} r={10} fill={color} stroke-width="3" stroke={stroke}
         />
     )
 }
