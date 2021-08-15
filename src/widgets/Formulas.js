@@ -18,8 +18,8 @@ const generalEquations = {
 }
 
 const equationTitles = {
-    0: "Activations Of The 1st Hidden Layer",
-    1: "Activations Of The 1st Hidden Layer",
+    0: "Activations Of The Hidden Layer",
+    1: "Activations Of The Hidden Layer",
     2: "Activations Of The Output Layer",
     3: "Activations Of The Output Layer",
     4: "Choose a Loss Function"
