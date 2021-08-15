@@ -4,9 +4,12 @@ import { motion } from 'framer-motion';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIosRounded from '@material-ui/icons/ArrowForwardIosRounded';
 import ArrowBackIosRounded from '@material-ui/icons/ArrowBackIosRounded';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
+import { useStyles } from './Grids';
 import { TutorialNetwork } from './TutorialNetwork';
-import { EquationGenerator } from './Formulas';
+import { EquationGenerator, GeneralEquationGenerator } from './Formulas';
 
 
 let maxStep = 3;
@@ -15,14 +18,37 @@ let minStep = 0;
 
 export function Learn({ }) {
     let [tutorialStep, setTutorialStep] = useState(0);
+    let classes = useStyles();
+    let tutorialNetwork = {
+        height: 750,
+        alignItems: "center",
+        justify: "center",
+        position: "absolute",
+        backgroundColor: "blue"
+    }
 
     return (
         <>
             {tutorialStep}
-            <ChangeStepButtons tutorialStep={tutorialStep} stepSetter={setTutorialStep} />
-            <EquationGenerator tutorialStep={tutorialStep} />
-            <TutorialAnimation tutorialStep={tutorialStep} />
-            <TutorialNetwork />
+            <Grid container className={classes.root} spacing={1}>
+                <Grid item xs={6}>
+                    <Paper style={{ height: 150 }}>
+                        <EquationGenerator tutorialStep={tutorialStep} />
+                    </Paper>
+                </Grid>
+                <Grid item xs={6}>
+                    <Paper style={{ height: 150 }}>
+                        <GeneralEquationGenerator tutorialStep={tutorialStep} />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper style={{ height: 400 }}>
+                        <ChangeStepButtons tutorialStep={tutorialStep} stepSetter={setTutorialStep} />
+                        <TutorialAnimation tutorialStep={tutorialStep} />
+                        <TutorialNetwork />
+                    </Paper>
+                </Grid>
+            </Grid>
         </>
     )
 }
@@ -43,11 +69,11 @@ function MovingValue({ startPos, endPos, label, index, isVisible }) {
                 animate={{
                     x: endX, y: endY, 
                     opacity: 0.2,
-                    scale: [2, 1.5, 1, 1, 1],
+                    scale: [3, 1.5, 1, 1, 1],
                 }}
                 transition={{
                     type: "spring",
-                    duration: 2,
+                    duration: 2.5,
                     ease: "easeInOut",
                     times: [0, 0.4, 0.7, 0.8, 1],
                     loop: Infinity
@@ -63,7 +89,7 @@ function MovingValue({ startPos, endPos, label, index, isVisible }) {
 function TutorialAnimation({ tutorialStep }) {
     let chosenAnimation = null;
     // Doing it that way, because triggering these animations at random times
-    // did some random stuff, not sure why :(.
+    // did some bizarre stuff, not sure why :(.
     let animationsVisibility = {
         0: false,
         1: false,
