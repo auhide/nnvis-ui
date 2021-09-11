@@ -12,7 +12,7 @@ import { TutorialNetwork, neuronColor } from './TutorialNetwork';
 import { EquationGenerator, GeneralEquationGenerator } from './Formulas';
 
 
-let maxStep = 4;
+let maxStep = 8;
 let minStep = 0;
 
 
@@ -25,17 +25,17 @@ export function Learn({ }) {
             {tutorialStep}
             <Grid container className={classes.root} spacing={1}>
                 <Grid item xs={6}>
-                    <Paper style={{ height: 150 }}>
+                    <Paper className={classes.learnPageFormulasPaper} >
                         <EquationGenerator tutorialStep={tutorialStep} />
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
-                    <Paper style={{ height: 150 }}>
+                    <Paper className={classes.learnPageFormulasPaper} >
                         <GeneralEquationGenerator tutorialStep={tutorialStep} />
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>
-                    <Paper style={{ height: 400 }}>
+                    <Paper className={classes.learnPageAnimPaper} style={{ height: 400 }}>
                         <ChangeStepButtons tutorialStep={tutorialStep} stepSetter={setTutorialStep} />
                         <TutorialAnimation tutorialStep={tutorialStep} />
                         <TutorialNetwork tutorialStep={tutorialStep} />

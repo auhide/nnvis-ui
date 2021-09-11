@@ -63,6 +63,14 @@ export const useStyles = makeStyles((theme) => ({
       justify: "center",
       position: "absolute",
       backgroundColor: paperColor
+    },
+    learnPageFormulasPaper: {
+      height: 160,
+      backgroundColor: paperColor
+    },
+    learnPageAnimPaper: {
+      height: 400,
+      backgroundColor: paperColor
     }
 }));
 
