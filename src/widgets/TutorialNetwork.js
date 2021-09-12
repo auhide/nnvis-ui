@@ -16,7 +16,7 @@ export function TutorialNetwork({ tutorialStep }) {
         case 4:
             currentOutputAnimationLabels = <> 
                 <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
-                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} />
             </>;
             currentOutputAnimation = <>
                 <AnimatedNeuron x={400} y={50} destination={[445, 58]} 
@@ -46,6 +46,12 @@ export function TutorialNetwork({ tutorialStep }) {
             </>;
 
             currentOutputAnimation = <> 
+                {/* Updated synapse animation */}
+                <AnimatedSynapse 
+                    x1={300} y1={50} 
+                    x2={400} y2={50} 
+                /> 
+
                 {/* y1 to o1 */}
                 <AnimatedNeuron 
                     color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
@@ -85,6 +91,7 @@ export function TutorialNetwork({ tutorialStep }) {
             </>;
 
             currentOutputAnimation = <> 
+
                 {/* y1 to o1 */}
                 <AnimatedNeuron 
                     color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
@@ -113,6 +120,12 @@ export function TutorialNetwork({ tutorialStep }) {
                 <OriginalOutputNeuron visualized={true} position={[445, 58]} />
                 {/* y2 */}
                 <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+
+                {/* Updated Synapse */}
+                <AnimatedSynapse 
+                    x1={300} y1={100} 
+                    x2={400} y2={50} 
+                />
             </>;
             break;
 
@@ -124,6 +137,11 @@ export function TutorialNetwork({ tutorialStep }) {
             </>;
 
             currentOutputAnimation = <> 
+                <AnimatedSynapse 
+                    x1={300} y1={50} 
+                    x2={400} y2={100} 
+                />
+
                 {/* y2 to o2 */}
                 <AnimatedNeuron 
                     color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
@@ -152,6 +170,7 @@ export function TutorialNetwork({ tutorialStep }) {
                 <OriginalOutputNeuron visualized={true} position={[445, 58]} />
                 {/* y2 */}
                 <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+
             </>;
             break;
 
@@ -191,6 +210,11 @@ export function TutorialNetwork({ tutorialStep }) {
                 <OriginalOutputNeuron visualized={true} position={[445, 58]} />
                 {/* y2 */}
                 <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+
+                <AnimatedSynapse 
+                    x1={300} y1={100} 
+                    x2={400} y2={100} 
+                />
             </>;
             break;
 
@@ -202,6 +226,11 @@ export function TutorialNetwork({ tutorialStep }) {
             </>;
 
             currentOutputAnimation = <> 
+                <AnimatedSynapse 
+                    x1={200} y1={50} 
+                    x2={300} y2={50} 
+                />
+
                 {/* y2 to o2 */}
                 <AnimatedNeuron 
                     color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
@@ -331,6 +360,11 @@ export function TutorialNetwork({ tutorialStep }) {
                 <OriginalOutputNeuron visualized={true} position={[445, 58]} />
                 {/* y2 */}
                 <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+
+                <AnimatedSynapse 
+                    x1={200} y1={100} 
+                    x2={300} y2={50} 
+                />
             </>;
             break;
 
@@ -342,6 +376,11 @@ export function TutorialNetwork({ tutorialStep }) {
             </>;
 
             currentOutputAnimation = <> 
+                <AnimatedSynapse 
+                    x1={200} y1={50} 
+                    x2={300} y2={100} 
+                />
+
                 {/* y2 to o2 */}
                 <AnimatedNeuron 
                     color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
@@ -412,6 +451,7 @@ export function TutorialNetwork({ tutorialStep }) {
             </>;
 
             currentOutputAnimation = <> 
+
                 {/* y2 to o2 */}
                 <AnimatedNeuron 
                     color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
@@ -471,6 +511,12 @@ export function TutorialNetwork({ tutorialStep }) {
                 <OriginalOutputNeuron visualized={true} position={[445, 58]} />
                 {/* y2 */}
                 <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+                
+                <AnimatedSynapse 
+                    x1={200} y1={100} 
+                    x2={300} y2={100} 
+                />
+
             </>;
             break;
 
@@ -557,6 +603,9 @@ export function TutorialNetwork({ tutorialStep }) {
                     x1={300} y1={100} 
                     x2={400} y2={100} 
                 />
+                
+                {/* Output layer */}
+                {currentOutputAnimation}
 
                 {/* Input layer */}
                 <TutorialNeuron x={200} y={50} />
@@ -566,8 +615,6 @@ export function TutorialNetwork({ tutorialStep }) {
                 <TutorialNeuron x={300} y={50} />
                 <TutorialNeuron x={300} y={100} />
 
-                {/* Output layer */}
-                {currentOutputAnimation}
 
             </motion.svg>
         </>
@@ -659,12 +706,23 @@ function TutorialSynapse({ x1, y1, x2, y2 }) {
     )
 }
 
-function AnimationSynapse({ x1, y1, x2, y2 }) {
+function AnimatedSynapse({ x1, y1, x2, y2 }) {
     return (
         <motion.line
             x1={x1} y1={y1} 
             x2={x2} y2={y2} 
-            fill={"white"} stroke-width="3" stroke={neuronColor}
+            stroke-width="3" stroke={neuronColor}
+            animate={{
+                strokeWidth: ["1", "2", "10", "3", "1"],
+                opacity: [1, 1, 0.5, 1, 1]
+            }}
+            transition={{
+                type: "spring",
+                duration: 2,
+                ease: "easeInOut",
+                times: [0, 0.7, 0.8, 0.9, 1],
+                loop: Infinity
+            }}
         />
     )
 }
