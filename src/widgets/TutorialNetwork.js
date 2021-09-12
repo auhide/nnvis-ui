@@ -138,7 +138,7 @@ export function TutorialNetwork({ tutorialStep }) {
                     scale={[1, 0.5, 1.2, 0.5, 1]}
                 />
 
-                {/* a1 to w11 */}
+                {/* a1 to w21 */}
                 <AnimatedNeuron 
                     color={neuronColor} x={300} y={50} destination={[350, 75]} 
                     times={[0, 0.7, 0.8, 0.9, 1]}
@@ -180,6 +180,286 @@ export function TutorialNetwork({ tutorialStep }) {
                 {/* a2 to w22 */}
                 <AnimatedNeuron 
                     color={neuronColor} x={300} y={100} destination={[350, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+
+        // For 1st layer w11 backprop
+        case 9:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y2 to o2 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+                {/* y1 to o1 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o2 to w21 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={100} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a1 to w21 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* o1 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={50} destination={[350, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a1 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[350, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a1 to w11^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[250, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* x1 to w11^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={200} y={50} destination={[250, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+
+        // For 1st layer w12 backprop
+        case 10:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y2 to o2 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+                {/* y1 to o1 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o2 to w21 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={100} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a1 to w21 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* o1 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={50} destination={[350, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a1 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[350, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a1 to w12^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[250, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* x1 to w12^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={200} y={100} destination={[250, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+
+        // For 1st layer w21 backprop
+        case 11:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y2 to o2 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+                {/* y1 to o1 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o2 to w22 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={100} destination={[350, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a2 to w22 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[350, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* o1 to w12 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={50} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a2 to w12 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a2 to w21^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[250, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* x1 to w21^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={200} y={50} destination={[250, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+        
+        // For 1st layer w22 backprop
+        case 12:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y2 to o2 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+                {/* y1 to o1 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o2 to w22 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={100} destination={[350, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a2 to w22 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[350, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* o1 to w12 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={50} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* a2 to w12 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a2 to w22^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[250, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+                {/* x2 to w22^1 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={200} y={100} destination={[250, 100]} 
                     times={[0, 0.7, 0.8, 0.9, 1]}
                     scale={[1, 0.5, 1.2, 0.5, 1]}
                 />
@@ -286,7 +566,6 @@ export function TutorialNetwork({ tutorialStep }) {
                 <TutorialNeuron x={300} y={50} />
                 <TutorialNeuron x={300} y={100} />
 
-                {/* Error calculation animation */}
                 {/* Output layer */}
                 {currentOutputAnimation}
 
@@ -380,6 +659,15 @@ function TutorialSynapse({ x1, y1, x2, y2 }) {
     )
 }
 
+function AnimationSynapse({ x1, y1, x2, y2 }) {
+    return (
+        <motion.line
+            x1={x1} y1={y1} 
+            x2={x2} y2={y2} 
+            fill={"white"} stroke-width="3" stroke={neuronColor}
+        />
+    )
+}
 
 function StaticValue({ x, y, value, subIndex, supIndex, valueColor }) {
     let color = neuronColor;
