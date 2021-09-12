@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 
 import { useStyles } from './Grids';
 import { TutorialNetwork, neuronColor } from './TutorialNetwork';
-import { EquationGenerator, GeneralEquationGenerator } from './Formulas';
+import { EquationGenerator, GeneralEquationGenerator, NotationsGenerator } from './Formulas';
 
 
 let maxStep = 12;
@@ -23,12 +23,17 @@ export function Learn({ }) {
     return (
         <>
             <Grid container className={classes.root} spacing={1} style={{ marginTop: "-1.8%" }}>
-                <Grid item xs={6}>
+                <Grid item xs={5}>
                     <Paper className={classes.learnPageFormulasPaper} >
                         <EquationGenerator tutorialStep={tutorialStep} />
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
+                    <Paper className={classes.learnPageFormulasPaper} >
+                        <NotationsGenerator tutorialStep={tutorialStep} />
+                    </Paper>
+                </Grid>
+                <Grid item xs={3}>
                     <Paper className={classes.learnPageFormulasPaper} >
                         <GeneralEquationGenerator tutorialStep={tutorialStep} />
                     </Paper>

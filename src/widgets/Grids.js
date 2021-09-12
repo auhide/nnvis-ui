@@ -65,7 +65,7 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: paperColor
     },
     learnPageFormulasPaper: {
-      height: 160,
+      height: 180,
       backgroundColor: paperColor
     },
     learnPageAnimPaper: {
