@@ -10,35 +10,59 @@ const equations = {
     // Output weights - w_11
     5: [
         "`w_(11)^(2) = w_(11)^(2) - eta(delC)/(delw_(11)^(2))`", 
-        "`(delC)/(delw_(11)^(2))=a_1delta_(o_1)^(2)  \\ =>\\ \\ \\delta_(o_1)^(2) = (delo_1)/(delz_(o1)) (delC)/(delo_1) = z_(a1)(1-z_(a1))(o_1-y_1)`"
+        "`(delC)/(delw_(11)^(2))=a_1delta_(o_1)  \\ =>\\ \\ \\delta_(o_1) = (delo_1)/(delz_(o1)) (delC)/(delo_1) = z_(a1)(1-z_(a1))(o_1-y_1)`"
     ],
     // Output weights - w_12
     6: [
         "`w_(12)^(2) = w_(12)^(2) - eta(delC)/(delw_(12)^(2))`", 
-        "`(delC)/(delw_(12)^(2))=a_2delta_(o_1)^(2)  \\ =>\\ \\ \\delta_(o_1)^(2) = (delo_1)/(delz_(o1)) (delC)/(delo_1) =z_(a2)(1-z_(a2))(o_1-y_1)`"
+        "`(delC)/(delw_(12)^(2))=a_2delta_(o_1)  \\ =>\\ \\ \\delta_(o_1) = (delo_1)/(delz_(o1)) (delC)/(delo_1) =z_(a2)(1-z_(a2))(o_1-y_1)`"
     ],
     // Output weights - w_21
     7: [
         "`w_(21)^(2) = w_(21)^(2) - eta(delC)/(delw_(21)^(2))`", 
-        "`(delC)/(delw_(21)^(2))=a_1delta_(o_2)^(2)  \\ =>\\ \\ \\delta_(o_2)^(2) = (delo_2)/(delz_(o2)) (delC)/(delo_2) = z_(a1)(1-z_(a1))(o_2-y_2)`"
+        "`(delC)/(delw_(21)^(2))=a_1delta_(o_2)  \\ =>\\ \\ \\delta_(o_2) = (delo_2)/(delz_(o2)) (delC)/(delo_2) = z_(a1)(1-z_(a1))(o_2-y_2)`"
     ],
     // Output weights - w_22
     8: [
         "`w_(22)^(2) = w_(22)^(2) - eta(delC)/(delw_(22)^(2))`", 
-        "`(delC)/(delw_(22)^(2))=a_2delta_(o_2)^(2)  \\ =>\\ \\ \\delta_(o_2)^(2) = (delo_2)/(delz_(o2)) (delC)/(delo_2) = z_(a2)(1-z_(a2))(o_2-y_2)`"
+        "`(delC)/(delw_(22)^(2))=a_2delta_(o_2)  \\ =>\\ \\ \\delta_(o_2) = (delo_2)/(delz_(o2)) (delC)/(delo_2) = z_(a2)(1-z_(a2))(o_2-y_2)`"
+    ],
+    // Hidden weights - w_11
+    9: [
+        "`w_(11)^(1) = w_(11)^(1) - eta(delC)/(delw_(11)^(1))`", 
+        "`(delC)/(delw_(11)^(1))=x_1 (dela_1)/(delz_(a1)) delta_(a_1)  \\ =>\\ \\ \\delta_(a_1) = w_(11)^2delta_(o_1) + w_(21)^2delta_(o_2)`"
+    ],
+    // Hidden weights - w_12
+    10: [
+        "`w_(12)^(1) = w_(12)^(1) - eta(delC)/(delw_(12)^(1))`", 
+        "`(delC)/(delw_(12)^(1))=x_2 (dela_1)/(delz_(a1)) delta_(a_1)  \\ =>\\ \\ \\delta_(a_1) = w_(11)^2delta_(o_1) + w_(21)^2delta_(o_2)`"
+    ],
+    // Hidden weights - w_21
+    11: [
+        "`w_(21)^(1) = w_(21)^(1) - eta(delC)/(delw_(21)^(1))`", 
+        "`(delC)/(delw_(21)^(1))=x_1 (dela_2)/(delz_(a2)) delta_(a_2)  \\ =>\\ \\ \\delta_(a_2) = w_(12)^2delta_(o_1) + w_(22)^2delta_(o_2)`"
+    ],
+    // Hidden weights - w_22
+    12: [
+        "`w_(22)^(1) = w_(22)^(1) - eta(delC)/(delw_(22)^(1))`", 
+        "`(delC)/(delw_(22)^(1))=x_2 (dela_2)/(delz_(a2)) delta_(a_2)  \\ =>\\ \\ \\delta_(a_2) = w_(12)^2delta_(o_1) + w_(22)^2delta_(o_2)`"
     ]
 }
 
 const generalEquations = {
-    0: ["`sigma([[w_11^1,w_12^1],[-,-]][[x_1],[x_2]])=sigma([[a_1],[-]])=bb{A}^1`"],
-    1: ["`sigma([[-,-],[w_21^1,w_22^1]][[x_1],[x_2]])=sigma([[-],[a_2]])=bb{A}^1`"],
-    2: ["`sigma([[w_11^2,w_12^2],[-,-]][[a_1],[a_2]])=sigma([[o_1],[-]])=bb{A}^2`"],
-    3: ["`sigma([[-,-],[w_21^2,w_22^2]][[a_1],[a_2]])=sigma([[-],[o_2]])=bb{A}^2`"],
+    0: ["`sigma([[w_11^1,w_12^1],[-,-]][[x_1],[x_2]])=sigma([[a_1],[-]])=bb{a}^1`"],
+    1: ["`sigma([[-,-],[w_21^1,w_22^1]][[x_1],[x_2]])=sigma([[-],[a_2]])=bb{a}^1`"],
+    2: ["`sigma([[w_11^2,w_12^2],[-,-]][[a_1],[a_2]])=sigma([[o_1],[-]])=bb{a}^2`"],
+    3: ["`sigma([[-,-],[w_21^2,w_22^2]][[a_1],[a_2]])=sigma([[-],[o_2]])=bb{a}^2`"],
     4: ["`L=1/nsum_(i=0)^n(y_i - o_i)^2`"],
     5: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
     6: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
     7: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
     8: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
+    9: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
+    10: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
+    11: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
+    12: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
 }
 
 const equationTitles = {
@@ -51,6 +75,10 @@ const equationTitles = {
     6: "Updating Output Weights",
     7: "Updating Output Weights",
     8: "Updating Output Weights",
+    9: "Updating Hidden Weights",
+    10: "Updating Hidden Weights",
+    11: "Updating Hidden Weights",
+    12: "Updating Hidden Weights",
 }
 
 const genEquationTitles = {
@@ -63,6 +91,10 @@ const genEquationTitles = {
     6: "General Gradient Descent Formula",
     7: "General Gradient Descent Formula",
     8: "General Gradient Descent Formula",
+    9: "General Gradient Descent Formula",
+    10: "General Gradient Descent Formula",
+    11: "General Gradient Descent Formula",
+    12: "General Gradient Descent Formula",
 }
 
 

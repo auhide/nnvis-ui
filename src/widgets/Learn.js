@@ -12,7 +12,7 @@ import { TutorialNetwork, neuronColor } from './TutorialNetwork';
 import { EquationGenerator, GeneralEquationGenerator } from './Formulas';
 
 
-let maxStep = 8;
+let maxStep = 12;
 let minStep = 0;
 
 
