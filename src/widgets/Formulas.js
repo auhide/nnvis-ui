@@ -6,22 +6,26 @@ const equations = {
     1: ["`a_2=sigma(z_(a2)) = sigma(w_21^1*x_1+w_22^1*x_2)`"],
     2: ["`o_1=sigma(z_(o1)) = sigma(w_11^2*a_1+w_12^2*a_2)`"],
     3: ["`o_2=sigma(z_(o2)) = sigma(w_21^2*a_1+w_22^2*a_2)`"],
-    4: ["`L=1/2((y_1-z_(o1))^2 + (y_2-z_(o2))^2)`"],
+    4: ["`L=1/2((y_1-o_1))^2 + (y_2-o_2))^2)`"],
+    // Output weights - w_11
     5: [
         "`w_(11)^(2) = w_(11)^(2) - eta(delC)/(delw_(11)^(2))`", 
-        "`(delC)/(delw_(11)^(2))=a_1delta_(w11)^(2)  \\ =>\\ \\ \\delta_(w11)^(2) = z_(a1)(1-z_(a1))(o_1-y_1)`"
+        "`(delC)/(delw_(11)^(2))=a_1delta_(o_1)^(2)  \\ =>\\ \\ \\delta_(o_1)^(2) = (delo_1)/(delz_(o1)) (delC)/(delo_1) = z_(a1)(1-z_(a1))(o_1-y_1)`"
     ],
+    // Output weights - w_12
     6: [
         "`w_(12)^(2) = w_(12)^(2) - eta(delC)/(delw_(12)^(2))`", 
-        "`(delC)/(delw_(12)^(2))=a_2delta_(w12)^(2)  \\ =>\\ \\ \\delta_(w12)^(2) = z_(a2)(1-z_(a2))(o_1-y_1)`"
+        "`(delC)/(delw_(12)^(2))=a_2delta_(o_1)^(2)  \\ =>\\ \\ \\delta_(o_1)^(2) = (delo_1)/(delz_(o1)) (delC)/(delo_1) =z_(a2)(1-z_(a2))(o_1-y_1)`"
     ],
+    // Output weights - w_21
     7: [
         "`w_(21)^(2) = w_(21)^(2) - eta(delC)/(delw_(21)^(2))`", 
-        "`(delC)/(delw_(21)^(2))=a_1delta_(w21)^(2)  \\ =>\\ \\ \\delta_(w21)^(2) = z_(a1)(1-z_(a1))(o_2-y_2)`"
+        "`(delC)/(delw_(21)^(2))=a_1delta_(o_2)^(2)  \\ =>\\ \\ \\delta_(o_2)^(2) = (delo_2)/(delz_(o2)) (delC)/(delo_2) = z_(a1)(1-z_(a1))(o_2-y_2)`"
     ],
+    // Output weights - w_22
     8: [
         "`w_(22)^(2) = w_(22)^(2) - eta(delC)/(delw_(22)^(2))`", 
-        "`(delC)/(delw_(22)^(2))=a_2delta_(w22)^(2)  \\ =>\\ \\ \\delta_(w22)^(2) = z_(a2)(1-z_(a2))(o_2-y_2)`"
+        "`(delC)/(delw_(22)^(2))=a_2delta_(o_2)^(2)  \\ =>\\ \\ \\delta_(o_2)^(2) = (delo_2)/(delz_(o2)) (delC)/(delo_2) = z_(a2)(1-z_(a2))(o_2-y_2)`"
     ]
 }
 
@@ -30,7 +34,7 @@ const generalEquations = {
     1: ["`sigma([[-,-],[w_21^1,w_22^1]][[x_1],[x_2]])=sigma([[-],[a_2]])=bb{A}^1`"],
     2: ["`sigma([[w_11^2,w_12^2],[-,-]][[a_1],[a_2]])=sigma([[o_1],[-]])=bb{A}^2`"],
     3: ["`sigma([[-,-],[w_21^2,w_22^2]][[a_1],[a_2]])=sigma([[-],[o_2]])=bb{A}^2`"],
-    4: ["`L=1/nsum_(i=0)^n(y_i - z_i)^2`"],
+    4: ["`L=1/nsum_(i=0)^n(y_i - o_i)^2`"],
     5: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
     6: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],
     7: ["`w_(ji) = w_(ji) - eta grad_w C=w_(ji) - eta (delC)/(delw_(ji))`"],

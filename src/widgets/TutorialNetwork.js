@@ -5,13 +5,200 @@ import { synapseColor, outputNeuronColor } from '../nn/stylistic'
 const neuronColor = synapseColor;
 
 
+
 export function TutorialNetwork({ tutorialStep }) {
-    let showExpectedOutputs = false;
+
+    let currentOutputAnimationLabels = <></>;
+    let currentOutputAnimation = <></>;
 
     switch(tutorialStep) {
+        // For error calculation
         case 4:
-            showExpectedOutputs = true;
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+            currentOutputAnimation = <>
+                <AnimatedNeuron x={400} y={50} destination={[445, 58]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]} 
+                    scale = {[1, 1, 1.2, 1, 1]}
+                />
+                <TutorialNeuron x={400} y={50} />
+                <AnimatedNeuron x={400} y={100} destination={[445, 88]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]} 
+                    scale = {[1, 1, 1.2, 1, 1]}
+                />
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>
+
             break;
+        
+        // For 2nd layer w11 backprop
+        case 5:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y1 to o1 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o1 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={50} destination={[350, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a1 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[350, 50]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+        
+        // 2nd Layer - w12
+        case 6:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y1 to o1 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={58} destination={[400, 50]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o1 to w12 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={50} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a2 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+
+        // 2nd Layer - w21
+        case 7:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y2 to o2 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o2 to w21 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={100} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a1 to w11 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={50} destination={[350, 75]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+
+        // For 2nd layer w11 backprop
+        case 8:
+            currentOutputAnimationLabels = <> 
+                <OriginalOutputY visualized={true} position={[1000, 120]} index={1} />
+                <OriginalOutputY visualized={true} position={[1000, 185]} index={2} /> 
+            </>;
+
+            currentOutputAnimation = <> 
+                {/* y2 to o2 */}
+                <AnimatedNeuron 
+                    color={outputNeuronColor} x={445} y={88} destination={[400, 100]} 
+                    times={[0, 0.9, 0.95, 1, 1]}
+                    scale={[1, 1, 1.2, 1, 1]}
+                />
+
+                {/* o2 to w22 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={400} y={100} destination={[350, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                {/* a2 to w22 */}
+                <AnimatedNeuron 
+                    color={neuronColor} x={300} y={100} destination={[350, 100]} 
+                    times={[0, 0.7, 0.8, 0.9, 1]}
+                    scale={[1, 0.5, 1.2, 0.5, 1]}
+                />
+
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+
+                {/* y1 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 58]} />
+                {/* y2 */}
+                <OriginalOutputNeuron visualized={true} position={[445, 88]} />
+            </>;
+            break;
+
+        default:
+            currentOutputAnimation = <> 
+                <TutorialNeuron x={400} y={50} /> 
+                <TutorialNeuron x={400} y={100} />
+            </>;
     }
 
     return (
@@ -45,8 +232,8 @@ export function TutorialNetwork({ tutorialStep }) {
             {/* For o2 */}
             <StaticValue x={700} y={135} value={"w"} subIndex={21} supIndex={2} />
             <StaticValue x={780} y={200} value={"w"} subIndex={22} supIndex={2} />
-
-            <OriginalOutputYs visualized={showExpectedOutputs} />
+            
+            {currentOutputAnimationLabels}
 
             <motion.svg
                 xmlns="http://www.w3.org/2000/svg" 
@@ -99,11 +286,9 @@ export function TutorialNetwork({ tutorialStep }) {
                 <TutorialNeuron x={300} y={50} />
                 <TutorialNeuron x={300} y={100} />
 
+                {/* Error calculation animation */}
                 {/* Output layer */}
-                <TutorialNeuron x={400} y={50} isAnimated={showExpectedOutputs} destination={[445, 58]} />
-                <TutorialNeuron x={400} y={100} isAnimated={showExpectedOutputs} destination={[445, 88]}/>
-
-                <OriginalOutputNeurons visualized={showExpectedOutputs} />
+                {currentOutputAnimation}
 
             </motion.svg>
         </>
@@ -111,16 +296,13 @@ export function TutorialNetwork({ tutorialStep }) {
 }
 
 
-function OriginalOutputYs({ visualized }) {
+function OriginalOutputY({ visualized, position, index }) {
+    let [x, y] = position;
+
     if (visualized) {
         return (
             <>
-                {/* Expected predictions */}
-                {/* For y1 */}
-                <StaticValue x={1000} y={120} value={"y"} subIndex={1} valueColor={neuronColor} />
-
-                {/* For y2 */}
-                <StaticValue x={1000} y={185} value={"y"} subIndex={2} valueColor={neuronColor} />
+                <StaticValue x={x} y={y} value={"y"} subIndex={index} valueColor={neuronColor} />
             </>
         );
     }
@@ -131,13 +313,13 @@ function OriginalOutputYs({ visualized }) {
 }
 
 
-function OriginalOutputNeurons({ visualized }) {
+function OriginalOutputNeuron({ visualized, position }) {
+    let [x, y] = position;
+
     if (visualized) {
         return (
             <>
-                {/* Expected outputs */}
-                <TutorialNeuron x={445} y={58} color={outputNeuronColor} />
-                <TutorialNeuron x={445} y={88} color={outputNeuronColor} />
+                <TutorialNeuron x={x} y={y} color={outputNeuronColor} />
             </>
         );
     }
@@ -148,37 +330,9 @@ function OriginalOutputNeurons({ visualized }) {
 }
 
 
-function TutorialNeuron({ x, y, isAnimated, color, stroke, destination }) {
+function TutorialNeuron({ x, y, color, stroke }) {
     if (color == null) { color = neuronColor; }
     if (stroke == null) { stroke = neuronColor; }
-
-    if (isAnimated) {
-        let [endX, endY] = destination;
-
-        return (
-            <>
-                <motion.circle
-                    x={x} y={y} r={10} fill={color} stroke-width="3" stroke={stroke}
-                />
-                <motion.circle
-                    x={x} y={y} r={10} fill={color} stroke-width="3" stroke={stroke}
-                    animate={{
-                        x: [x, endX, x],
-                        y: [y, endY, y],
-                        opacity: [1, 1, 0.2],
-                        scale: [1, 1, 1.2, 1, 1],
-                    }}
-                    transition={{
-                        type: "spring",
-                        duration: 2,
-                        ease: "easeInOut",
-                        times: [0, 0.7, 0.8, 0.9, 1],
-                        loop: Infinity
-                    }}
-                />
-            </>
-        );
-    }
 
     return (
         <motion.circle
@@ -187,6 +341,34 @@ function TutorialNeuron({ x, y, isAnimated, color, stroke, destination }) {
     )
 }
 
+
+function AnimatedNeuron({ x, y, color, stroke, destination, times, scale }) {
+    if (color == null) { color = neuronColor; }
+    if (stroke == null) { stroke = neuronColor; }
+
+    let [endX, endY] = destination;
+
+    return (
+        <>
+            <motion.circle
+                x={x} y={y} r={10} fill={color} stroke-width="3" stroke={stroke}
+                animate={{
+                    x: [x, endX, x],
+                    y: [y, endY, y],
+                    opacity: [1, 1, 0.2],
+                    scale: scale,
+                }}
+                transition={{
+                    type: "spring",
+                    duration: 2,
+                    ease: "easeInOut",
+                    times: times,
+                    loop: Infinity
+                }}
+            />
+        </>
+    );
+}
 
 function TutorialSynapse({ x1, y1, x2, y2 }) {
     return (
