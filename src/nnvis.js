@@ -13,17 +13,17 @@ export function NNVis() {
     return (
         <Router>
             <ul class="navbar">
-                <li className="mainText navbarTab"><Link to={'/learn'} ><b>Learn</b></Link></li>
-                <li className="mainText navbarTab"><Link to={'/'} ><b>Config</b></Link></li>
+                <li className="mainText navbarTab"><Link to={'/'} ><b>Learn</b></Link></li>
+                <li className="mainText navbarTab"><Link to={'/config'} ><b>Config</b></Link></li>
                 <li className="mainText navbarTab"><Link to={'/datasets'} ><b>Data</b></Link></li>
             </ul>
 
             <Switch> 
-                <Route path="/learn" exact>
+                <Route path="/" exact>
                     <Learn />
                 </Route>
 
-                <Route path = "/" exact>
+                <Route path = "/config" exact>
                     <ArchitectureComponents />
                 </Route>
 
