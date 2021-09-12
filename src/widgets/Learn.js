@@ -22,7 +22,7 @@ export function Learn({ }) {
 
     return (
         <>
-            <Grid container className={classes.root} spacing={1} style={{ marginTop: "-1.8%" }}>
+            <Grid container className={classes.root} spacing={1} style={{ marginTop: "-1.6%" }}>
                 <Grid item xs={5}>
                     <Paper className={classes.learnPageFormulasPaper} >
                         <EquationGenerator tutorialStep={tutorialStep} />
