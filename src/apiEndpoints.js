@@ -1,8 +1,11 @@
 
 // The NN API Endpoints that are of use now:
-const baseUrl = process.env.REACT_APP_BASE_API_URL;
+const env = process.env.REACT_APP_ENV;
+let baseUrl = null;
 
-if (typeof baseUrl !== 'undefined') {
+if (env === "PROD") {
+    baseUrl = process.env.REACT_APP_BASE_API_URL;
+} else {
     baseUrl = "http://localhost:5000/";
 }
 
