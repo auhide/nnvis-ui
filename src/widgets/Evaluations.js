@@ -13,7 +13,6 @@ import {
     HeatmapSeries, 
     ContinuousColorLegend
 } from 'react-vis';
-import Popup, { evaluationText } from './Popups';
 import { useSelector } from 'react-redux';
 
 // The dropdown needs these imports:
@@ -23,6 +22,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+
+import DownloadModelButton from '../forms/modelForm';
+
 
 let greyColor = "#212226";
 
@@ -99,7 +101,7 @@ export function Evaluations() {
     if (isEvaluating == null) {
         return( 
             <>
-                <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
+                <h1 className="mainText">Evaluation</h1>
                 <p>Click <b><i>TRAIN NETWORK</i></b> to Evaluate</p>
             </>
         )
@@ -108,7 +110,7 @@ export function Evaluations() {
     if (isEvaluating) {
         return (
             <>
-                <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
+                <h1 className="mainText">Evaluation</h1>
                 <br />
                 <br />
                 <br />
@@ -118,7 +120,10 @@ export function Evaluations() {
     } else {
         return (
             <>
-                <h1 className="mainText">Evaluation<Popup text={evaluationText} /></h1>
+                <h1 className="mainText">Evaluation</h1>
+                <DownloadModelButton result={result} text={"Download Model"} />
+                <br />
+                <br />
                 <Divider />
                 <Accuracy result={result} />
                 <DropDown evalChoice={evaluationType} setEvalChoice={setEvalType} />
