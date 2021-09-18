@@ -88,3 +88,14 @@ li a:hover:not(.active) {
   margin-top: -1.5%;
   margin-left: 22%;
 }
+
+/* Logo Font */
+@font-face {
+  font-family: 'Anurati';
+  src: local('Anurati'), url(./fonts/Anurati-Regular.woff) format('woff');
+}
+
+.logoText {
+  font-family: 'Anurati', sans-serif;
+  color: #D9D9D9;
+}

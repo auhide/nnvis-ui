@@ -116,9 +116,9 @@ function SubTitle({ text }) {
                 color: rectFill,
                 fontSize: 25,
                 position: "absolute",
+                textAlign: "center"
             }}
             initial={{
-                x: "80%",
                 scale: 0.5,
                 opacity: 0
             }}
