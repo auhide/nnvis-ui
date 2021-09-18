@@ -16,6 +16,9 @@ export function NNVis() {
     return (
         <Router>
             <ul class="navbar">
+                <li className="mainText navbarTab"><Link to={'/'} >
+                    <b style={{ fontFamily: 'Anurati' }}>NEUROAD</b>
+                </Link></li>
                 <li className="mainText navbarTab"><Link to={'/'} ><b>Home</b></Link></li>
                 <li className="mainText navbarTab"><Link to={'/learn'} ><b>Learn</b></Link></li>
                 <li className="mainText navbarTab"><Link to={'/config'} ><b>Config</b></Link></li>
