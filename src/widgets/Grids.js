@@ -21,7 +21,7 @@ export let paperColor = "#F2F2F2"
 export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        width: window.screen.availWidth
+        width: window.screen.availWidth,
     },
     hyperparamsPaperOptions: {
         height: 750,
