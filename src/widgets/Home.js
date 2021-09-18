@@ -88,9 +88,6 @@ function Title({ text }) {
                     ease: "easeIn",
                     times: [0, 0.4, 0.7, 0.8, 1],
                 }}
-                whileHover={{
-                    scale: 2.05
-                }}
 
             >{text}</motion.h1>
 

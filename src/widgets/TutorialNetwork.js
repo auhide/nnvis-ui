@@ -563,7 +563,7 @@ export function TutorialNetwork({ tutorialStep }) {
 
             <motion.svg
                 xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 600 600"
+                viewBox="0 0 600 200"
             >
 
                 {/* Hidden layer */}
