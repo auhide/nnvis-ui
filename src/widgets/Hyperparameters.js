@@ -255,7 +255,7 @@ export function Hyperparameters(props) {
         <Grid container className={gridStyles.root} spacing={1}>
             <Grid item xs={12}>
                 <Grid container justify="center">
-                    <h1 className="mainText">Hyperparameters<Popup text={hyperparametersText} /></h1>
+                    <h1 className="mainText">Hyperparameters</h1>
                 </Grid>
             </Grid>
 
