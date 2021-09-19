@@ -187,8 +187,8 @@ function CustomNeuralNetAnim() {
     return (
         <motion.svg
             xmlns="http://www.w3.org/2000/svg"
-            x={"270%"}
-            y={"-150%"} 
+            x={"125%"}
+            y={"-100%"} 
         >
             {/* Synapses */}
             <motion.line 
