@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width: window.screen.availWidth,
-        height: window.screen.availHeight,
+        height: window.screen.availHeight + 200,
         background: "linear-gradient(to bottom, #3F4D59,#73A2BF)"
     },
     firstPaper: {
@@ -28,9 +28,11 @@ export function Home({  }) {
         <Grid container className={classes.root}>
 
             <Grid item xs={12} className={classes.firstPaper}>
+                <br />
+                <br />
+                <br />
                 <Title text={"Welcome to Neuroad"} />
                 <PaveText />
-
 
                 {/* First path */}
                 <motion.svg
