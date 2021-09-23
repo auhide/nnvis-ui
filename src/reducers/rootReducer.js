@@ -34,7 +34,8 @@ const initialState = {
             epsilon: 0.01,
             beta1: 0.9,
             beta2: 0.999
-        }
+        },
+        trainsetSize: 0.7
     },
     
     dataset: "gender_voice",

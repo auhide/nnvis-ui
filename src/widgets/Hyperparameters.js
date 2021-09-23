@@ -246,6 +246,29 @@ let optimizers = [
     }
 ];
 
+let trainingsetSizes = [
+    {
+        value: 0.1,
+        label: "0.1"
+    },
+    {
+        value: 0.3,
+        label: "0.3"
+    },
+    {
+        value: 0.5,
+        label: "0.5"
+    },
+    {
+        value: 0.7,
+        label: "0.7"
+    },
+    {
+        value: 0.9,
+        label: "0.9"
+    }
+]
+
 export function Hyperparameters(props) {
     // Accessing the Hyperparameters in the Redux State Storage
     const params = useSelector(state => state.params);
@@ -275,10 +298,13 @@ export function Hyperparameters(props) {
             
             {/* Fourth Row */}
             <Pca />
+            <TrainSetSize params={params} dispatch={dispatch} />
+
+            {/* Fifth Row */}
             <Momentum params={params} dispatch={dispatch} />
             <Epsilon params={params} dispatch={dispatch} />
 
-            {/* Fifth Row */}
+            {/* Sixth Row */}
             <Beta1 params={params} dispatch={dispatch} />
             <Beta2 params={params} dispatch={dispatch} />
 
@@ -626,6 +652,36 @@ function Optimizer({ params, dispatch }) {
                         </MenuItem>
                     ))}
                 </TextField>
+            </Grid>
+        </Grid>
+    )
+}
+
+
+function TrainSetSize({ params, dispatch }) {
+    const handleTrainSetSizeChange = (event, value) => {
+        let newHP = params;
+        newHP.trainsetSize = value;
+        dispatch({type: "UPDATE_HPARAMS", params: { ...newHP }})
+    };
+
+    return (
+        
+        <Grid item xs={6}>
+            <Grid container justify="center">
+                <Typography id="discrete-slider-small-steps" gutterBottom>
+                    Training Set Size
+                </Typography>
+                <ParametersSlider
+                    defaultValue={params.trainsetSize}
+                    onChange={handleTrainSetSizeChange}
+                    aria-labelledby="discrete-slider-small-steps"
+                    step={0.1}
+                    min={0.1}
+                    max={0.9}
+                    marks={trainingsetSizes}
+                    valueLabelDisplay="auto"
+                />
             </Grid>
         </Grid>
     )

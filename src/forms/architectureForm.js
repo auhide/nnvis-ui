@@ -89,6 +89,7 @@ function prepareArchitectureRequest(architecture, hyperparams, dataset, features
 
     // Adding Hyperparameters
     request.optimization = hyperparams.optimization;
+    request.train_size = hyperparams.trainsetSize;
     request.hyperparameters = hyperparams.hyperparameters;
     request.dataset = dataset;
 
