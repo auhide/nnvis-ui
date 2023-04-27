@@ -1,11 +1,7 @@
 # Neuroad UI - Train Your MLP Through The Browser
 The project was previously deployed on Heroku but currently is not deployed anywhere. The repository of the MLP API is [this one](https://github.com/auhide/mlp_nn). 
 
-You can see a walkthrough video of the full project below:
-
-<video width="100%" height="auto" controls>
-  <source src="static/neuroad-demo.mp4" type="video/mp4">
-</video>
+You can see a walkthrough video of the full project [here](https://youtu.be/3_6KJYapns4).
 
 ## Pages
 
